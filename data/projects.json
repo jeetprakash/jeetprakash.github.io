@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "antigravity-cli",
+    "title": "Antigravity CLI & Dev Tooling",
+    "shortDescription": "An intelligent, agentic coding assistant CLI for seamless workflow automation, project scaffolding, and context management.",
+    "tech": [
+      "Node.js",
+      "TypeScript",
+      "CLI",
+      "AI",
+      "Automation"
+    ],
+    "github": "https://github.com/jeetprakash",
+    "date": "2026-07-28",
+    "file": "projects/antigravity-cli/antigravity-cli.md",
+    "url": "projects/antigravity-cli/"
+  },
+  {
+    "slug": "flat-ui-blog-generator",
+    "title": "Flat UI & Static Blog Generator",
+    "shortDescription": "Zero-build static dev blog generator built for GitHub Pages, featuring pre-rendered HTML, Markdown parsing, and clean URLs.",
+    "tech": [
+      "JavaScript",
+      "Node.js",
+      "HTML5",
+      "CSS3",
+      "Markdown",
+      "SSG"
+    ],
+    "github": "https://github.com/jeetprakash/jeetprakash.github.io",
+    "date": "2026-07-25",
+    "file": "projects/flat-ui-blog-generator/flat-ui-blog-generator.md",
+    "url": "projects/flat-ui-blog-generator/"
+  },
+  {
+    "slug": "async-task-scheduler",
+    "title": "Async Task & Timer Scheduler",
+    "shortDescription": "Lightweight JavaScript background job runner with cron expression parsing and status notifications.",
+    "tech": [
+      "JavaScript",
+      "Web Workers",
+      "Algorithms",
+      "Async"
+    ],
+    "github": "https://github.com/jeetprakash",
+    "date": "2026-07-20",
+    "file": "projects/async-task-scheduler/async-task-scheduler.md",
+    "url": "projects/async-task-scheduler/"
+  }
+]

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async Task & Timer Scheduler | Projects | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Lightweight JavaScript background job runner with cron expression parsing and status notifications.">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Async Task & Timer Scheduler | Projects | jeetprakash">
+  <meta property="og:description" content="Lightweight JavaScript background job runner with cron expression parsing and status notifications.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../" class="nav-link ">All Posts</a>
+      <a href="../../tags/" class="nav-link ">Tags</a>
+      <a href="../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../projects/" class="nav-link active">Projects</a>
+      <a href="../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../projects/" class="back-btn">&larr; Back to Projects</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Async Task & Timer Scheduler</h1>
+          <div class="post-meta-bar">
+            <span>Project Released: Jul 20, 2026</span>
+          </div>
+          <p class="post-preface-box">Lightweight JavaScript background job runner with cron expression parsing and status notifications.</p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+            <span class="skill-pill">JavaScript</span> <span class="skill-pill">Web Workers</span> <span class="skill-pill">Algorithms</span> <span class="skill-pill">Async</span>
+          </div>
+          <div class="project-links" style="margin-top:1.25rem;"><a href="https://github.com/jeetprakash" target="_blank" rel="noopener" class="btn-flat">GitHub Repository &rarr;</a></div>
+        </header>
+
+        <div class="post-content">
+          <h1>Async Task &amp; Timer Scheduler</h1>
+<p>A high-performance JavaScript task scheduler supporting non-blocking background execution, 5-field cron parsing, one-shot timers, and early cancellation triggers.</p>
+<hr>
+<h2>🌟 Key Features</h2>
+<ul>
+<li><strong>Cron Expression Parsing</strong>: Full support for standard 5-field cron expressions (e.g. <code>*/5 * * * *</code> for every 5 minutes).</li>
+<li><strong>One-Shot Timers with Early Termination</strong>: Flexible trigger conditions (<code>never</code>, <code>any</code>, or specific task ID listeners).</li>
+<li><strong>Non-Blocking Background Threads</strong>: Runs background jobs inside Web Workers without blocking the main UI thread.</li>
+<li><strong>Robust Event API</strong>: Lifecycle hooks for <code>onStart</code>, <code>onProgress</code>, <code>onComplete</code>, and <code>onError</code>.</li>
+</ul>
+<hr>
+<h2>💻 Code Example</h2>
+<pre><code class="language-javascript">import { TaskScheduler } from &#39;async-task-scheduler&#39;;
+
+const scheduler = new TaskScheduler();
+
+// Schedule a recurring health check every 10 minutes
+scheduler.scheduleCron({
+  cron: &#39;*/10 * * * *&#39;,
+  maxIterations: 6,
+  task: async () =&gt; {
+    const res = await fetch(&#39;/api/health&#39;);
+    console.log(&#39;Health Status:&#39;, res.status);
+  }
+});
+</code></pre>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

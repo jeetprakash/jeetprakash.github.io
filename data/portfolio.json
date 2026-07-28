@@ -1,0 +1,39 @@
+{
+  "name": "Jeet Prakash",
+  "title": "Software Engineer & System Architect",
+  "bio": "Passionate software engineer focused on building clean, performant web applications, developer tooling, and distributed systems. Advocate for clean code, flat aesthetics, and efficient developer workflows.",
+  "location": "India",
+  "github": "https://github.com/jeetprakash",
+  "email": "contact@jeetprakash.com",
+  "skills": [
+    "JavaScript / TypeScript",
+    "Node.js & Express",
+    "Frontend Frameworks & Vanilla Web",
+    "Python & Automation",
+    "Git & GitHub Actions",
+    "REST & GraphQL APIs",
+    "CSS3 Design Systems & Responsive Layouts",
+    "Software Architecture & Clean Code"
+  ],
+  "experience": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "Tech Innovations Inc.",
+      "period": "2024 - Present",
+      "description": "Architecting scalable web solutions, optimizing frontend load performance by 40%, and mentoring engineering teams."
+    },
+    {
+      "role": "Full Stack Developer",
+      "company": "Dev Solutions Hub",
+      "period": "2022 - 2024",
+      "description": "Built responsive single page applications, RESTful microservices, and automated CI/CD pipelines for cloud deployments."
+    }
+  ],
+  "education": [
+    {
+      "degree": "B.Tech in Computer Science & Engineering",
+      "institution": "University Institute of Technology",
+      "year": "2022"
+    }
+  ]
+}

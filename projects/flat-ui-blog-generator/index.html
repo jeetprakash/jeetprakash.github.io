@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flat UI & Static Blog Generator | Projects | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Zero-build static dev blog generator built for GitHub Pages, featuring pre-rendered HTML, Markdown parsing, and clean URLs.">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Flat UI & Static Blog Generator | Projects | jeetprakash">
+  <meta property="og:description" content="Zero-build static dev blog generator built for GitHub Pages, featuring pre-rendered HTML, Markdown parsing, and clean URLs.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../" class="nav-link ">All Posts</a>
+      <a href="../../tags/" class="nav-link ">Tags</a>
+      <a href="../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../projects/" class="nav-link active">Projects</a>
+      <a href="../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../projects/" class="back-btn">&larr; Back to Projects</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Flat UI & Static Blog Generator</h1>
+          <div class="post-meta-bar">
+            <span>Project Released: Jul 25, 2026</span>
+          </div>
+          <p class="post-preface-box">Zero-build static dev blog generator built for GitHub Pages, featuring pre-rendered HTML, Markdown parsing, and clean URLs.</p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+            <span class="skill-pill">JavaScript</span> <span class="skill-pill">Node.js</span> <span class="skill-pill">HTML5</span> <span class="skill-pill">CSS3</span> <span class="skill-pill">Markdown</span> <span class="skill-pill">SSG</span>
+          </div>
+          <div class="project-links" style="margin-top:1.25rem;"><a href="https://github.com/jeetprakash/jeetprakash.github.io" target="_blank" rel="noopener" class="btn-flat">GitHub Repository &rarr;</a></div>
+        </header>
+
+        <div class="post-content">
+          <h1>Flat UI &amp; Static Blog Generator</h1>
+<p>A pre-rendered, lightweight static site generator specifically tailored for hosting blogs, project showcases, and developer portfolios on <strong>GitHub Pages</strong>.</p>
+<hr>
+<h2>🌟 Key Architectural Highlights</h2>
+<ul>
+<li><strong>Date-Nested Clean URLs</strong>: Clean, bookmarkable URL paths (<code>/posts/&lt;YYYY&gt;/&lt;MM&gt;/&lt;slug&gt;/</code>).</li>
+<li><strong>Colocated Markdown Files</strong>: Markdown source files (<code>.md</code>) sit directly beside compiled static HTML (<code>index.html</code>) in post and project folders.</li>
+<li><strong>100% &quot;View Page Source&quot; Ready</strong>: Pre-renders complete static HTML for every article and project, ensuring instant SEO indexing and viewability in Chrome&#39;s View Page Source (Ctrl+U).</li>
+<li><strong>Special Tag Filtering</strong>: Native support for special tags <code>#devMusings</code> and <code>#devRants</code> alongside custom tag cloud summary pages (<code>/tags/</code>).</li>
+<li><strong>Flat Light Design System</strong>: Crisp off-white backgrounds, Inter &amp; Fira Code typography, flat badge components, and 50-word home summaries.</li>
+</ul>
+<hr>
+<h2>⚡ Static Generator Pipeline (<code>build.js</code>)</h2>
+<pre><code class="language-javascript">// Build Pipeline Workflow
+const { marked } = require(&#39;marked&#39;);
+const yaml = require(&#39;js-yaml&#39;);
+
+function compileMarkdownPage(filePath) {
+  const rawText = fs.readFileSync(filePath, &#39;utf8&#39;);
+  const { frontmatter, body } = parseFrontmatter(rawText);
+  
+  const htmlContent = marked.parse(body);
+  return generateStaticHtmlPage(frontmatter.title, htmlContent);
+}
+</code></pre>
+<hr>
+<h2>🚀 Creating New Posts &amp; Projects</h2>
+<p>Simply create a sub-directory in <code>posts/&lt;YYYY&gt;/&lt;MM&gt;/&lt;slug&gt;/</code> or <code>projects/&lt;slug&gt;/</code>, place your <code>.md</code> content file inside it, and run:</p>
+<pre><code class="language-bash">npm run build
+</code></pre>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

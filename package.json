@@ -1,0 +1,14 @@
+{
+  "name": "jeetprakash.github.io",
+  "version": "1.0.0",
+  "description": "Developer blog, project showcase, and portfolio static site generator for GitHub Pages.",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "marked": "^12.0.1"
+  }
+}

@@ -1,0 +1,48 @@
+[
+  {
+    "slug": "sample-lorem-ipsum-post",
+    "title": "Lorem Ipsum: A Comprehensive Developer Post Guide",
+    "date": "2026-07-28",
+    "updated": "2026-07-28",
+    "preface": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A complete reference guide demonstrating all metadata fields, tags, code syntax highlighting, blockquotes, and markdown elements that can be copied for future posts.",
+    "tags": [
+      "devMusings",
+      "devRants",
+      "javascript",
+      "webdev",
+      "tutorial"
+    ],
+    "headerImage": "assets/images/header-placeholder.svg",
+    "file": "posts/2026/07/sample-lorem-ipsum-post/sample-lorem-ipsum-post.md",
+    "url": "posts/2026/07/sample-lorem-ipsum-post/"
+  },
+  {
+    "slug": "welcome-to-my-dev-blog",
+    "title": "Welcome to My Developer Blog & Portfolio",
+    "date": "2026-07-20",
+    "updated": "2026-07-21",
+    "preface": "Welcome to my personal developer hub hosted on GitHub Pages! Here I share insights on software engineering, web performance, dev musings, and project showcases.",
+    "tags": [
+      "devMusings",
+      "announcement",
+      "github-pages"
+    ],
+    "headerImage": "assets/images/header-placeholder.svg",
+    "file": "posts/2026/07/welcome-to-my-dev-blog/welcome-to-my-dev-blog.md",
+    "url": "posts/2026/07/welcome-to-my-dev-blog/"
+  },
+  {
+    "slug": "reflections-on-modern-frontend-bloat",
+    "title": "Reflections on Modern Frontend Over-Engineering",
+    "date": "2026-07-15",
+    "preface": "A frank discussion about the unnecessary complexity in modern web apps, the power of vanilla JavaScript, and why fast static sites offer superior user experiences.",
+    "tags": [
+      "devRants",
+      "architecture",
+      "webdev"
+    ],
+    "headerImage": "assets/images/header-placeholder.svg",
+    "file": "posts/2026/07/reflections-on-modern-frontend-bloat/reflections-on-modern-frontend-bloat.md",
+    "url": "posts/2026/07/reflections-on-modern-frontend-bloat/"
+  }
+]

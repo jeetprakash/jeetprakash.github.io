@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lorem Ipsum: A Comprehensive Developer Post Guide | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A complete reference guide demonstrating all metadata fields, tags, code syntax highlighting, blockquotes, and markdown elements that can be copied for future posts.">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Lorem Ipsum: A Comprehensive Developer Post Guide | jeetprakash">
+  <meta property="og:description" content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. A complete reference guide demonstrating all metadata fields, tags, code syntax highlighting, blockquotes, and markdown elements that can be copied for future posts.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Lorem Ipsum: A Comprehensive Developer Post Guide</h1>
+          <div class="post-meta-bar">
+            <span>Published: Jul 28, 2026</span>
+            &bull; <span>Updated: Jul 28, 2026</span>
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/devMusings/" class="tag-badge tag-devMusings">#devMusings</a> <a href="../../../../tag/devRants/" class="tag-badge tag-devRants">#devRants</a> <a href="../../../../tag/javascript/" class="tag-badge">#javascript</a> <a href="../../../../tag/webdev/" class="tag-badge">#webdev</a> <a href="../../../../tag/tutorial/" class="tag-badge">#tutorial</a>
+            </div>
+          </div>
+          <div class="post-preface-box">Lorem ipsum dolor sit amet, consectetur adipiscing elit. A complete reference guide demonstrating all metadata fields, tags, code syntax highlighting, blockquotes, and markdown elements that can be copied for future posts.</div>
+        </header>
+        
+      <img src="../../../../assets/images/header-placeholder.svg" alt="Lorem Ipsum: A Comprehensive Developer Post Guide" class="post-header-img" onerror="this.style.display='none'"/>
+    
+        <div class="post-content">
+          <h1>Introduction to the Blueprint Template</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+<p>This post serves as a <strong>live template &amp; blueprint</strong> for creating future articles on this developer blog. It demonstrates all available frontmatter attributes, image embeds, code formatting options, tag lists, and typography styles.</p>
+<hr>
+<h2>1. Frontmatter Metadata Reference</h2>
+<p>When creating a new blog post, place the YAML metadata at the very top of your <code>.md</code> file inside its dedicated post directory (<code>posts/&lt;YYYY&gt;/&lt;MM&gt;/&lt;slug&gt;/&lt;slug&gt;.md</code>):</p>
+<pre><code class="language-yaml">---
+title: &quot;Your Post Title Here&quot;
+slug: &quot;your-post-title-here&quot;
+date: &quot;2026-07-28&quot;
+updated: &quot;2026-07-28&quot; # Optional
+preface: &quot;A concise 1-2 sentence summary of what this post covers.&quot;
+tags:
+  - devMusings # Special tag featured in navbar
+  - devRants   # Special tag featured in navbar
+  - javascript
+  - webdev
+headerImage: &quot;assets/images/header-placeholder.svg&quot; # Optional
+---
+</code></pre>
+<hr>
+<h2>2. Text Formatting &amp; Typography</h2>
+<p>Lorem ipsum dolor sit amet, <strong>consectetur adipiscing elit</strong>, sed do eiusmod tempor <em>incididunt ut labore</em> et dolore magna aliqua. You can also highlight <code>inline code</code> or use strike-through text like <del>outdated ideas</del>.</p>
+<h3>Blockquotes &amp; Callouts</h3>
+<blockquote>
+<p><strong>Pro Tip for Developers:</strong><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Keeping client-side code lightweight ensures instantaneous page transitions and optimal mobile performance.</p>
+</blockquote>
+<hr>
+<h2>3. Code Snippets &amp; Syntax Highlighting</h2>
+<p>Here are sample code blocks in multiple languages demonstrating syntax highlighting:</p>
+<h3>JavaScript Async Function</h3>
+<pre><code class="language-javascript">// Fetch and parse markdown post content dynamically
+async function loadBlogPost(slug) {
+  try {
+    const response = await fetch(`./posts/${slug}.md`);
+    if (!response.ok) throw new Error(`HTTP Error ${response.status}`);
+    const rawMarkdown = await response.text();
+    
+    // Extract Frontmatter and Body
+    const { metadata, body } = parseFrontmatter(rawMarkdown);
+    console.log(&quot;Loaded metadata for:&quot;, metadata.title);
+    return { metadata, html: marked.parse(body) };
+  } catch (error) {
+    console.error(&quot;Failed to load post:&quot;, error);
+    return null;
+  }
+}
+</code></pre>
+<h3>Clean CSS Variables (Flat Theme)</h3>
+<pre><code class="language-css">/* Core Design Tokens */
+:root {
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --accent-primary: #3b82f6;
+  --border-subtle: #e2e8f0;
+}
+</code></pre>
+<h3>HTML5 Semantic Markup</h3>
+<pre><code class="language-html">&lt;article class=&quot;post-detail&quot;&gt;
+  &lt;header class=&quot;post-header&quot;&gt;
+    &lt;h1 class=&quot;post-title&quot;&gt;Lorem Ipsum Post Title&lt;/h1&gt;
+    &lt;p class=&quot;post-preface&quot;&gt;Sample preface text goes here.&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;div class=&quot;post-content&quot;&gt;
+    &lt;!-- Rendered Markdown HTML --&gt;
+  &lt;/div&gt;
+&lt;/article&gt;
+</code></pre>
+<hr>
+<h2>4. Lists &amp; Structured Data</h2>
+<h3>Key Features Checklist</h3>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Responsive layout with flat aesthetic</li>
+<li><input checked="" disabled="" type="checkbox"> Pre-rendered static HTML for 100% &quot;View Page Source&quot; visibility</li>
+<li><input checked="" disabled="" type="checkbox"> Date-nested clean URLs (<code>/posts/2026/07/sample-lorem-ipsum-post/</code>)</li>
+<li><input checked="" disabled="" type="checkbox"> Colocated Markdown <code>.md</code> source files right beside <code>index.html</code></li>
+<li><input checked="" disabled="" type="checkbox"> Special tags support (<code>#devMusings</code>, <code>#devRants</code>)</li>
+<li><input checked="" disabled="" type="checkbox"> Automatic 50-word summary truncation on home screen</li>
+</ul>
+<h3>Ordered Steps for Adding New Posts</h3>
+<ol>
+<li>Create a new directory <code>posts/&lt;YYYY&gt;/&lt;MM&gt;/&lt;slug&gt;/</code>.</li>
+<li>Add your <code>.md</code> content file inside it (<code>posts/&lt;YYYY&gt;/&lt;MM&gt;/&lt;slug&gt;/&lt;slug&gt;.md</code>).</li>
+<li>Add a matching entry in <code>posts/posts.json</code>.</li>
+<li>Run <code>npm run build</code> to compile clean static HTML files!</li>
+</ol>
+<hr>
+<h2>5. Header &amp; Inline Images</h2>
+<p>Below is an example of an inline image embed with alt text:</p>
+<p><img src="../../../../assets/images/header-placeholder.svg" alt="Developer Header Placeholder"></p>
+<hr>
+<h2>Conclusion</h2>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>
