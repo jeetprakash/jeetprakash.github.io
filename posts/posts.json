@@ -1,48 +1,91 @@
 [
   {
-    "slug": "sample-lorem-ipsum-post",
-    "title": "Lorem Ipsum: A Comprehensive Developer Post Guide",
-    "date": "2026-07-28",
-    "updated": "2026-07-28",
-    "preface": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. A complete reference guide demonstrating all metadata fields, tags, code syntax highlighting, blockquotes, and markdown elements that can be copied for future posts.",
+    "slug": "getting-started-with-mqtt",
+    "title": "Getting Started with MQTT",
+    "date": "2020-06-06",
+    "preface": "The MQTT protocol is a lightweight protocol that enables small IoT devices to communicate using publish and subscribe model.",
     "tags": [
-      "devMusings",
-      "devRants",
-      "javascript",
-      "webdev",
-      "tutorial"
+      "mqtt",
+      "iot",
+      "eclipse-mosquitto",
+      "pub-sub"
     ],
-    "headerImage": "assets/images/header-placeholder.svg",
-    "file": "posts/2026/07/sample-lorem-ipsum-post/sample-lorem-ipsum-post.md",
-    "url": "posts/2026/07/sample-lorem-ipsum-post/"
+    "headerImage": "posts/2020/06/getting-started-with-mqtt/louis-reed-zDxlNcdUzxk-unsplash.jpg",
+    "file": "posts/2020/06/getting-started-with-mqtt/getting-started-with-mqtt.md",
+    "url": "posts/2020/06/getting-started-with-mqtt/"
   },
   {
-    "slug": "welcome-to-my-dev-blog",
-    "title": "Welcome to My Developer Blog & Portfolio",
-    "date": "2026-07-20",
-    "updated": "2026-07-21",
-    "preface": "Welcome to my personal developer hub hosted on GitHub Pages! Here I share insights on software engineering, web performance, dev musings, and project showcases.",
+    "slug": "what-is-application-scalability",
+    "title": "What is Application Scalability?",
+    "date": "2020-05-30",
+    "preface": "What to do when your application starts trending and then drowning in a huge load?",
     "tags": [
-      "devMusings",
-      "announcement",
-      "github-pages"
-    ],
-    "headerImage": "assets/images/header-placeholder.svg",
-    "file": "posts/2026/07/welcome-to-my-dev-blog/welcome-to-my-dev-blog.md",
-    "url": "posts/2026/07/welcome-to-my-dev-blog/"
-  },
-  {
-    "slug": "reflections-on-modern-frontend-bloat",
-    "title": "Reflections on Modern Frontend Over-Engineering",
-    "date": "2026-07-15",
-    "preface": "A frank discussion about the unnecessary complexity in modern web apps, the power of vanilla JavaScript, and why fast static sites offer superior user experiences.",
-    "tags": [
-      "devRants",
+      "scalability",
       "architecture",
-      "webdev"
+      "horizontal scaling",
+      "vertical scaling"
     ],
-    "headerImage": "assets/images/header-placeholder.svg",
-    "file": "posts/2026/07/reflections-on-modern-frontend-bloat/reflections-on-modern-frontend-bloat.md",
-    "url": "posts/2026/07/reflections-on-modern-frontend-bloat/"
+    "headerImage": null,
+    "file": "posts/2020/05/what-is-application-scalability/what-is-application-scalability.md",
+    "url": "posts/2020/05/what-is-application-scalability/"
+  },
+  {
+    "slug": "embedded-h2-database-with-spring-boot-application",
+    "title": "Embedded H2 Database with Spring Boot Application",
+    "date": "2020-04-26",
+    "preface": "Using H2 database as an embedded DB for java based desktop applications",
+    "tags": [
+      "h2",
+      "spring boot",
+      "database",
+      "embedded"
+    ],
+    "headerImage": null,
+    "file": "posts/2020/04/embedded-h2-database-with-spring-boot-application/embedded-h2-database-with-spring-boot-application.md",
+    "url": "posts/2020/04/embedded-h2-database-with-spring-boot-application/"
+  },
+  {
+    "slug": "getting-started-with-hibernate",
+    "title": "Getting Started With Hibernate",
+    "date": "2020-04-26",
+    "preface": "Setting up a simple Hibernate project without using any web framework",
+    "tags": [
+      "hibernate",
+      "java",
+      "database"
+    ],
+    "headerImage": null,
+    "file": "posts/2020/04/getting-started-with-hibernate/getting-started-with-hibernate.md",
+    "url": "posts/2020/04/getting-started-with-hibernate/"
+  },
+  {
+    "slug": "no-xml-spring-and-hibernate-integration",
+    "title": "No XML Spring and Hibernate Integration",
+    "date": "2020-04-26",
+    "preface": "Creating an end to end Spring Hibernate application without using any XML configuration",
+    "tags": [
+      "hibernate",
+      "spring",
+      "java",
+      "database"
+    ],
+    "headerImage": null,
+    "file": "posts/2020/04/no-xml-spring-and-hibernate-integration/no-xml-spring-and-hibernate-integration.md",
+    "url": "posts/2020/04/no-xml-spring-and-hibernate-integration/"
+  },
+  {
+    "slug": "why-design-patterns",
+    "title": "Why Design Patterns?",
+    "date": "2020-04-26",
+    "preface": "Why should we care about using design patterns in our projects?",
+    "tags": [
+      "design patterns",
+      "software",
+      "design",
+      "patterns"
+    ],
+    "headerImage": null,
+    "file": "posts/2020/04/why-design-patterns/why-design-patterns.md",
+    "url": "posts/2020/04/why-design-patterns/"
   }
 ]

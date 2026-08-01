@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embedded H2 Database with Spring Boot Application | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Using H2 database as an embedded DB for java based desktop applications">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Embedded H2 Database with Spring Boot Application | jeetprakash">
+  <meta property="og:description" content="Using H2 database as an embedded DB for java based desktop applications">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Embedded H2 Database with Spring Boot Application</h1>
+          <div class="post-meta-bar">
+            <span>Published: Apr 26, 2020</span>
+            
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/h2/" class="tag-badge">#h2</a> <a href="../../../../tag/spring boot/" class="tag-badge">#spring boot</a> <a href="../../../../tag/database/" class="tag-badge">#database</a> <a href="../../../../tag/embedded/" class="tag-badge">#embedded</a>
+            </div>
+          </div>
+          <div class="post-preface-box">Using H2 database as an embedded DB for java based desktop applications</div>
+        </header>
+        
+        <div class="post-content">
+          <p>It’s a well known fact that when we are building a web application it is nearly impossible to do away with some form of data storage. There&#39;s got to be a database, relational or non-relational, where we need to store the business data to be retrieved and used later. Desktop applications too might require some useful data to be be stored locally like application settings, cached data from servers etc.</p>
+<p>H2 is one of the lightweight and open source relational database management system written in java and can be easily embedded in java applications or run in client server mode. In this post we are going to use H2 database embedded in a Spring Boot application. And for the sake simplicity we will only creating a dummy application setting record on out embedded H2 database and then retrieving the same record. So let’s begin!</p>
+<h2>Setting up Spring Boot project</h2>
+<p>Setting up a Spring Boot project is quite easy. Head to <a href="https://start.spring.io/">Spring Initializr</a> website and fill in the appropriate details on left under &quot;Project Metadata&quot;. Under &quot;Dependencies&quot; fill in H2 and JPA as dependencies and hit &quot;Generate Project&quot;. This will download a preconfigured spring boot project that we can open with our favourite IDE.</p>
+<p><img src="./img01.png" alt="Spring Initializr" title="Generating Project from Spring Initializr"></p>
+<p>Once we have our initial project setup with IDE, we can start adding more details on it.</p>
+<h2>Adding JPA Repository and Entity</h2>
+<p>Next up is adding database Entity and corresponding Spring Data JPA Repository to do CRUD operation on that repository. Since we have decided to save application settings into embedded H2 database we would need to create an entity class for Application Settings.</p>
+<pre><code class="language-java">package com.jeetprksh.h2.boot.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class ApplicationSetting {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String userEmail;
+    private boolean cachingEnabled;
+
+    ApplicationSetting() {
+
+    }
+
+    public ApplicationSetting(String userEmail, boolean cachingEnabled) {
+        this.userEmail = userEmail;
+        this.cachingEnabled = cachingEnabled;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;ApplicationSetting{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, userEmail=&#39;&quot; + userEmail + &#39;\&#39;&#39; +
+                &quot;, cachingEnabled=&quot; + cachingEnabled +
+                &#39;}&#39;;
+    }
+}
+</code></pre>
+<p>And declare a Spring Data Repository interface.</p>
+<pre><code class="language-java">package com.jeetprksh.h2.boot.dao;
+
+import com.jeetprksh.h2.boot.entity.ApplicationSetting;
+import org.springframework.data.repository.CrudRepository;
+
+public interface AppSettingRepository extends CrudRepository&lt;ApplicationSetting, Integer&gt; {
+}
+</code></pre>
+<p>Now we need to Autowire this repository and do the saving and fetching of application settings.</p>
+<pre><code class="language-java">package com.jeetprksh.h2.boot.app;
+
+import com.jeetprksh.h2.boot.dao.AppSettingRepository;
+import com.jeetprksh.h2.boot.entity.ApplicationSetting;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+import java.util.logging.Logger;
+
+@SpringBootApplication(scanBasePackages = &quot;com.jeetprksh.h2.boot&quot;)
+@EnableJpaRepositories(&quot;com.jeetprksh.h2.boot&quot;)
+@EntityScan(&quot;com.jeetprksh.h2.boot&quot;)
+public class Application {
+
+    private static Logger logger = Logger.getLogger(Application.class.getName());
+
+    @Autowired
+    private static AppSettingRepository repository;
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+        repository.save(new ApplicationSetting(&quot;abc@def.ghi&quot;, true));
+        repository.findAll().forEach(setting -&gt; {
+            logger.info(setting.toString());
+        });
+    }
+
+    @Autowired
+    public void setRepository(AppSettingRepository repository) {
+        Application.repository = repository;
+    }
+}
+</code></pre>
+<p><strong>Note:</strong> I decided to add/retrieve the settings in the configuration file itself, but it would have been better off in an appropriate service.</p>
+<h2>Setting Application Properties</h2>
+<p>Our application would require following properties:</p>
+<pre><code class="language-properties"># Datasource
+spring.datasource.url=jdbc:h2:file:~/embedded-db
+spring.datasource.username=sa
+spring.datasource.password=
+spring.datasource.driver-class-name=org.h2.Driver
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+</code></pre>
+<ul>
+<li><code>Spring.datasource.url</code>: Here we give the connection URL to the database. Since we are using embedded H2 database which saves all of its data in local file system we will be giving in the path to the file which will be used to store data. In our case this file will be in user’s home directory.</li>
+<li><code>Spring.datasource.username</code>: The user name for H2 database.</li>
+<li><code>Spring.datasource.password</code>: Password for database, by default it does not have one.</li>
+<li><code>Spring.datasource.driver-class-name</code>: The driver class that would be used.</li>
+<li><code>Spring.jpa.hibernate.ddl-auto</code>: Setting this property to “update” will enable application to use existing database and not drop the database on each startup.</li>
+</ul>
+<h2>Running the Project</h2>
+<p>There are numerous ways to run a spring boot project. Let’s do it with creating executable jar with maven, following commands would do it:</p>
+<pre><code class="language-sh">mvn package
+cd .\target\
+java -jar .\h2-springboot-embedded-0.0.1-SNAPSHOT.jar
+</code></pre>
+<p><img src="./img02.png" alt="Running the Project" title="Running the executable jar"></p>
+<p>Notice that after running this application a file will be created in user home directory with name embedded-db.mv.db which will be having our database schema and all the records we will be saving into it.</p>
+<h2>Code</h2>
+<p>All the working code for this project is available on this <a href="https://github.com/jeetprksh/h2-springboot-embedded">github</a> repository.</p>
+<h2>Useful Links</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/H2_(DBMS)">H2 DBMS</a></li>
+<li><a href="http://www.h2database.com/html/main.html">http://www.h2database.com/html/main.html</a></li>
+<li><a href="https://start.spring.io/">https://start.spring.io/</a></li>
+</ul>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

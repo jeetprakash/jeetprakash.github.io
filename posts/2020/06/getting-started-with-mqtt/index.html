@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started with MQTT | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="The MQTT protocol is a lightweight protocol that enables small IoT devices to communicate using publish and subscribe model.">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Getting Started with MQTT | jeetprakash">
+  <meta property="og:description" content="The MQTT protocol is a lightweight protocol that enables small IoT devices to communicate using publish and subscribe model.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Getting Started with MQTT</h1>
+          <div class="post-meta-bar">
+            <span>Published: Jun 6, 2020</span>
+            
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/mqtt/" class="tag-badge">#mqtt</a> <a href="../../../../tag/iot/" class="tag-badge">#iot</a> <a href="../../../../tag/eclipse-mosquitto/" class="tag-badge">#eclipse-mosquitto</a> <a href="../../../../tag/pub-sub/" class="tag-badge">#pub-sub</a>
+            </div>
+          </div>
+          <div class="post-preface-box">The MQTT protocol is a lightweight protocol that enables small IoT devices to communicate using publish and subscribe model.</div>
+        </header>
+        
+      <img src="../../../../posts/2020/06/getting-started-with-mqtt/louis-reed-zDxlNcdUzxk-unsplash.jpg" alt="Getting Started with MQTT" class="post-header-img" onerror="this.style.display='none'"/>
+    
+        <div class="post-content">
+          <p>MQTT is a light-weight publish and subscribe protocol which allows low energy devices to exchange messages among each other. It is a simple messaging protocol design for resource constrained devices having low bandwidth. And hence it has found wide adoption on devices for Internet of Things (IoT) as it enables the IoT devices to receive control commands to do various things like turning the lights on or off.</p>
+<p>There are many brokers available that implement MQTT protocol. I will be using Mosquitto Broker for the purpose of this and future posts.</p>
+<h2>Setting up Mosquitto MQTT Broker</h2>
+<p>Head to the official <a href="https://mosquitto.org/download/">Mosquitto Downloads</a> page for installing MQTT broker on your Windows or Linux machine. Or if you are more comfortable with docker you can also download and run the <a href="https://hub.docker.com/_/eclipse-mosquitto">official docker image</a> from Docker Hub as well.</p>
+<p><code>docker run -it -p 1883:1883 -p 9001:9001 eclipse-mosquitto:latest</code></p>
+<p>This command will download the eclipse-mosquitto image and start the container which will listen on port 1883 for incoming connections.</p>
+<h2>Connecting to Mosquitto MQTT Broker</h2>
+<p>Now that we have set up the Mosquitto MQTT Broker we are ready to publish messages to it. When we install the Mosquitto broker from its official downloads page it installs the CLI based MQTT client as well which allows us to publish messages and subscribe to the Mosquitto MQTT Broker.</p>
+<p>With the following command we can subscribe to the broker:</p>
+<p><code>&gt; mosquitto_sub -t mqtt/test</code></p>
+<p>And to publish the message to broker we can use this command:</p>
+<p><code>&gt; mosquitto_pub -t mqtt/test -m &quot;Hello MQTT&quot;</code></p>
+<p>In both of the above commands we have used <code>-t</code> flag to specify which of the topics to subscribe and publish to. By default both commands will try to find the broker at localhost, if we want the clients to connect to a broker located somewhere else we can use <code>-h</code> flag for that. Also the message to be published can be specified by <code>-m</code> flag.</p>
+<p>And as soon as we publish a message on terminal running publish client we see the same message appear on the terminal running subscriber client.</p>
+<p><img src="./mosquitto-subscribe.png" alt="Subscribing to Broker" title="Subscribing to a topic on Mosquitto Broker"></p>
+<p><img src="./mosquitto-publish.png" alt="Publishing to Broker" title="Publishing to a topic on Mosquitto Broker"></p>
+<p>There is a lot more to MQTT that I have not covered in this post like Topic Levels, Message Encryption, Message Retention and much more. But these would surely be the topics for future posts. So stay tuned!</p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Getting Started With Hibernate | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Setting up a simple Hibernate project without using any web framework">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Getting Started With Hibernate | jeetprakash">
+  <meta property="og:description" content="Setting up a simple Hibernate project without using any web framework">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Getting Started With Hibernate</h1>
+          <div class="post-meta-bar">
+            <span>Published: Apr 26, 2020</span>
+            
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/hibernate/" class="tag-badge">#hibernate</a> <a href="../../../../tag/java/" class="tag-badge">#java</a> <a href="../../../../tag/database/" class="tag-badge">#database</a>
+            </div>
+          </div>
+          <div class="post-preface-box">Setting up a simple Hibernate project without using any web framework</div>
+        </header>
+        
+        <div class="post-content">
+          <p>Hibernate is one of the most famous Object-Relational Mapping (ORM) tool that allows a developer to easily map specialised Java objects, known as Entities, to database tables while also enabling him/her to create new rows on database tables and/or update the existing ones via those Java objects. This capability greatly reduces the development time as now we don’t have to take care of each and every intricate detail about how the data is being created, updated and deleted on the database. And it need not saying that an awesome framework like Hibernate provides a lot more than just that.</p>
+<p>In this post we will be setting up a simple Java project to get started with Hibernate. But we will not be using a Web MVC framework like Spring on top of Hibernate because using any other framework will be a distraction for understanding Hibernate itself. So we will be creating a standalone Hibernate application and use JUnit for unit testing each Hibernate feature we learn. As our first example we will be inserting a record on User table in a local MySQL server. So lets get started!</p>
+<h2>Create a Maven Project</h2>
+<p>Start by creating a maven project on your favourite IDE and edit the pom.xml file to have the following Hibernate, JUnit and MySQL (since we are using a MySQL database) dependencies. The final pom.xml file would look like this:</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+  
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;com.jeetprksh&lt;/groupId&gt;
+  &lt;artifactId&gt;hibernate-examples&lt;/artifactId&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;name&gt;hibernate-examples&lt;/name&gt;
+
+  &lt;dependencies&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;junit&lt;/groupId&gt;
+      &lt;artifactId&gt;junit&lt;/artifactId&gt;
+      &lt;version&gt;4.11&lt;/version&gt;
+      &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+      &lt;groupId&gt;mysql&lt;/groupId&gt;
+      &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+      &lt;version&gt;8.0.11&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+      &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
+      &lt;artifactId&gt;hibernate-core&lt;/artifactId&gt;
+      &lt;version&gt;5.2.10.Final&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+
+&lt;/project&gt;
+</code></pre>
+<h2>Configuring Hibernate</h2>
+<p>Any Hibernate application would want minimal configuration that tells it what database to use and where to look for it. We configure all of that information in <code>hibernate.cfg.xml</code> file:</p>
+<pre><code class="language-xml">&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf-8&#39;?&gt;
+&lt;!DOCTYPE hibernate-configuration PUBLIC
+        &quot;-//Hibernate/Hibernate Configuration DTD//EN&quot;
+        &quot;http://hibernate.sourceforge.net/hibernate-configuration-5.0.dtd&quot;&gt;
+
+&lt;hibernate-configuration&gt;
+    &lt;session-factory&gt;
+        &lt;property name=&quot;hibernate.connection.driver_class&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;
+        &lt;property name=&quot;hibernate.connection.url&quot;&gt;jdbc:mysql://localhost:3306/testDB&lt;/property&gt;
+        &lt;property name=&quot;hibernate.connection.username&quot;&gt;root&lt;/property&gt;
+        &lt;property name=&quot;hibernate.connection.password&quot;&gt;qwerty123&lt;/property&gt;
+        &lt;property name=&quot;hibernate.connection.pool_size&quot;&gt;10&lt;/property&gt;
+        &lt;property name=&quot;show_sql&quot;&gt;true&lt;/property&gt;
+        &lt;property name=&quot;dialect&quot;&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;
+        &lt;property name=&quot;hibernate.current_session_context_class&quot;&gt;thread&lt;/property&gt;
+
+        &lt;mapping class=&quot;com.jeetprksh.hibernate.entity.User&quot; /&gt;
+    &lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;
+</code></pre>
+<p>Apart from having database connection details it is also having details for mapped Entities. We need to keep this file in maven’s resource directory so that we have it on classpath. Now in our Java application we will read out this configuration to create an instance of SessionFactory which will be used to create and manage Session which in turn provides a CRUD interface for mapped Entities. The overall Java configuration class would be:</p>
+<pre><code class="language-java">public class HibernateConfig {
+
+  private static final SessionFactory sessionFactory;
+
+  private static ServiceRegistry serviceRegistry;
+
+  static {
+    try {
+      StandardServiceRegistry standardRegistry =
+              new StandardServiceRegistryBuilder().configure(&quot;hibernate.cfg.xml&quot;).build();
+      Metadata metaData = new MetadataSources(standardRegistry).getMetadataBuilder().build();
+      sessionFactory = metaData.getSessionFactoryBuilder().build();
+    } catch (Exception e) {
+      e.printStackTrace();
+      throw new ExceptionInInitializerError(e);
+    }
+  }
+
+  public static SessionFactory getSessionFactory() {
+    return sessionFactory;
+  }
+}
+</code></pre>
+<h2>Entity Class</h2>
+<p>The entity class is a special Java class which represents a database table in our Java application and any CRUD operation that we need to on that database table would be done through this entity class. Since we need to insert a record into user table we will be creating a User entity class that would look like this:</p>
+<pre><code class="language-java">@Entity
+public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
+
+  private String firstName;
+
+  private String lastName;
+
+  private int age;
+
+  public User(String firstName, String lastName, int age) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+  }
+
+  // getters and setters
+  
+}
+</code></pre>
+<p>Notice that our User class is using following Hibernate annotations:</p>
+<ul>
+<li>A class level annotation <code>@Entity</code> which makes it an Entity mapped with the table having similar name. If name of entity class and that of table needs to differ then we can specify table name in optional annotation parameter as <code>@Entity(name = &quot;user_table&quot;)</code>.</li>
+<li>With <code>@Id</code> annotation on id attribute we are making it the unique identifier for User entity.</li>
+<li><code>@GeneratedValue</code> decides how the unique identifier would be generated while inserting new records into User table.</li>
+</ul>
+<h2>Creating the DAO Layer</h2>
+<p>Data Access Object would be the single point of contact for whole application for updating and querying records to and from database. In our case the unit test cases will be using these DAOs for same. Since we need to insert a user entity the corresponding <code>UserDao</code> will look like this:</p>
+<pre><code class="language-java">public class UserDaoImpl extends CommonDaoImpl implements UserDAO {
+
+  @Override
+  public int createUser(User user) throws HibernateException {
+    return super.saveEntity(user);
+  }
+
+}
+</code></pre>
+<p>Notice that <code>UserDao</code> will only be having data access methods specific to User entity, so if we are having another entity, say <code>Address</code>, it will require its own DAO class, <code>AddressDao</code>. But these DAOs are dependent on more generic <code>CommonDao</code> which would be communicating directly with Hibernate for saving, querying and updating entities.</p>
+<pre><code class="language-java">public class CommonDaoImpl {
+
+  private SessionFactory sessionFactory;
+  private Session session;
+
+  public CommonDaoImpl() {
+    this.sessionFactory = HibernateConfig.getSessionFactory();
+    this.session = sessionFactory.getCurrentSession();
+  }
+
+  protected int saveEntity(Object obj) throws HibernateException {
+    Transaction transaction = session.beginTransaction();
+    int id = (Integer) session.save(obj);
+    transaction.commit();
+    return id;
+  }
+}
+</code></pre>
+<p>Each method in this DAO would be responsible for starting a transaction on an instance of <code>Session</code> object, save the Entity on same <code>Session</code> instance and then commit the transaction.</p>
+<h2>Putting It All Together</h2>
+<p>Finally, we have configured and implemented all the necessary things and now it is time we put in the final piece to see it all in action, the unit test.</p>
+<pre><code class="language-java">public class Tests {
+
+  private static final Logger logger = Logger.getLogger(Tests.class.getName());
+
+  private UserDAO userDao;
+
+  public Tests() {
+    this.userDao = new UserDaoImpl();
+  }
+
+  @Test
+  public void testInsertUser() {
+    User user = new User(&quot;Robb&quot;, &quot;Stark&quot;, 17);
+    Integer id = (Integer) userDao.createUser(user);
+    assertTrue(id instanceof Integer);
+  }
+}
+</code></pre>
+<p>Notice that for unit testing the insert User our unit test case is first making the User object and giving it to the DAO layer to get it inserted into database. The DAO layer will return the unique identifier of the record just inserted which we will use as the pass/fail criteria for this unit test.</p>
+<h2>Code</h2>
+<p>Working code has been committed on <a href="https://github.com/jeetprksh/hibernate-examples">this</a> github repository.</p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

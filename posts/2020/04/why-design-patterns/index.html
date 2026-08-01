@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Design Patterns? | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Why should we care about using design patterns in our projects?">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Why Design Patterns? | jeetprakash">
+  <meta property="og:description" content="Why should we care about using design patterns in our projects?">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Why Design Patterns?</h1>
+          <div class="post-meta-bar">
+            <span>Published: Apr 26, 2020</span>
+            
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/design patterns/" class="tag-badge">#design patterns</a> <a href="../../../../tag/software/" class="tag-badge">#software</a> <a href="../../../../tag/design/" class="tag-badge">#design</a> <a href="../../../../tag/patterns/" class="tag-badge">#patterns</a>
+            </div>
+          </div>
+          <div class="post-preface-box">Why should we care about using design patterns in our projects?</div>
+        </header>
+        
+        <div class="post-content">
+          <p><img src="https://awoiaf.westeros.org/thumb.php?f=King%27s_Landing.jpg&width=800" alt="Kings Landing" title="You must be wondering what Kings Landing has to do with Design Patterns"></p>
+<p>Somewhere in <a href="https://awoiaf.westeros.org/index.php/King%27s_Landing">Kings Landing</a>, <a href="https://awoiaf.westeros.org/index.php/Tyrion_Lannister">Tyrion</a> and <a href="https://awoiaf.westeros.org/index.php/Bronn">Bronn</a> were discussing their strategy for an upcoming Software Design tourney.</p>
+<blockquote>
+<p><strong>Tyrion:</strong> Ser Bronn of Blackwater! I am sure you are all prepared for the upcoming tourney.<br><br><strong>Bronn:</strong> Oh! I will be surprising all the knights with this new thing I am working on.<br><br><strong>Tyrion:</strong> Just like you surprised Stannis at Blackwater? I would want to know more about that!<br><br><strong>Bronn:</strong> So there are these special client object that wants to get some task done, you know like cleaning a castle or opening the gates. And then there are some command object that know how to execute those task on other set of objects, so for example, OpenGateCommand will do open gate operation on Gate object. And you know what? That client object would not care about how the gate is opened.<br><br><strong>Tyrion:</strong> Excellent! I am sure you are going to topple a knight or two with this kind of design. It reminded me of old days when I was Acting Hand of The King.<br><br><strong>Bronn:</strong> But I wish I could have a name for this software design. Who’s going to wait for me to explain all this?</p>
+</blockquote>
+<p>It is evident from above conversation that there is nothing called Software Design Patterns in Westeros. What Bronn was trying to convey to Tyrion can be easily termed as Command Pattern in our world, but since neither of them know what Software Design Patterns are they will always be having a hard time explaining things related to software design to each other.</p>
+<p>An excerpt from wikipedia on Design Patterns:</p>
+<blockquote>
+<p>&quot;A software design pattern is a general, reusable solution to a commonly occurring problem within a given context in software design. It is not a finished design that can be transformed directly into source or machine code. It is a description or template for how to solve a problem that can be used in many different situations.&quot;</p>
+</blockquote>
+<p>So why should we care about using Design Patterns in our projects?</p>
+<h2>Shared Vocabulary</h2>
+<p>Design patterns adds on to a developer’s vocabulary so that he/she can easily communicate their ideas with fellow developers by saying more with less words. Other developers will know quickly what is being conveyed. For example, if both Tyrion and Bronn had a common understanding of Command Pattern, Bronn wouldn’t need to explain each and every aspect of what he is trying to do.</p>
+<h2>Avoid Reinventing the Wheel</h2>
+<p>Design Patterns are proven techniques and solutions for commonly recurring problems that are developed from hard experience of other developers, providing us with ready-to-use design templates. And that really helps us to design and implement flexible and maintainable solutions without reinventing the wheel.</p>
+<h2>Collection of Best Design Practices</h2>
+<p>The basic principles of object oriented programming namely Encapsulation, Abstraction, Polymorphism and Inheritance while these are perfect tools for designing software systems but doing so with the understanding of design patterns will further enhance them with additional design principles like &quot;composition over inheritance&quot;, &quot;encapsulate what varies&quot; etc for creating flexible and future proof systems.</p>
+<h2>Helps you to stay &quot;In Design&quot;</h2>
+<p>Design patterns helps developers keep the discussion at design level and avoid the minute details about classes, objects, functions and methods. We should only care about these details during implementation phase and not in design phase.</p>
+<h2>Used by Frameworks and Libraries</h2>
+<p>It&#39;s not just that only we can leverage the power of design patterns to our advantage, but the famous frameworks and libraries are also using them to make our life simpler. For eg. JdbcTemplate and JmsTemplate in Spring framework are good examples of Template Pattern, also MapMaker in Guava library and StringBuilder in Java are perfect examples of Builder Pattern.</p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

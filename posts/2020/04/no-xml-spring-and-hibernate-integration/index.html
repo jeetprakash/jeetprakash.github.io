@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No XML Spring and Hibernate Integration | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Creating an end to end Spring Hibernate application without using any XML configuration">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="No XML Spring and Hibernate Integration | jeetprakash">
+  <meta property="og:description" content="Creating an end to end Spring Hibernate application without using any XML configuration">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">No XML Spring and Hibernate Integration</h1>
+          <div class="post-meta-bar">
+            <span>Published: Apr 26, 2020</span>
+            
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/hibernate/" class="tag-badge">#hibernate</a> <a href="../../../../tag/spring/" class="tag-badge">#spring</a> <a href="../../../../tag/java/" class="tag-badge">#java</a> <a href="../../../../tag/database/" class="tag-badge">#database</a>
+            </div>
+          </div>
+          <div class="post-preface-box">Creating an end to end Spring Hibernate application without using any XML configuration</div>
+        </header>
+        
+        <div class="post-content">
+          <p>Back in the pre Spring 3.1 days, we had to configure each and every bean into one of the spring configuration files which only happens to be an XML. And so if we were building a web application with Spring which is also using a relational database to store all its data, we needed to create a bean tag into one of those spring configuration XML files for reading out database connection properties to create a data source bean, which we then feed as a parameter to yet another bean tag to create a database session factory bean.</p>
+<p>In this post we will be building a small restful web application with Spring MVC integrated with Hibernate to fetch the user record from MySQL database server and display it as a JSON response on the browser, without writing a single XML file. Furthermore we will also be doing away with tomcat’s web.xml leveraging latest Servlet 3.1 APIs and doing all of that configuration in our Java classes. So what are we waiting for!</p>
+<h2>Configuring Spring and Hibernate Integration</h2>
+<p>We can start by making a maven project with webapp archetype into any of our favourite IDE. And in its <code>pom.xml</code> file we can give all the dependencies as per <a href="https://gist.github.com/jeetprksh/486bb92eac1b6c9f4043fa8666060c5e">this gist</a>. Notice that as one of the properties we have to set <code>failOnMissingWebXml</code> to be false so that we can safely delete <code>web.xml</code> file.</p>
+<p>Now we can start with configuring DispatcherServlet for our Spring MVC application which we can do in a single class:</p>
+<pre><code class="language-java">public class AppConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+  @Override
+  protected Class&lt;?&gt;[] getRootConfigClasses() {
+    return new Class[] { HibernateConfig.class };
+  }
+
+  @Override
+  protected Class&lt;?&gt;[] getServletConfigClasses() {
+    return new Class[] { WebMvcConfig.class };
+  }
+
+  @Override
+  protected String[] getServletMappings() {
+    return new String[] { &quot;/&quot; };
+  }
+
+}
+</code></pre>
+<p>A couple of points to note here:</p>
+<ul>
+<li>This class is extending the <code>AbstractAnnotationConfigDispatcherServletInitializer</code> which automatically configure <code>DispatcherServlet</code> and the Spring application context.</li>
+<li>In <code>getServletMappings()</code> methods we return one or more paths that <code>DispatcherServlet</code> will be mapped to.</li>
+<li>In <code>getServletConfigClasses()</code> we would be returning the <code>@Configuration</code> annotated classes that are having beans from which <code>DispatcherServlet</code> will be loading its application context.</li>
+<li>Classes returned from <code>getRootConfigClasses()</code> will be used to configure other application contexts that are created by <code>ContextLoaderListener</code> and are shared among them.</li>
+</ul>
+<p>This is all we need to configure our <code>DispatcherServlet</code>, now let&#39;s look into <code>HibernateConfig.java</code> and <code>WebMvcConfig.java</code>. In <code>HibernateConfig.java</code> we need to create all the beans that are necessary for handling interaction with database via Hibernate.</p>
+<pre><code class="language-java">@Configuration
+@EnableTransactionManagement
+public class HibernateConfig {
+
+  @Bean
+  public LocalSessionFactoryBean getSessionFactory() throws PropertyVetoException {
+    LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
+
+    Properties hibernateProperties = new Properties();
+    hibernateProperties.put(&quot;hibernate.dialect&quot;, &quot;org.hibernate.dialect.MySQLDialect&quot;);
+    hibernateProperties.put(&quot;hibernate.show_sql&quot;, &quot;true&quot;);
+
+    bean.setHibernateProperties(hibernateProperties);
+    bean.setDataSource(getDataSource());
+    bean.setPackagesToScan(&quot;com.spring5.app.dto&quot;);
+    return bean;
+  }
+
+  @Bean
+  public ComboPooledDataSource getDataSource() throws PropertyVetoException {
+    ComboPooledDataSource dataSource = new ComboPooledDataSource();
+
+    dataSource.setDriverClass(&quot;com.mysql.cj.jdbc.Driver&quot;);
+    dataSource.setJdbcUrl(&quot;jdbc:mysql://localhost:3306/app-db?useSSL=false&quot;);
+    dataSource.setUser(&quot;root&quot;);
+    dataSource.setPassword(&quot;qwerty123&quot;);
+    dataSource.setAcquireIncrement(10);
+    dataSource.setIdleConnectionTestPeriod(0);
+    dataSource.setInitialPoolSize(5);
+    dataSource.setMaxIdleTime(0);
+    dataSource.setMaxPoolSize(50);
+    dataSource.setMaxStatements(100);
+    dataSource.setMinPoolSize(5);
+
+    return dataSource;
+  }
+
+  @Bean
+  public JdbcTemplate getJdbcTemplate() throws PropertyVetoException {
+    JdbcTemplate template = new JdbcTemplate();    	
+    template.setDataSource(getDataSource());    	
+    return template;
+  }
+
+  @Bean
+  public HibernateTransactionManager getTransactionManager() throws PropertyVetoException {
+    HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+    transactionManager.setSessionFactory(getSessionFactory().getObject());
+    return transactionManager;
+  }
+
+}
+</code></pre>
+<p>In <code>WebMvcConfig.java</code> we need to create web specific beans, so as we are creating restful endpoints we would need appropriate message converters that would be required to convert Java objects to their proper JSON representations.</p>
+<pre><code class="language-java">@Configuration
+@EnableWebMvc
+@ComponentScan(&quot;com.spring5.app&quot;)
+public class WebMvcConfig extends WebMvcConfigurationSupport {
+
+  @Override
+  public void configureMessageConverters(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters) {
+    converters.add(customJackson2HttpMessageConverter());
+    super.addDefaultHttpMessageConverters(converters);
+  }
+
+  @Bean
+  public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
+    MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    jsonConverter.setObjectMapper(objectMapper);
+    return jsonConverter;
+  }
+
+}
+</code></pre>
+<h2>Implementing REST and Persistence Layers</h2>
+<p>Now that we have configured all the important parts of our application we now need to implement a REST controller and corresponding Service and DAO that are quite straightforward.</p>
+<pre><code class="language-java">@RestController()
+@RequestMapping(&quot;user&quot;)
+public class UserController {
+
+  @Autowired
+  private UserService service;
+
+  @RequestMapping(value = &quot;{userId}&quot;, method = RequestMethod.GET)
+  public @ResponseBody ServerResponse getUser(@PathVariable(&quot;userId&quot;) Long userId) {
+    return this.service.getUser(userId);
+  }
+}
+</code></pre>
+<pre><code class="language-java">@Repository
+public class UserDaoImpl implements UserDao {
+    
+  @Autowired
+  private SessionFactory sessionFactory;
+
+  @Override
+  public UserDTO getUser(Long userId) {
+    TypedQuery&lt;UserDTO&gt; typedQuery = sessionFactory.getCurrentSession().createQuery(&quot;from UserDTO where id=&quot; + userId.toString());
+    return typedQuery.getSingleResult();
+  }
+
+}
+</code></pre>
+<p>And finally our service class is doing some mission critical stuff!</p>
+<pre><code class="language-java">@Service
+public class UserServiceImpl implements UserService {
+
+  @Autowired
+  private UserDao userDao;
+
+  @Override
+  @Transactional(readOnly = true)
+  public ServerResponse getUser(Long userId) {
+    ServerResponse response = new ServerResponse();
+
+    UserDTO dto = userDao.getUser(userId);
+    response.setUser(new User(dto.getFirstName() + &quot; &quot; + dto.getLastName(), 
+                        new Long(dto.getAge())));
+
+    return response;
+  }
+
+}
+</code></pre>
+<h2>Database schema</h2>
+<p>Lastly for the application to work we also need to create database schema in our MySQL server:</p>
+<pre><code class="language-sql">create table if not exists `users` (
+  `id`		int not null auto_increment,
+  `firstName`	varchar(20),
+  `lastName`	varchar(20),
+  `age`		int,
+  primary key (`id`)
+);
+insert into `users` values (1, &quot;john&quot;, &quot;doe&quot;, 29);
+</code></pre>
+<h2>Source Code</h2>
+<p>I have not put all of the code on this post, but you can check out the working project from <a href="https://github.com/jeetprksh/spring5-with-hibernate5">this github</a> repository.</p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>
