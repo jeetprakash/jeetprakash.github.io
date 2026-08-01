@@ -1,39 +1,137 @@
 {
   "name": "Jeet Prakash",
-  "title": "Software Engineer & System Architect",
-  "bio": "Passionate software engineer focused on building clean, performant web applications, developer tooling, and distributed systems. Advocate for clean code, flat aesthetics, and efficient developer workflows.",
-  "location": "India",
-  "github": "https://github.com/jeetprakash",
-  "email": "contact@jeetprakash.com",
+  "title": "Technical Lead Engineer | Distributed Systems & GenAI",
+  "bio": "Result-oriented Technical Lead Engineer with 12 years of overall IT experience specializing in full-stack enterprise application development. Proven track record of designing, architecting, and scaling high-volume backends using Java 21, Spring Boot, Microservices, Kafka, Redis, and cloud-native architectures. Adept at leading engineering teams, implementing Distributed Systems, AI/RAG chatbot solutions, and orchestrating complex third-party system integrations.",
+  "github": "https://github.com/jeetprksh",
+  "linkedin": "https://linkedin.com/in/jeetprakash/",
   "skills": [
-    "JavaScript / TypeScript",
-    "Node.js & Express",
-    "Frontend Frameworks & Vanilla Web",
-    "Python & Automation",
-    "Git & GitHub Actions",
-    "REST & GraphQL APIs",
-    "CSS3 Design Systems & Responsive Layouts",
-    "Software Architecture & Clean Code"
+    "Java 21",
+    "Spring Boot 3", 
+    "Spring Data JPA",
+    "Microservices",
+    "RESTful APIs",
+    "Distributed Systems",
+    "HLD/LLD",
+    "Retrieval-Augmented Generation (RAG)",
+    "LLMs (Claude)",
+    "Apache Kafka",
+    "JMS",
+    "Redis",
+    "InfluxDB", 
+    "Hazelcast",
+    "PostgreSQL", 
+    "MySQL", 
+    "MS SQL Server",
+    "TypeScript", 
+    "JavaScript", 
+    "ReactJS", 
+    "Angular 18",
+    "Docker",
+    "Jenkins", 
+    "GitHub Actions", 
+    "Nginx",
+    "gRPC",
+    "Gradle",
+    "Maven",
+    "Agile / Scrum & Jira"
   ],
   "experience": [
     {
-      "role": "Senior Software Engineer",
-      "company": "Tech Innovations Inc.",
-      "period": "2024 - Present",
-      "description": "Architecting scalable web solutions, optimizing frontend load performance by 40%, and mentoring engineering teams."
+      "role": "Technical Lead",
+      "period": "May 2022 – Present",
+      "project": "Low-Code Digital Lending & Customer Onboarding Platform (2022 – Present)",
+      "type": "Professional Project",
+      "techStack": [
+        "Java 21",
+        "Spring Boot 3",
+        "Spring Data JPA",
+        "Microservices",
+        "Apache Kafka",
+        "Redis",
+        "Hazelcast",
+        "Docker",
+        "Gradle",
+        "RAG",
+        "LLM (Claude)",
+        "ReactJS"
+      ],
+      "highlights": [
+        "Led an engineering team of 5 in developing a flagship low-code digital lending platform automating data extraction, multi-channel verification, and automated underwriting for financial institutions.",
+        "Modernized legacy Groovy/Grails architecture by decomposing it into a centralized orchestration layer and independently deployable microservices using modern Java and Spring Cloud, accelerating feature delivery and system scalability.",
+        "Designed and deployed a RAG-based AI chatbot using LLMs (Claude) to resolve loan applicants' queries regarding retail banking products.",
+        "Spearheaded design and execution of a Custom Message Service for REST API error-handling, reducing debugging time and standardizing error responses across consumer integrations.",
+        "Engineered an automated Loan Archival engine capable of executing data archiving based on dynamic, user-defined configurations, significantly reducing node memory requirements.",
+        "Led low-level technical design (LLD) and PR code reviews, maintaining strict clean code principles, architectural alignment, and comprehensive test coverage within an Agile/Scrum framework."
+      ]
     },
     {
-      "role": "Full Stack Developer",
-      "company": "Dev Solutions Hub",
-      "period": "2022 - 2024",
-      "description": "Built responsive single page applications, RESTful microservices, and automated CI/CD pipelines for cloud deployments."
-    }
-  ],
-  "education": [
+      "role": "Technical Lead",
+      "period": "May 2020 – May 2022",
+      "project": "Enterprise Connectors Platform (2020 – 2022)",
+      "type": "Professional Project",
+      "techStack": [
+        "Java 8",
+        "RESTful Web Services",
+        "Executor Framework",
+        "Multithreading",
+        "JSON",
+        "XSD/XML",
+        "Maven",
+        "GitHub Actions",
+        "Jenkins",
+        "Agile"
+      ],
+      "highlights": [
+        "Managed a team of 7 developers building pluggable Enterprise Connectors to extend integration capabilities across E-Commerce, CRM/ERP, ITSM, and Data Warehouse domains.",
+        "Gathered business requirements and translated complex use cases into scalable low-level technical design (LLD) specifications.",
+        "Utilized the Java Executor Framework to optimize multithreaded performance for high-throughput data synchronization pipelines.",
+        "Headed sprint planning, owned user story assignments, and drove daily standups to communicate clear progress metrics to stakeholders.",
+        "Established CI/CD workflows using GitHub Actions and Jenkins to automate connector verification and delivery."
+      ]
+    },
     {
-      "degree": "B.Tech in Computer Science & Engineering",
-      "institution": "University Institute of Technology",
-      "year": "2022"
+      "role": "Technical Lead / Senior Software Engineer",
+      "period": "Nov 2014 – April 2020",
+      "project": "Enterprise Application Integration Middleware (2014 – 2020)",
+      "type": "Professional Project",
+      "techStack": [
+        "Java 8",
+        "Spring 5",
+        "Hibernate 5",
+        "Angular 8",
+        "JSP",
+        "Microsoft SQL",
+        "InfluxDB",
+        "Apache Kafka",
+        "JMS",
+        "Octopus Deploy",
+        "ReactJS"
+      ],
+      "highlights": [
+        "Developed core RESTful services and business logic layer for an enterprise iPaaS product facilitating seamless data transformation across XML, JDBC, and Flat Files.",
+        "Successfully managed legacy UI migration, porting front-end modules from JSP to Angular 8.",
+        "Designed and implemented a real-time logging infrastructure powered by Apache Kafka and InfluxDB for live integration tracking."
+      ]
+    },
+    {
+      "role": "Technical Lead / Senior Software Engineer",
+      "period": "Nov 2014 – April 2020",
+      "project": "Geo-Fenced Social Networking Backend (2014 – 2020)",
+      "type": "Professional Project",
+      "techStack": [
+        "Core Java",
+        "Spring Framework",
+        "Hibernate",
+        "RESTful Web Services",
+        "PostgreSQL",
+        "JSON",
+        "Maven",
+        "Postman"
+      ],
+      "highlights": [
+        "Built back-end RESTful web services serving structured JSON data for mobile clients.",
+        "Implemented geo-fencing business logic to support anonymous location-based networking hotspots (TAN) within defined radii."
+      ]
     }
   ]
 }

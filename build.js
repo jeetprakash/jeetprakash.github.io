@@ -475,22 +475,60 @@ async function buildSite() {
   const rootPrefixPort = '../';
 
   const skillsHtml = (portData.skills || []).map(s => `<span class="skill-pill">${s}</span>`).join(' ');
-  const expHtml = (portData.experience || []).map(e => `
-    <div class="timeline-item">
-      <div class="timeline-role">${e.role}</div>
-      <div class="timeline-company">${e.company}</div>
-      <div class="timeline-period">${e.period}</div>
-      <p class="timeline-desc">${e.description}</p>
-    </div>
-  `).join('');
 
-  const eduHtml = (portData.education || []).map(ed => `
-    <div class="timeline-item">
-      <div class="timeline-role">${ed.degree}</div>
-      <div class="timeline-company">${ed.institution}</div>
-      <div class="timeline-period">${ed.year}</div>
-    </div>
-  `).join('');
+  const expHtml = (portData.experience || []).map(e => {
+    const companyHtml = e.company ? `<div class="timeline-company">${e.company}</div>` : '';
+    const typeClass = (e.type && e.type.toLowerCase().includes('professional')) ? 'badge-professional' : 'badge-personal';
+    const typeBadgeHtml = e.type ? `<span class="project-type-badge ${typeClass}">${e.type}</span>` : '';
+    const projectHtml = e.project ? `<div class="timeline-project" style="font-weight:700; color:var(--text-primary); font-size:1.05rem; margin-top:0.4rem; margin-bottom:0.25rem;">${e.project}</div>` : '';
+    const techHtml = (e.techStack && e.techStack.length > 0) 
+      ? `<div class="project-tech" style="margin-top:0.4rem; margin-bottom:0.6rem;">${e.techStack.map(t => `<span class="tech-tag">${t}</span>`).join(' ')}</div>` 
+      : '';
+    
+    let bodyContent = '';
+    if (Array.isArray(e.highlights) && e.highlights.length > 0) {
+      bodyContent = `<ul class="timeline-highlights" style="padding-left:1.25rem; margin-top:0.5rem; font-size:0.95rem; color:var(--text-secondary); line-height:1.6;">${e.highlights.map(h => `<li style="margin-bottom:0.4rem;">${h}</li>`).join('')}</ul>`;
+    } else if (e.description) {
+      bodyContent = `<p class="timeline-desc">${e.description}</p>`;
+    }
+
+    return `
+      <div class="timeline-item">
+        <div class="timeline-role">${e.role} ${typeBadgeHtml}</div>
+        ${companyHtml}
+        <div class="timeline-period">${e.period}</div>
+        ${projectHtml}
+        ${techHtml}
+        ${bodyContent}
+      </div>
+    `;
+  }).join('');
+
+  const githubSvg = `<svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>`;
+  const linkedinSvg = `<svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>`;
+
+  const metaItems = [];
+  if (portData.location) metaItems.push(`<span>📍 ${portData.location}</span>`);
+  if (portData.email) metaItems.push(`<span>✉️ <a href="mailto:${portData.email}">${portData.email}</a></span>`);
+  if (portData.github) metaItems.push(`<span><a href="${portData.github}" target="_blank" rel="noopener">${githubSvg} GitHub</a></span>`);
+  if (portData.linkedin) metaItems.push(`<span><a href="${portData.linkedin}" target="_blank" rel="noopener">${linkedinSvg} LinkedIn</a></span>`);
+
+  const metaHtml = metaItems.length > 0 ? `<div class="portfolio-meta">${metaItems.join('')}</div>` : '';
+
+  const eduSectionHtml = (portData.education && portData.education.length > 0) ? `
+      <div class="section-block">
+        <h2 class="section-heading">Education</h2>
+        <div class="timeline">
+          ${portData.education.map(ed => `
+            <div class="timeline-item">
+              <div class="timeline-role">${ed.degree}</div>
+              <div class="timeline-company">${ed.institution}</div>
+              <div class="timeline-period">${ed.year}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+  ` : '';
 
   const portContent = `
     <div class="portfolio-container">
@@ -498,11 +536,7 @@ async function buildSite() {
         <h1 class="portfolio-name">${portData.name}</h1>
         <div class="portfolio-role">${portData.title}</div>
         <p class="portfolio-bio">${portData.bio}</p>
-        <div class="portfolio-meta">
-          <span>📍 ${portData.location}</span>
-          <span>✉️ <a href="mailto:${portData.email}">${portData.email}</a></span>
-          <span>💻 <a href="${portData.github}" target="_blank" rel="noopener">GitHub Profile</a></span>
-        </div>
+        ${metaHtml}
       </div>
 
       <div class="section-block">
@@ -511,14 +545,11 @@ async function buildSite() {
       </div>
 
       <div class="section-block">
-        <h2 class="section-heading">Work Experience</h2>
+        <h2 class="section-heading">Work Experience & Key Projects</h2>
         <div class="timeline">${expHtml}</div>
       </div>
 
-      <div class="section-block">
-        <h2 class="section-heading">Education</h2>
-        <div class="timeline">${eduHtml}</div>
-      </div>
+      ${eduSectionHtml}
     </div>
   `;
 
