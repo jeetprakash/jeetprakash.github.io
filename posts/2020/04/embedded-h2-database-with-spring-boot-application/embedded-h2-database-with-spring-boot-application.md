@@ -1,6 +1,6 @@
 ---
 layout: default
-canonical_url: 'https://jeetprksh.com/post/embedded-h2-database-with-spring-boot-application/'
+canonical_url: 'https://jeetprakash.github.io/posts/2020/04/embedded-h2-database-with-spring-boot-application/'
 title: Embedded H2 Database with Spring Boot Application
 description: Using H2 database as an embedded DB for java based desktop applications
 tags: [h2, spring boot, database, embedded]

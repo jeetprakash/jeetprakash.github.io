@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Real-Time Chat Platform | Projects | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Full-stack real-time messaging platform with Spring Boot 3 WebSocket backend, Angular 19 web UI, and Docker Compose orchestration.">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="WebSocket Real-Time Chat Platform | Projects | jeetprakash">
+  <meta property="og:description" content="Full-stack real-time messaging platform with Spring Boot 3 WebSocket backend, Angular 19 web UI, and Docker Compose orchestration.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../" class="nav-link ">All Posts</a>
+      <a href="../../tags/" class="nav-link ">Tags</a>
+      <a href="../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../projects/" class="nav-link active">Projects</a>
+      <a href="../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../projects/" class="back-btn">&larr; Back to Projects</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">WebSocket Real-Time Chat Platform</h1>
+          <div class="post-meta-bar">
+            <span>Published: Aug 22, 2026</span>
+          </div>
+          <p class="post-preface-box">Full-stack real-time messaging platform with Spring Boot 3 WebSocket backend, Angular 19 web UI, and Docker Compose orchestration.</p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
+            <span class="skill-pill">Java 21</span> <span class="skill-pill">Spring Boot 3</span> <span class="skill-pill">WebSockets</span> <span class="skill-pill">Angular 19</span> <span class="skill-pill">TypeScript</span> <span class="skill-pill">Docker</span> <span class="skill-pill">Docker Compose</span> <span class="skill-pill">Nginx</span>
+          </div>
+          <div class="project-links" style="margin-top:1.25rem;"><a href="https://github.com/jeetprksh/websocket-chat" target="_blank" rel="noopener" class="btn-flat">GitHub Repository &rarr;</a></div>
+        </header>
+
+        <div class="post-content">
+          <h1>WebSocket Real-Time Chat Platform</h1>
+<p>A low-latency, bidirectional multi-client chat application implemetned with a <strong>Spring Boot 3 (Java 21)</strong> backend, an <strong>Angular 19</strong> single-page web application, and full <strong>Docker Compose</strong> container orchestration.</p>
+<p>The system demonstrates WebSocket lifecycle management, thread-safe concurrent session pooling, dynamic hostname resolution for containerized and LAN environments, and real-time active user presence tracking.</p>
+<hr>
+<h2>Demo</h2>
+<p>Following video demonstrats two browser sessions (<em>Frodo</em> and <em>Samwise</em>) authenticating and exchanging real-time chat messages bidirectionally:</p>
+<div style="margin: 1.5rem 0; text-align: center;">
+  <video controls style="max-width: 100%; width: 720px; border-radius: 8px; border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.06);" poster="">
+    <source src="./chat.mp4" type="video/mp4">
+    Your browser does not support HTML5 video streaming.
+  </video>
+  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;"><em>Bidirectional real-time chat between authenticated personas</em></p>
+</div>
+
+<hr>
+<h2>System Architecture</h2>
+<p>The following diagram illustrates the complete topology, communication protocols, and runtime interaction between the client applications, Docker network, and the backend WebSocket engine:</p>
+<p><img src="./websocket-chat-architecture.png" alt="Websocket Chat Architecture" title="Websocket Chat Architecture"></p>
+<hr>
+<h2>Backend Architecture (Spring Boot 3 &amp; WebSockets)</h2>
+<p>The backend is built with <strong>Spring Boot 3</strong> and <strong>Java 21</strong>.</p>
+<h3>1. WebSocket Protocol Configuration</h3>
+<p>The WebSocket configuration registers the <code>/websocket</code> endpoint and enables cross-origin requests from any frontend origin (<code>setAllowedOrigins(&quot;*&quot;)</code>):</p>
+<pre><code class="language-java">package com.chat.config;
+
+import com.chat.websocket.WebSocketHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
+@Configuration
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
+
+    @Autowired
+    private WebSocketHandler webSocketHandler;
+
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(webSocketHandler, &quot;/websocket&quot;)
+                .setAllowedOrigins(&quot;*&quot;);
+    }
+}
+</code></pre>
+<hr>
+<h3>2. Thread-Safe WebSocket Handler &amp; Session Pooling</h3>
+<p>Spring&#39;s <code>TextWebSocketHandler</code> manages WebSocket lifecycles. Sessions are indexed in a <code>ConcurrentHashMap&lt;User, WebSocketSession&gt;</code>:</p>
+<ul>
+<li><strong>Handshake User Extraction</strong>: When a client establishes a connection (<code>ws://host:8185/websocket?userId=1&amp;userName=Frodo</code>), <code>getUserFromSession()</code> parses the query parameters from <code>session.getUri()</code>.</li>
+<li><strong>Session Registration</strong>: <code>afterConnectionEstablished</code> registers the new session in the concurrent map and logs active session metrics.</li>
+<li><strong>Broadcast Engine</strong>: When any user transmits a <code>TextMessage</code>, <code>handleTextMessage()</code> iterates across all registered sessions in <code>userSessions.values()</code> and broadcasts the message in real time.</li>
+<li><strong>Graceful Cleanup</strong>: <code>afterConnectionClosed</code> automatically dereferences the user from the pool upon socket disconnection or network dropouts.</li>
+</ul>
+<hr>
+<h3>3. REST API &amp; Dynamic Presence Aggregation</h3>
+<p><code>AppController</code> provides two core REST endpoints:</p>
+<ol>
+<li><strong><code>POST /user/login</code></strong>: Authenticates a user by matching their chosen persona name against an in-memory registry of 14 personas (<em>Frodo, Samwise, Gandalf, Aragorn, Legolas, Gimli, Gollum, Sauron, etc.</em>). Returns <code>200 OK</code> with user details or <code>401 UNAUTHORIZED</code>.</li>
+<li><strong><code>GET /user/list</code></strong>: Returns the full user roster where each user&#39;s <code>isOnline</code> boolean is dynamically resolved by querying <code>webSocketHandler.getOnlineUsers()</code>.</li>
+</ol>
+<pre><code class="language-java">@CrossOrigin
+@RestController
+public class AppController {
+
+    @Autowired
+    private WebSocketHandler webSocketHandler;
+
+    @RequestMapping(value = &quot;/user/login&quot;, method = RequestMethod.POST)
+    public User userLogin(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+        return getValidUsers().stream()
+                .filter(u -&gt; u.getUserName().equalsIgnoreCase(loginRequest.getName()))
+                .findFirst()
+                .orElseGet(() -&gt; {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return null;
+                });
+    }
+
+    @RequestMapping(value = &quot;/user/list&quot;, method = RequestMethod.GET)
+    public List&lt;User&gt; listUsers() {
+        List&lt;User&gt; validUsers = getValidUsers();
+        Set&lt;User&gt; onlineUsers = webSocketHandler.getOnlineUsers();
+        validUsers.forEach(validUser -&gt; validUser.setOnline(onlineUsers.contains(validUser)));
+        return validUsers;
+    }
+}
+</code></pre>
+<hr>
+<h2>Web Frontend Architecture (Angular 19)</h2>
+<p>The web frontend (<code>chat-ui/</code>) is developed with <strong>Angular 19</strong> and structured with modular services and components.</p>
+<h3>1. Dynamic Host Resolution</h3>
+<p>To ensure seamless deployment across <code>localhost</code>, custom Docker bridge networks, and local area network (LAN) IP addresses, the application dynamically resolves the WebSocket connection target from the browser window&#39;s current host location:</p>
+<pre><code class="language-typescript">// Dynamic WebSocket URI Resolution
+const host = window.location.hostname;
+const socketUrl = `ws://${host}:8185/websocket?userId=${currentUser.id}&amp;userName=${currentUser.userName}`;
+const socket = new WebSocket(socketUrl);
+</code></pre>
+<h3>2. Frontend Capabilities</h3>
+<ul>
+<li><strong>Persona Authentication</strong>: Clean modal to pick and authenticate as any character from the Middle-earth user roster.</li>
+<li><strong>Active Presence Sidebar</strong>: Real-time user roster featuring green active status pills indicating which users currently maintain an active WebSocket connection.</li>
+<li><strong>Bidirectional Chat Room</strong>:<ul>
+<li>Message bubble distinction (outgoing messages aligned right with accent color; incoming messages aligned left with neutral card styling).</li>
+<li>Formatted sender avatars and timestamps.</li>
+<li>Automatic scrolling upon receiving new broadcast payloads.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>Containerization &amp; Docker Orchestration</h2>
+<p>The app is fully containerized with multi-stage Docker builds and orchestrated using <strong>Docker Compose</strong>:</p>
+<h3>Multi-Stage Dockerfiles</h3>
+<table>
+<thead>
+<tr>
+<th align="left">Service</th>
+<th align="left">Build Stage</th>
+<th align="left">Runtime Stage</th>
+<th align="left">Exposed Port</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><code>websocket-chat-server</code></strong></td>
+<td align="left">Maven Wrapper + Java 21 SDK</td>
+<td align="left">Eclipse Temurin 21 JRE (<code>alpine</code>)</td>
+<td align="left"><code>8185:8185</code></td>
+</tr>
+<tr>
+<td align="left"><strong><code>websocket-chat-ui</code></strong></td>
+<td align="left">Node.js 20 (<code>npm run build</code>)</td>
+<td align="left">Nginx 1.25 Alpine</td>
+<td align="left"><code>80:80</code></td>
+</tr>
+</tbody></table>
+<h3>Docker Compose Configuration (<code>docker-compose.yaml</code>)</h3>
+<pre><code class="language-yaml">services:
+  websocket-chat-server:
+    build: ./server
+    ports:
+      - &quot;8185:8185&quot;
+
+  websocket-chat-ui:
+    build: ./chat-ui
+    ports:
+      - &quot;80:80&quot;
+</code></pre>
+<hr>
+<h2>Getting Started &amp; Local Development</h2>
+<h3>Option A: One-Line Docker Compose (Recommended)</h3>
+<p>From the root directory:</p>
+<pre><code class="language-bash">docker compose up --build
+</code></pre>
+<ul>
+<li>Access the web interface at <strong><code>http://localhost</code></strong></li>
+<li>WebSocket server runs at <strong><code>ws://localhost:8185/websocket</code></strong></li>
+</ul>
+<hr>
+<h3>Option B: Local Development (Individual Services)</h3>
+<h4>1. Start Backend Server</h4>
+<pre><code class="language-bash">cd server
+./mvnw spring-boot:run
+</code></pre>
+<h4>2. Start Angular Frontend</h4>
+<pre><code class="language-bash">cd chat-ui
+npm install
+npm start
+</code></pre>
+<hr>
+<h2>Future Roadmap</h2>
+<p>While the current architecture provides a clean, low-latency foundation for real-time communication, the following enhancements presents the future evolution path:</p>
+<h3>1. Dedicated Mobile Phone Application</h3>
+<ul>
+<li><strong>Native Mobile Clients</strong>: Extending the chat platform with a native mobile client built to handle mobile lifecycle events (app suspend/resume, background state, and device rotation).</li>
+<li><strong>Push Notification Integration</strong>: Incorporating Firebase Cloud Messaging (FCM) so users receive message alerts even when the WebSocket connection is idle or the app is closed.</li>
+</ul>
+<h3>2. Decoupled WebSocket Gateways &amp; API Microservices</h3>
+<ul>
+<li><strong>Traffic Segregation for High Availability</strong>: Separating the persistent WebSocket connection layer from standard stateless HTTP REST traffic.</li>
+<li><strong>Stateless REST Services</strong>: Isolating user authentication, persona discovery, and account services into independently auto-scaled stateless microservices behind an API Gateway (e.g., Spring Cloud Gateway / Nginx Ingress).</li>
+</ul>
+<h3>3. Distributed Message Broker for Multi-Node Fan-Out</h3>
+<ul>
+<li><strong>Cluster-Wide Broadcasting</strong>: Upgrading the single-instance in-memory <code>ConcurrentHashMap</code> session pool with a distributed message broker (such as <strong>RabbitMQ</strong>, <strong>Redis Pub/Sub</strong>, or <strong>Apache Kafka</strong>).</li>
+<li><strong>Multi-Instance Scalability</strong>: When User A (connected to WebSocket Node 1) sends a message, Node 1 publishes the event to the broker topic. The broker immediately fans out the payload to WebSocket Node 2, Node 3, and Node $N$, delivering messages to recipients connected to any server instance in the cluster.</li>
+</ul>
+<h3>4. Message Persistence &amp; Cross-Session Retention</h3>
+<ul>
+<li><strong>Durable Message Storage</strong>: Introducing a persistent database layer (e.g., PostgreSQL for relational query integrity or MongoDB/Cassandra for high-write chat logging) combined with Redis for hot message caching.</li>
+<li><strong>Session Rehydration &amp; History Sync</strong>: Enabling users to retrieve historical conversation threads, paginate older messages on scroll, and maintain chat continuity when logging in from new devices or browser sessions.</li>
+<li><strong>Delivery Status &amp; Receipts</strong>: Tracking <em>sent</em>, <em>delivered</em>, and <em>read</em> receipts alongside unread message badges.</li>
+</ul>
+<hr>
+<p>The complete open-source repository is available on GitHub:<br><strong><a href="https://github.com/jeetprksh/websocket-chat">github.com/jeetprksh/websocket-chat</a></strong></p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

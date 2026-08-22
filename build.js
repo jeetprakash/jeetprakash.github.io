@@ -203,7 +203,7 @@ async function buildSite() {
   let homeContent = `
     <div class="page-title-banner">
       <h1 class="page-title">Latest Posts</h1>
-      <p class="page-subtitle">Articles, musings, and engineering notes in descending date order.</p>
+      <p class="page-subtitle">Articles, musings, and engineering notes...</p>
     </div>
     <div class="posts-list">
   `;
@@ -309,8 +309,26 @@ async function buildSite() {
 
   // 4. Specific Tag Filter Pages (tag/<name>/index.html)
   console.log('📄 Pre-rendering Tag Filter Pages...');
+  const tagBaseDir = path.join(__dirname, 'tag');
+  ensureDir(tagBaseDir);
+
+  // Analyze and prune unused tag directories
+  const existingTagDirs = fs.readdirSync(tagBaseDir).filter(item => {
+    return fs.statSync(path.join(tagBaseDir, item)).isDirectory();
+  });
+
+  const unusedTagDirs = existingTagDirs.filter(dirName => !tagsArray.includes(dirName));
+  if (unusedTagDirs.length > 0) {
+    console.log(`🧹 Found ${unusedTagDirs.length} unused tag director(ies) to clean up:`);
+    unusedTagDirs.forEach(dirName => {
+      const unusedPath = path.join(tagBaseDir, dirName);
+      fs.rmSync(unusedPath, { recursive: true, force: true });
+      console.log(`   └─ 🗑️ Removed unused tag directory: tag/${dirName}`);
+    });
+  }
+
   tagsArray.forEach(t => {
-    const tagDir = path.join(__dirname, 'tag', t);
+    const tagDir = path.join(tagBaseDir, t);
     ensureDir(tagDir);
     const rootPrefixTag = '../../';
 
@@ -320,7 +338,7 @@ async function buildSite() {
       <a href="${rootPrefixTag}tags/" class="back-btn">&larr; All Tags</a>
       <div class="page-title-banner">
         <h1 class="page-title">Posts tagged with <span class="${getTagClass(t)}">#${t}</span></h1>
-        <p class="page-subtitle">${filtered.length} article(s) found in descending date order.</p>
+        <p class="page-subtitle">${filtered.length} article(s) found.</p>
       </div>
       <div class="posts-list">
     `;
@@ -428,8 +446,27 @@ async function buildSite() {
 
   // 6. Pre-render Individual Project Detail Pages (projects/<slug>/index.html)
   console.log('📄 Pre-rendering Individual Project Detail Pages...');
+  const projectBaseDir = path.join(__dirname, 'projects');
+  ensureDir(projectBaseDir);
+
+  // Analyze and prune unused project directories
+  const existingProjDirs = fs.readdirSync(projectBaseDir).filter(item => {
+    return fs.statSync(path.join(projectBaseDir, item)).isDirectory();
+  });
+  const validSlugs = projects.map(p => p.slug);
+  const unusedProjDirs = existingProjDirs.filter(dirName => !validSlugs.includes(dirName));
+
+  if (unusedProjDirs.length > 0) {
+    console.log(`🧹 Found ${unusedProjDirs.length} unused project director(ies) to clean up:`);
+    unusedProjDirs.forEach(dirName => {
+      const unusedPath = path.join(projectBaseDir, dirName);
+      fs.rmSync(unusedPath, { recursive: true, force: true });
+      console.log(`   └─ 🗑️ Removed unused project directory: projects/${dirName}`);
+    });
+  }
+
   projects.forEach(proj => {
-    const projectDir = path.join(__dirname, 'projects', proj.slug);
+    const projectDir = path.join(projectBaseDir, proj.slug);
     ensureDir(projectDir);
 
     const rootPrefixDetail = '../../';
@@ -442,7 +479,7 @@ async function buildSite() {
         <header class="post-detail-header">
           <h1 class="post-detail-title">${proj.title}</h1>
           <div class="post-meta-bar">
-            <span>Project Released: ${formatDate(proj.date)}</span>
+            <span>Published: ${formatDate(proj.date)}</span>
           </div>
           <p class="post-preface-box">${proj.shortDescription || ''}</p>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">

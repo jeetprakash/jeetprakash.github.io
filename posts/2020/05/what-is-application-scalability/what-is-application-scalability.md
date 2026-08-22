@@ -1,9 +1,9 @@
 ---
 layout: default
-canonical_url: 'https://jeetprksh.com/post/what-is-application-scalability/'
+canonical_url: 'https://jeetprakash.github.io/posts/2020/05/what-is-application-scalability/'
 title: What is Application Scalability?
 description: What to do when your application starts trending and then drowning in a huge load?
-image: https://jeetprksh.com/post/what-is-application-scalability/img03.png
+image: https://jeetprakash.github.io/posts/2020/05/what-is-application-scalability/img03.png
 tags: [scalability, architecture, horizontal scaling, vertical scaling]
 ---
 

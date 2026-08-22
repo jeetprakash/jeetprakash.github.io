@@ -1,6 +1,6 @@
 ---
 layout: default
-canonical_url: 'https://jeetprksh.com/post/getting-started-with-hibernate/'
+canonical_url: 'https://jeetprakash.github.io/posts/2020/04/getting-started-with-hibernate/'
 title: Getting Started With Hibernate
 description: Setting up a simple Hibernate project without using any web framework
 tags: [hibernate, java, database]

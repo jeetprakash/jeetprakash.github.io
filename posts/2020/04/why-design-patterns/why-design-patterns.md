@@ -1,6 +1,6 @@
 ---
 layout: default
-canonical_url: 'https://jeetprksh.com/post/why-design-patterns/'
+canonical_url: 'https://jeetprakash.github.io/posts/2020/04/why-design-patterns/'
 title: Why Design Patterns?
 description: Why should we care about using design patterns in our projects?
 tags: [design patterns, software, design, patterns]

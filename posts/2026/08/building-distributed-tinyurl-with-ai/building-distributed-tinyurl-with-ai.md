@@ -1,6 +1,6 @@
 ---
 layout: default
-canonical_url: 'https://jeetprksh.com/post/building-distributed-tinyurl-with-ai/'
+canonical_url: 'https://jeetprakash.github.io/posts/2026/08/building-distributed-tinyurl-with-ai/'
 title: Building a Scalable TinyURL Microservices Architecture with AI
 description: The journey of engineering a distributed, fault-tolerant URL shortener using Antigravity AI agents, and lessons learned on prompt precision and code monitoring.
 tags: [system-design, microservices, ai, kubernetes, prometheus, grafana]

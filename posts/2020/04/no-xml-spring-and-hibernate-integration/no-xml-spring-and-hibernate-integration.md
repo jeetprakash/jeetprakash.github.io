@@ -1,6 +1,6 @@
 ---
 layout: default
-canonical_url: 'https://jeetprksh.com/post/no-xml-spring-and-hibernate-integration/'
+canonical_url: 'https://jeetprakash.github.io/posts/2020/04/no-xml-spring-and-hibernate-integration/'
 title: No XML Spring and Hibernate Integration
 description: Creating an end to end Spring Hibernate application without using any XML configuration
 tags: [hibernate, spring, java, database]

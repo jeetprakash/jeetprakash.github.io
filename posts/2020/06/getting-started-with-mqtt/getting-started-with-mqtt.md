@@ -1,9 +1,9 @@
 ---
 layout: default
-canonical_url: 'https://jeetprksh.com/post/getting-started-with-mqtt/'
+canonical_url: 'https://jeetprakash.github.io/posts/2020/06/getting-started-with-mqtt/'
 title: Getting Started with MQTT
 description: The MQTT protocol is a lightweight protocol that enables small IoT devices to communicate using publish and subscribe model.
-image: https://jeetprksh.com/post/getting-started-with-mqtt/louis-reed-zDxlNcdUzxk-unsplash.jpg
+image: https://jeetprakash.github.io/posts/2020/06/getting-started-with-mqtt/louis-reed-zDxlNcdUzxk-unsplash.jpg
 tags: [mqtt, iot, eclipse-mosquitto, pub-sub]
 ---
 

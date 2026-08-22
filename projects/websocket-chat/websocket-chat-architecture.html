@@ -1,0 +1,99 @@
+<div style="margin: 2rem 0; padding: 1.5rem; background: var(--bg-alt); border: 1px solid var(--border-color); border-radius: 8px; overflow-x: auto;">
+<svg viewBox="0 0 960 480" width="100%" height="480" xmlns="http://www.w3.org/2000/svg" style="font-family: var(--font-sans); display: block; margin: 0 auto; min-width: 800px;">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+    <linearGradient id="serverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.08" />
+    </filter>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2563eb" />
+    </marker>
+    <marker id="arrowhead-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#059669" />
+    </marker>
+  </defs>
+  <rect x="20" y="20" width="300" height="440" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4" />
+  <text x="35" y="45" font-size="12" font-weight="700" fill="#475569" letter-spacing="0.05em">CLIENT TIER (ANGULAR 19 / NGINX)</text>
+  <g transform="translate(40, 70)" filter="url(#shadow)">
+    <rect width="260" height="160" rx="6" fill="url(#cardGrad)" stroke="#e2e8f0" stroke-width="1.5" />
+    <rect width="260" height="32" rx="6" fill="#e2e8f0" />
+    <circle cx="15" cy="16" r="4" fill="#ef4444" />
+    <circle cx="28" cy="16" r="4" fill="#f59e0b" />
+    <circle cx="41" cy="16" r="4" fill="#10b981" />
+    <text x="55" y="20" font-size="11" font-weight="600" fill="#334155">Browser: Frodo (User ID: 1)</text>
+    <rect x="15" y="45" width="230" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" />
+    <text x="25" y="65" font-size="11" fill="#0f172a">👤 Active Persona: Frodo</text>
+    <rect x="15" y="85" width="230" height="60" rx="4" fill="#ffffff" stroke="#cbd5e1" />
+    <text x="25" y="105" font-size="10" font-weight="600" fill="#0284c7">WebSocket Connection:</text>
+    <text x="25" y="122" font-size="9.5" font-family="monospace" fill="#334155">ws://host:8185/websocket</text>
+    <text x="25" y="136" font-size="9" fill="#64748b">?userId=1&amp;userName=Frodo</text>
+  </g>
+  <g transform="translate(40, 260)" filter="url(#shadow)">
+    <rect width="260" height="160" rx="6" fill="url(#cardGrad)" stroke="#e2e8f0" stroke-width="1.5" />
+    <rect width="260" height="32" rx="6" fill="#e2e8f0" />
+    <circle cx="15" cy="16" r="4" fill="#ef4444" />
+    <circle cx="28" cy="16" r="4" fill="#f59e0b" />
+    <circle cx="41" cy="16" r="4" fill="#10b981" />
+    <text x="55" y="20" font-size="11" font-weight="600" fill="#334155">Browser: Samwise (User ID: 2)</text>
+    <rect x="15" y="45" width="230" height="30" rx="4" fill="#ffffff" stroke="#cbd5e1" />
+    <text x="25" y="65" font-size="11" fill="#0f172a">👤 Active Persona: Samwise</text>
+    <rect x="15" y="85" width="230" height="60" rx="4" fill="#ffffff" stroke="#cbd5e1" />
+    <text x="25" y="105" font-size="10" font-weight="600" fill="#0284c7">WebSocket Connection:</text>
+    <text x="25" y="122" font-size="9.5" font-family="monospace" fill="#334155">ws://host:8185/websocket</text>
+    <text x="25" y="136" font-size="9" fill="#64748b">?userId=2&amp;userName=Samwise</text>
+  </g>
+  <rect x="420" y="20" width="520" height="440" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="420" y="20" width="520" height="36" rx="8" fill="url(#serverGrad)" />
+  <text x="440" y="43" font-size="13" font-weight="700" fill="#ffffff" letter-spacing="0.05em">BACKEND SERVER TIER (SPRING BOOT 3 / JAVA 21)</text>
+  <g transform="translate(440, 75)" filter="url(#shadow)">
+    <rect width="480" height="150" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+    <rect width="480" height="28" rx="6" fill="#eff6ff" />
+    <text x="15" y="19" font-size="11" font-weight="700" fill="#1e40af">WebSocket Engine &amp; Session Pool</text>
+    <rect x="15" y="38" width="215" height="45" rx="4" fill="#f8fafc" stroke="#cbd5e1" />
+    <text x="25" y="55" font-size="10" font-weight="600" fill="#0f172a">WebSocketConfig</text>
+    <text x="25" y="72" font-size="9" fill="#64748b">Endpoint: /websocket | CORS: *</text>
+    <rect x="245" y="38" width="220" height="45" rx="4" fill="#f8fafc" stroke="#cbd5e1" />
+    <text x="255" y="55" font-size="10" font-weight="600" fill="#0f172a">WebSocketHandler</text>
+    <text x="255" y="72" font-size="9" fill="#64748b">Extends TextWebSocketHandler</text>
+    <rect x="15" y="92" width="450" height="45" rx="4" fill="#f0fdf4" stroke="#86efac" />
+    <text x="25" y="110" font-size="10.5" font-weight="700" fill="#15803d">ConcurrentHashMap&lt;User, WebSocketSession&gt; userSessions</text>
+    <text x="25" y="126" font-size="9.5" fill="#166534">Thread-safe session pool | Broadcasts payloads via handleTextMessage() loop</text>
+  </g>
+  <g transform="translate(440, 245)" filter="url(#shadow)">
+    <rect width="480" height="190" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+    <rect width="480" height="28" rx="6" fill="#fef3c7" />
+    <text x="15" y="19" font-size="11" font-weight="700" fill="#92400e">REST API &amp; Persona Presence Layer (AppController)</text>
+    <rect x="15" y="38" width="450" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1" />
+    <rect x="25" y="47" width="45" height="20" rx="3" fill="#2563eb" />
+    <text x="32" y="61" font-size="9.5" font-weight="700" fill="#ffffff">POST</text>
+    <text x="78" y="61" font-size="10.5" font-family="monospace" font-weight="600" fill="#0f172a">/user/login</text>
+    <text x="210" y="61" font-size="9.5" fill="#64748b">Validates persona against in-memory roster</text>
+    <rect x="15" y="85" width="450" height="40" rx="4" fill="#f8fafc" stroke="#cbd5e1" />
+    <rect x="25" y="94" width="45" height="20" rx="3" fill="#059669" />
+    <text x="36" y="108" font-size="9.5" font-weight="700" fill="#ffffff">GET</text>
+    <text x="78" y="108" font-size="10.5" font-family="monospace" font-weight="600" fill="#0f172a">/user/list</text>
+    <text x="200" y="108" font-size="9.5" fill="#64748b">Annotates roster with live isOnline presence status</text>
+    <rect x="15" y="132" width="450" height="45" rx="4" fill="#fafaf9" stroke="#e7e5e4" />
+    <text x="25" y="150" font-size="10" font-weight="600" fill="#44403c">In-Memory Persona Registry (14 Personas):</text>
+    <text x="25" y="165" font-size="9" fill="#78716c">Frodo, Samwise, Merry, Pippin, Gandalf, Aragorn, Legolas, Gimli, Sauron, Gollum, ...</text>
+  </g>
+  <path d="M 300 170 L 440 140" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowhead)" stroke-dasharray="5,3" />
+  <text x="330" y="145" font-size="9.5" font-weight="600" fill="#2563eb" transform="rotate(-12, 330, 145)">WebSocket Full-Duplex</text>
+  <path d="M 300 320 L 440 175" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowhead)" stroke-dasharray="5,3" />
+  <text x="330" y="255" font-size="9.5" font-weight="600" fill="#2563eb" transform="rotate(-38, 330, 255)">WebSocket Full-Duplex</text>
+  <path d="M 300 190 L 440 280" fill="none" stroke="#059669" stroke-width="1.8" marker-end="url(#arrowhead-green)" />
+  <path d="M 300 370 L 440 320" fill="none" stroke="#059669" stroke-width="1.8" marker-end="url(#arrowhead-green)" />
+  <text x="325" y="360" font-size="9.5" font-weight="600" fill="#059669" transform="rotate(-18, 325, 360)">REST (Login / Presence)</text>
+</svg>
+</div>
