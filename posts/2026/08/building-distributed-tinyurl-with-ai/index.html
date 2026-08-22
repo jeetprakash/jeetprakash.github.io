@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building a Scalable TinyURL Microservices Architecture with AI | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="The journey of engineering a distributed, fault-tolerant URL shortener using Antigravity AI agents, and lessons learned on prompt precision and code monitoring.">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Building a Scalable TinyURL Microservices Architecture with AI | jeetprakash">
+  <meta property="og:description" content="The journey of engineering a distributed, fault-tolerant URL shortener using Antigravity AI agents, and lessons learned on prompt precision and code monitoring.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Building a Scalable TinyURL Microservices Architecture with AI</h1>
+          <div class="post-meta-bar">
+            <span>Published: Aug 22, 2026</span>
+            
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/system-design/" class="tag-badge">#system-design</a> <a href="../../../../tag/microservices/" class="tag-badge">#microservices</a> <a href="../../../../tag/ai/" class="tag-badge">#ai</a> <a href="../../../../tag/kubernetes/" class="tag-badge">#kubernetes</a> <a href="../../../../tag/prometheus/" class="tag-badge">#prometheus</a> <a href="../../../../tag/grafana/" class="tag-badge">#grafana</a>
+            </div>
+          </div>
+          <div class="post-preface-box">The journey of engineering a distributed, fault-tolerant URL shortener using Antigravity AI agents, and lessons learned on prompt precision and code monitoring.</div>
+        </header>
+        
+        <div class="post-content">
+          <p>Building a production-ready, distributed system from scratch is rarely a linear journey. Setting out to build a highly scalable <strong>TinyURL system</strong> using modern cloud-native standards—<strong>Spring Boot 3 (Java 21)</strong>, <strong>gRPC</strong>, <strong>Spring Cloud (Eureka &amp; API Gateway)</strong>, <strong>multi-database PostgreSQL sharding</strong>, <strong>Prometheus/Grafana observability</strong>, <strong>Loki log aggregation</strong>, and <strong>Kubernetes manifests</strong>— I chose to pair program with an autonomous AI coding agent (Antigravity).</p>
+<p>It began with an one <strong>&quot;Mega-Prompt&quot;</strong> which quickly evolved through deep architectural iterations: eliminating multi-threaded race conditions, deriving dynamic database shard routing without configuration drift, enabling dynamic range block sizing with PostgreSQL interval intersection guarantees, and getting complete 14-container monitoring topology up and running.</p>
+<p>In this article, I will share the architectural blueprint of the system, the chronological evolution of the codebase, and most importantly, practical takeaways on <strong>how to drive AI agents efficiently using high-density, constraint-driven prompts</strong> and <strong>why continuous human code auditing remains non-negotiable</strong>.</p>
+<hr>
+<h2>The System Design Blueprint</h2>
+<p>At its core, a scalable URL shortener must satisfy several hard requirements:</p>
+<ol>
+<li><strong>Massive Capacity &amp; Compact URLs</strong>: 6-character Base62 alphanumeric short codes <code>[a-zA-Z0-9]</code>, yielding about 56.8 Billion unique combinations.</li>
+<li><strong>Zero Key Collisions &amp; High Throughput</strong>: Guaranteeing uniqueness without costly centralized database locks or synchronous coordination per HTTP request.</li>
+<li><strong>Horizontal Partitioning (Database Sharding)</strong>: Distributing URL mappings across multiple isolated PostgreSQL databases based on consistent hash routing.</li>
+<li><strong>Resilient Observability &amp; Monitoring</strong>: Sub-second metric scraping via Prometheus, centralized log streaming with Grafana Loki and Promtail, and auto-provisioned Grafana dashboards.</li>
+</ol>
+<h3>End-to-End System Topology</h3>
+<p><img src="./tinyurl-architecture.png" alt="Tiny URL Architecture" title="Tiny URL Architecture"></p>
+<hr>
+<h2>The Initial &quot;Mega-Prompt&quot; &amp; Kickoff</h2>
+<p>I started by giving the agent a comprehensive, multi-paragraph architectural specification—a <strong>&quot;mega-prompt&quot;</strong>—detailing the exact multi-module project structure, database schemas, gRPC protobuf contracts, Spring Cloud components, and Docker Compose topology.</p>
+<p>However, complex distributed systems are not built in a single prompt. Real-world edge cases, multi-threaded concurrency traps, and configuration drift require continuous refinement.</p>
+<hr>
+<h2>Deep Iterations &amp; Solving Real Bugs</h2>
+<h3>1. Concurrency Trap: Thread Contention &amp; Duplicate Range Allocation</h3>
+<p>In <code>RandomRangeBufferService.java</code>, each instance of <code>tinyurl-service</code> maintains an in-memory buffer of numbers pre-shuffled via Fisher-Yates shuffle. When 90% of the block is consumed, an asynchronous pre-fetch is triggered.</p>
+<p><img src="./range-prefetch-flow.png" alt="Range Pre-Fetch Flow" title="Range Pre-Fetch Flow"></p>
+<p><strong>The Bug Found During Code Review</strong>:<br>Initially, when the active block was exhausted (<code>idx &gt;= BLOCK_SIZE</code>), multiple threads waiting on <code>synchronized (this)</code> would each invoke <code>fetchAndShuffleBlock()</code> one after another. This caused multiple gRPC range fetches, discarding valid numbers and causing heavy lock contention.</p>
+<p><strong>The Fix (Double-Checked Locking)</strong>:<br>We instructed the agent with a targeted prompt to introduce double-checked locking inside the synchronized block:</p>
+<pre><code class="language-java">public long getNextNumber() {
+    while (true) {
+        int idx = currentIndex.getAndIncrement();
+        int currentBlockSize = activeBlock.length;
+        int refillThreshold = (int) (currentBlockSize * (refillThresholdPercentage / 100.0));
+
+        if (idx == refillThreshold) {
+            // Trigger async pre-fetch at dynamic threshold
+            if (prefetchTriggered.compareAndSet(false, true)) {
+                log.info(&quot;Reached threshold {}/{}. Triggering async pre-fetch.&quot;, refillThreshold, currentBlockSize);
+                nextBlockFuture = CompletableFuture.supplyAsync(this::fetchAndShuffleBlock);
+            }
+        }
+
+        if (idx &lt; currentBlockSize) {
+            return activeBlock[idx];
+        }
+
+        // Block exhausted: Double-check inside synchronized block before swapping
+        synchronized (this) {
+            if (currentIndex.get() &gt;= activeBlock.length) {
+                log.info(&quot;Active block exhausted. Swapping with pre-fetched block...&quot;);
+                long[] newBlock;
+                if (nextBlockFuture != null) {
+                    newBlock = nextBlockFuture.join();
+                    this.nextBlockFuture = null;
+                } else {
+                    newBlock = fetchAndShuffleBlock();
+                }
+                this.activeBlock = newBlock;
+                this.currentIndex.set(0);
+                this.prefetchTriggered.set(false);
+            }
+        }
+    }
+}
+</code></pre>
+<hr>
+<h3>2. Single-Source-of-Truth Dynamic Shard Routing</h3>
+<p>Initially, <code>UrlMappingService</code> routed keys using a hardcoded modulo: <code>Math.abs(code.hashCode()) % 3</code>.</p>
+<p>When starting the application with set number of database shards, hardcoding <code>% 3</code> or having a separate <code>tinyurl.sharding.count</code> property in <code>application.yml</code> creates configuration drift if someone adds a fourth datasource under <code>spring.datasource</code> but forgets to update the count.</p>
+<p><code>ShardRoutingDataSource</code> had to be refactored to dynamically track the count of registered target datasources (<code>targetDataSources.size()</code>):</p>
+<pre><code class="language-java">public class ShardRoutingDataSource extends AbstractRoutingDataSource {
+
+    private int shardCount = 1;
+
+    @Override
+    public void setTargetDataSources(Map&lt;Object, Object&gt; targetDataSources) {
+        super.setTargetDataSources(targetDataSources);
+        if (targetDataSources != null &amp;&amp; !targetDataSources.isEmpty()) {
+            this.shardCount = targetDataSources.size();
+        }
+    }
+
+    public int getRegisteredShardCount() {
+        return shardCount;
+    }
+
+    @Override
+    protected Object determineCurrentLookupKey() {
+        return DbContextHolder.getShardIndex();
+    }
+}
+</code></pre>
+<p>And <code>ShardRouter</code> delegates dynamically:</p>
+<pre><code class="language-java">@Component
+public class ShardRouter {
+
+    private final ShardRoutingDataSource routingDataSource;
+
+    public ShardRouter(ShardRoutingDataSource routingDataSource) {
+        this.routingDataSource = routingDataSource;
+    }
+
+    public int getShardIndex(String code) {
+        if (code == null) return 0;
+        return Math.abs(code.hashCode()) % routingDataSource.getRegisteredShardCount();
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Dynamic Range Size Allocation with Interval Overlap Protection</h3>
+<p>In the latest iteration, <code>tinyurl-service</code> was updated to specify its own desired buffer width (e.g. <code>tinyurl.range.buffer-size: 5000</code> or <code>10000</code>).</p>
+<p>To guarantee that different range widths never produce overlapping keyspaces, <code>RangeDispenserAllocationService</code> uses SQL interval intersection queries:</p>
+<pre><code class="language-java">@Query(&quot;SELECT COUNT(r) &gt; 0 FROM DispensedRange r WHERE r.startValue &lt;= :endValue AND r.endValue &gt;= :startValue&quot;)
+boolean existsOverlappingRange(@Param(&quot;startValue&quot;) Long startValue, @Param(&quot;endValue&quot;) Long endValue);
+</code></pre>
+<hr>
+<h2>The Art of Prompting: Precision vs. Ambiguity</h2>
+<p>One of the biggest lessons from this project is the direct correlation between <strong>prompt quality</strong> and <strong>agent efficiency</strong>.</p>
+<p>When working with autonomous AI agents, vague prompts lead to hallucinations, broken assumptions, and wasted iteration loops. High-density, constraint-driven prompts lead to clean, single-pass implementations.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Aspect</th>
+<th align="left">Vague / Ambiguous Prompting</th>
+<th align="left">High-Precision Constraint Prompting</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Locality</strong></td>
+<td align="left"><em>&quot;The buffer has some multi-threading issues, please fix it.&quot;</em></td>
+<td align="left"><em>&quot;In <code>RandomRangeBufferService.java</code> at <code>getNextNumber()</code>, threads waiting on <code>synchronized(this)</code> call <code>fetchAndShuffleBlock()</code> multiple times upon exhaustion. Implement double-checked locking on <code>currentIndex.get() &gt;= activeBlock.length</code>.&quot;</em></td>
+</tr>
+<tr>
+<td align="left"><strong>Configuration</strong></td>
+<td align="left"><em>&quot;Make the database shards dynamic.&quot;</em></td>
+<td align="left"><em>&quot;In <code>tinyurl-service</code>, derive the shard count directly from <code>targetDataSources.size()</code> in <code>ShardRoutingDataSource</code> so <code>ShardRouter</code> has a single source of truth without redundant YAML properties.&quot;</em></td>
+</tr>
+<tr>
+<td align="left"><strong>Contracts</strong></td>
+<td align="left"><em>&quot;Update the range dispenser.&quot;</em></td>
+<td align="left"><em>&quot;Update <code>range_dispenser.proto</code> to add <code>int32 request_range_size = 2</code> to <code>RangeRequest</code>. In <code>range-dispenser-service</code>, check interval overlaps using <code>r.startValue &lt;= :endValue AND r.endValue &gt;= :startValue</code>.&quot;</em></td>
+</tr>
+<tr>
+<td align="left"><strong>Execution Mode</strong></td>
+<td align="left">Jumping straight into random code edits.</td>
+<td align="left">Using <code>/plan</code> mode to review architectural changes, diffs, and verification strategies before touching code.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Why Continuous Human Code Auditing is Non-Negotiable</h2>
+<p>AI coding assistants are exceptionally capable at boilerplate generation, API wiring, and refactoring. However, <strong>the human engineer remains the architect and primary auditor</strong>.</p>
+<p>Throughout the sessions, active code auditing caught critical items that automated linters alone would miss:</p>
+<ol>
+<li><strong>Subtle Concurrency &amp; State Invariants</strong>: Identifying race conditions where multiple threads wake up from lock contention.</li>
+<li><strong>Configuration Drift</strong>: Catching decoupled configuration keys (<code>tinyurl.sharding.count</code> vs <code>spring.datasource.shard*</code>) and enforcing single-source architectures.</li>
+<li><strong>Database Schema Correctness</strong>: Ensuring PostgreSQL tables, unique constraints, and sequence types align with long-term keyspace capacities (56.8B numbers exceeding 32-bit integers require <code>int64</code> / <code>BIGINT</code>).</li>
+<li><strong>Dependency Hygiene</strong>: Eliminating duplicate Maven dependencies (such as duplicate <code>postgresql</code> driver entries) and managing gRPC BOM version alignment.</li>
+</ol>
+<hr>
+<h2>Production Kubernetes Topology</h2>
+<p>All configurations, health checks, and metrics endpoints are baked into clean, production-grade Kubernetes manifests under the <a href="https://github.com/jeetprakash/system-design-tinyurl/tree/main/k8s"><code>k8s/</code></a> directory:</p>
+<pre><code class="language-bash">k8s/
+├── 01-service-registry.yaml    # Eureka Server + Actuator Probes
+├── 02-range-dispenser.yaml     # Range Dispenser + PostgreSQL StatefulSet
+├── 03-tinyurl-shards.yaml      # 3x PostgreSQL DB Shard StatefulSets
+├── 04-tinyurl-service.yaml     # 3x TinyURL Pods + Dynamic Range Configs
+├── 05-api-gateway.yaml         # Spring Cloud Gateway LoadBalancer
+└── 06-monitoring-logging.yaml  # Prometheus, Loki, Promtail &amp; Grafana
+</code></pre>
+<p>To deploy the entire stack to Kubernetes cluster:</p>
+<pre><code class="language-bash">kubectl apply -f k8s/
+</code></pre>
+<hr>
+<h2>Conclusion</h2>
+<p>Pair programming with an AI agent to build a distributed system is like having a high-speed junior/mid-level developer pairing with a senior architect. </p>
+<p>When you provide <strong>clear, bounded architectural requirements</strong>, <strong>use structured planning modes</strong>, and <strong>rigorously audit the generated code</strong>, you can build, containerize, and test complex microservices architectures in a fraction of the traditional development time.</p>
+<p>The full source code, Kubernetes manifests, and Grafana dashboard configurations are available on GitHub:<br><strong><a href="https://github.com/jeetprksh/system-design-tinyurl">github.com/jeetprksh/system-design-tinyurl</a></strong></p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

@@ -1,5 +1,21 @@
 [
   {
+    "slug": "building-distributed-tinyurl-with-ai",
+    "title": "Building a Scalable TinyURL Microservices Architecture with AI",
+    "date": "2026-08-22",
+    "preface": "The journey of engineering a distributed, fault-tolerant URL shortener using Antigravity AI agents, and lessons learned on prompt precision and code monitoring.",
+    "tags": [
+      "system-design",
+      "microservices",
+      "ai",
+      "kubernetes",
+      "prometheus",
+      "grafana"
+    ],
+    "file": "posts/2026/08/building-distributed-tinyurl-with-ai/building-distributed-tinyurl-with-ai.md",
+    "url": "posts/2026/08/building-distributed-tinyurl-with-ai/"
+  },
+  {
     "slug": "getting-started-with-mqtt",
     "title": "Getting Started with MQTT",
     "date": "2020-06-06",

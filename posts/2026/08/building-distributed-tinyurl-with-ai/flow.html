@@ -1,0 +1,83 @@
+<div style="width: 100%; overflow-x: auto; margin: 30px 0; padding: 20px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+<svg viewBox="0 0 920 490" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; display: block; margin: 0 auto; max-width: 920px;">
+  <defs>
+    <marker id="seqArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563eb"/>
+    </marker>
+    <marker id="purpleSeqArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="greenSeqArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#059669"/>
+    </marker>
+    <filter id="seqShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Participant Headers -->
+  <g transform="translate(40, 20)" filter="url(#seqShadow)">
+    <rect width="160" height="42" rx="8" fill="#1e293b"/>
+    <text x="80" y="26" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">👷 Worker Threads (T1..Tn)</text>
+  </g>
+  <line x1="120" y1="62" x2="120" y2="470" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <g transform="translate(260, 20)" filter="url(#seqShadow)">
+    <rect width="180" height="42" rx="8" fill="#0284c7"/>
+    <text x="90" y="26" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">⚡ RandomRangeBufferService</text>
+  </g>
+  <line x1="350" y1="62" x2="350" y2="470" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <g transform="translate(490, 20)" filter="url(#seqShadow)">
+    <rect width="180" height="42" rx="8" fill="#7c3aed"/>
+    <text x="90" y="26" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">🔄 CompletableFuture (Async)</text>
+  </g>
+  <line x1="580" y1="62" x2="580" y2="470" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <g transform="translate(710, 20)" filter="url(#seqShadow)">
+    <rect width="170" height="42" rx="8" fill="#059669"/>
+    <text x="85" y="26" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">📦 Range Dispenser (gRPC)</text>
+  </g>
+  <line x1="795" y1="62" x2="795" y2="470" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+  <!-- Step 1: getNextNumber -->
+  <line x1="120" y1="95" x2="340" y2="95" stroke="#2563eb" stroke-width="1.5" marker-end="url(#seqArrow)"/>
+  <text x="230" y="88" fill="#0f172a" font-size="11" font-weight="600" text-anchor="middle">1. getNextNumber() [Atomic index++]</text>
+
+  <!-- Step 2: 90% Threshold reached -->
+  <rect x="290" y="115" width="120" height="26" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="350" y="132" fill="#92400e" font-size="10" font-weight="bold" text-anchor="middle">idx == 90% Threshold</text>
+
+  <!-- Step 3: Trigger async pre-fetch -->
+  <line x1="350" y1="155" x2="570" y2="155" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#purpleSeqArrow)"/>
+  <text x="460" y="148" fill="#6d28d9" font-size="11" font-weight="600" text-anchor="middle">2. Trigger async pre-fetch</text>
+
+  <!-- Step 4: gRPC DispenseRange -->
+  <line x1="580" y1="180" x2="785" y2="180" stroke="#7c3aed" stroke-width="1.5" marker-end="url(#purpleSeqArrow)"/>
+  <text x="682" y="173" fill="#6d28d9" font-size="11" font-weight="600" text-anchor="middle">3. dispenseRange(request_range_size)</text>
+
+  <!-- Step 5: gRPC Response -->
+  <line x1="795" y1="215" x2="590" y2="215" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#greenSeqArrow)"/>
+  <text x="692" y="208" fill="#065f46" font-size="11" font-weight="600" text-anchor="middle">4. RangeResponse [start, end, size]</text>
+
+  <!-- Step 6: In-memory shuffle -->
+  <rect x="520" y="235" width="120" height="24" rx="4" fill="#ecfdf5" stroke="#10b981"/>
+  <text x="580" y="251" fill="#065f46" font-size="10" font-weight="bold" text-anchor="middle">Fisher-Yates Shuffle</text>
+
+  <!-- Block Exhaustion Group / Box -->
+  <rect x="70" y="280" width="810" height="150" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="85" y="300" fill="#b45309" font-size="11" font-weight="bold">🔒 Capacity Exhaustion: Double-Checked Locking Inside synchronized(this)</text>
+
+  <!-- Thread 1 locks and swaps -->
+  <line x1="120" y1="325" x2="340" y2="325" stroke="#b45309" stroke-width="1.5" marker-end="url(#seqArrow)"/>
+  <text x="230" y="318" fill="#92400e" font-size="11" font-weight="600" text-anchor="middle">Thread 1: Acquires Lock -> Swaps activeBlock &amp; Resets idx = 0</text>
+
+  <!-- Subsequent threads see currentIndex < capacity -->
+  <line x1="120" y1="365" x2="340" y2="365" stroke="#059669" stroke-width="1.5" marker-end="url(#greenSeqArrow)"/>
+  <text x="230" y="358" fill="#065f46" font-size="11" font-weight="600" text-anchor="middle">Threads 2..N: Acquire Lock -> See idx &lt; capacity -> Skip swap!</text>
+
+  <!-- Return number to worker -->
+  <line x1="350" y1="405" x2="130" y2="405" stroke="#059669" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#greenSeqArrow)"/>
+  <text x="240" y="398" fill="#047857" font-size="11" font-weight="bold" text-anchor="middle">5. Return unique non-colliding number to worker</text>
+</svg>
+</div>

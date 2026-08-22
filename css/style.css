@@ -34,7 +34,7 @@
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
-  --max-width: 860px;
+  --max-width: 1140px;
   --transition: all 0.2s ease-in-out;
 }
 
@@ -337,8 +337,8 @@ a:hover {
 
 /* Markdown Content Typography */
 .post-content {
-  font-size: 1.05rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--text-primary);
 }
 
@@ -383,28 +383,37 @@ a:hover {
 
 .post-content code {
   font-family: var(--font-mono);
-  font-size: 0.9em;
+  font-size: 0.8em;
   background-color: var(--bg-alt);
-  padding: 0.2rem 0.4rem;
+  padding: 0.1rem 0.4rem;
   border-radius: 3px;
   color: #0369a1;
   border: 1px solid var(--border-color);
 }
 
 .post-content pre {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: #f6f8fa;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
   padding: 1.25rem;
   border-radius: var(--radius-md);
   overflow-x: auto;
   margin: 1.5rem 0;
+  font-family: var(--font-mono);
 }
 
 .post-content pre code {
   background: transparent;
   padding: 0;
-  color: inherit;
+  color: var(--text-primary);
   border: none;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.post-content pre code.hljs {
+  background: transparent;
+  padding: 0;
 }
 
 .post-content img {
@@ -419,6 +428,40 @@ a:hover {
   border: none;
   border-top: 1px dashed var(--border-color);
   margin: 2rem 0;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+}
+
+th,
+td {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background-color: var(--bg-alt);
+  color: var(--text-primary);
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-color);
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgba(241, 245, 249, 0.45);
+}
+
+tbody tr:hover {
+  background-color: var(--bg-hover);
 }
 
 /* Back Link */
@@ -660,7 +703,7 @@ a:hover {
 .timeline {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 2rem;
 }
 
 .timeline-item {
