@@ -2,7 +2,7 @@
   {
     "slug": "cap-theorem-and-beyond-pick-two",
     "title": "Beyond \"Pick Two\": CAP Theorem and PACELC for Distributed Systems",
-    "date": "2026-09-11",
+    "date": "2026-09-12",
     "preface": "We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of \"picking two\" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?",
     "tags": [
       "distributed-systems",

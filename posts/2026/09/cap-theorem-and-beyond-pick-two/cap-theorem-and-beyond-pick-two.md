@@ -1,7 +1,7 @@
 ---
 title: "Beyond \"Pick Two\": CAP Theorem and PACELC for Distributed Systems"
 slug: cap-theorem-and-beyond-pick-two
-date: "2026-09-11"
+date: "2026-09-12"
 tags:
   - distributed-systems
   - system-design
