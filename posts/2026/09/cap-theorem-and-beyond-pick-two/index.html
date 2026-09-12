@@ -52,9 +52,11 @@
         <header class="post-detail-header">
           <h1 class="post-detail-title">Beyond "Pick Two": CAP Theorem and PACELC for Distributed Systems</h1>
           <div class="post-meta-bar">
-            <span>Published: Sep 11, 2026</span>
-            
-            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+            <div class="post-meta-dates">
+              <span>Published: Sep 11, 2026</span>
+              
+            </div>
+            <div class="post-tags-list">
               <a href="../../../../tag/distributed-systems/" class="tag-badge">#distributed-systems</a> <a href="../../../../tag/system-design/" class="tag-badge">#system-design</a> <a href="../../../../tag/architecture/" class="tag-badge">#architecture</a> <a href="../../../../tag/database/" class="tag-badge">#database</a> <a href="../../../../tag/cap-theorem/" class="tag-badge">#cap-theorem</a> <a href="../../../../tag/pacelc/" class="tag-badge">#pacelc</a>
             </div>
           </div>
@@ -124,16 +126,13 @@
 <p>By explicitly evaluating the &quot;Else&quot; clause (<strong>ELC</strong>), PACELC captures the replication choices engineers make while configuring database settings, write concerns, and read preferences.</p>
 <h3>The Four PACELC System Classifications</h3>
 <p>PACELC categorizes distributed databases into four primary spectrums:</p>
-<table>
-<thead>
-<tr>
+<div class="table-container"><table><thead><tr>
 <th align="left">PACELC Class</th>
 <th align="left">Partition State (P) Trade-off</th>
 <th align="left">Normal State (E) Trade-off</th>
 <th align="left">Typical Use Cases &amp; Systems</th>
 </tr>
-</thead>
-<tbody><tr>
+</thead><tbody><tr>
 <td align="left"><strong>PA/EL</strong></td>
 <td align="left">Availability</td>
 <td align="left">Low Latency</td>
@@ -157,8 +156,7 @@
 <td align="left">Low Latency</td>
 <td align="left">Theoretical edge case (demands consistency in failure, sacrifices it in health)</td>
 </tr>
-</tbody></table>
-<h4>1. PA/EL Systems (High Availability &amp; Low Latency)</h4>
+</tbody></table></div><h4>1. PA/EL Systems (High Availability &amp; Low Latency)</h4>
 <ul>
 <li><strong>Behavior:</strong> During partitions, these systems trade consistency for availability (PA). Under normal conditions, they prioritize sub-millisecond response times over immediate consistency (EL) by replicating asynchronously.</li>
 <li><strong>Examples:</strong> Apache Cassandra, Amazon DynamoDB, Riak.</li>

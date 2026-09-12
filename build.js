@@ -9,6 +9,15 @@ marked.setOptions({
   gfm: true
 });
 
+// Custom renderer to wrap tables for responsive horizontal scrolling
+marked.use({
+  renderer: {
+    table(header, body) {
+      return `<div class="table-container"><table><thead>${header}</thead><tbody>${body}</tbody></table></div>`;
+    }
+  }
+});
+
 // Helper: Ensure directory exists
 function ensureDir(dirPath) {
   if (!fs.existsSync(dirPath)) {
@@ -244,9 +253,11 @@ async function buildSite() {
         <header class="post-detail-header">
           <h1 class="post-detail-title">${p.title}</h1>
           <div class="post-meta-bar">
-            <span>Published: ${formatDate(p.date)}</span>
-            ${updatedDateHtml}
-            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+            <div class="post-meta-dates">
+              <span>Published: ${formatDate(p.date)}</span>
+              ${updatedDateHtml}
+            </div>
+            <div class="post-tags-list">
               ${tagsHtml}
             </div>
           </div>

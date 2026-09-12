@@ -52,9 +52,11 @@
         <header class="post-detail-header">
           <h1 class="post-detail-title">Building a Scalable TinyURL Microservices Architecture with AI</h1>
           <div class="post-meta-bar">
-            <span>Published: Aug 22, 2026</span>
-            
-            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+            <div class="post-meta-dates">
+              <span>Published: Aug 22, 2026</span>
+              
+            </div>
+            <div class="post-tags-list">
               <a href="../../../../tag/system-design/" class="tag-badge">#system-design</a> <a href="../../../../tag/microservices/" class="tag-badge">#microservices</a> <a href="../../../../tag/ai/" class="tag-badge">#ai</a> <a href="../../../../tag/kubernetes/" class="tag-badge">#kubernetes</a> <a href="../../../../tag/prometheus/" class="tag-badge">#prometheus</a> <a href="../../../../tag/grafana/" class="tag-badge">#grafana</a>
             </div>
           </div>
@@ -178,15 +180,12 @@ boolean existsOverlappingRange(@Param(&quot;startValue&quot;) Long startValue, @
 <h2>The Art of Prompting: Precision vs. Ambiguity</h2>
 <p>One of the biggest lessons from this project is the direct correlation between <strong>prompt quality</strong> and <strong>agent efficiency</strong>.</p>
 <p>When working with autonomous AI agents, vague prompts lead to hallucinations, broken assumptions, and wasted iteration loops. High-density, constraint-driven prompts lead to clean, single-pass implementations.</p>
-<table>
-<thead>
-<tr>
+<div class="table-container"><table><thead><tr>
 <th align="left">Aspect</th>
 <th align="left">Vague / Ambiguous Prompting</th>
 <th align="left">High-Precision Constraint Prompting</th>
 </tr>
-</thead>
-<tbody><tr>
+</thead><tbody><tr>
 <td align="left"><strong>Locality</strong></td>
 <td align="left"><em>&quot;The buffer has some multi-threading issues, please fix it.&quot;</em></td>
 <td align="left"><em>&quot;In <code>RandomRangeBufferService.java</code> at <code>getNextNumber()</code>, threads waiting on <code>synchronized(this)</code> call <code>fetchAndShuffleBlock()</code> multiple times upon exhaustion. Implement double-checked locking on <code>currentIndex.get() &gt;= activeBlock.length</code>.&quot;</em></td>
@@ -206,8 +205,7 @@ boolean existsOverlappingRange(@Param(&quot;startValue&quot;) Long startValue, @
 <td align="left">Jumping straight into random code edits.</td>
 <td align="left">Using <code>/plan</code> mode to review architectural changes, diffs, and verification strategies before touching code.</td>
 </tr>
-</tbody></table>
-<hr>
+</tbody></table></div><hr>
 <h2>Why Continuous Human Code Auditing is Non-Negotiable</h2>
 <p>AI coding assistants are exceptionally capable at boilerplate generation, API wiring, and refactoring. However, <strong>the human engineer remains the architect and primary auditor</strong>.</p>
 <p>Throughout the sessions, active code auditing caught critical items that automated linters alone would miss:</p>

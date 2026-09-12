@@ -176,16 +176,13 @@ const socket = new WebSocket(socketUrl);
 <h2>Containerization &amp; Docker Orchestration</h2>
 <p>The app is fully containerized with multi-stage Docker builds and orchestrated using <strong>Docker Compose</strong>:</p>
 <h3>Multi-Stage Dockerfiles</h3>
-<table>
-<thead>
-<tr>
+<div class="table-container"><table><thead><tr>
 <th align="left">Service</th>
 <th align="left">Build Stage</th>
 <th align="left">Runtime Stage</th>
 <th align="left">Exposed Port</th>
 </tr>
-</thead>
-<tbody><tr>
+</thead><tbody><tr>
 <td align="left"><strong><code>websocket-chat-server</code></strong></td>
 <td align="left">Maven Wrapper + Java 21 SDK</td>
 <td align="left">Eclipse Temurin 21 JRE (<code>alpine</code>)</td>
@@ -197,8 +194,7 @@ const socket = new WebSocket(socketUrl);
 <td align="left">Nginx 1.25 Alpine</td>
 <td align="left"><code>80:80</code></td>
 </tr>
-</tbody></table>
-<h3>Docker Compose Configuration (<code>docker-compose.yaml</code>)</h3>
+</tbody></table></div><h3>Docker Compose Configuration (<code>docker-compose.yaml</code>)</h3>
 <pre><code class="language-yaml">services:
   websocket-chat-server:
     build: ./server
