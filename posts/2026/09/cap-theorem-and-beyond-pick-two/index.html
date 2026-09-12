@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond "Pick Two": CAP Theorem and PACELC for Distributed Systems | jeetprakash</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of "picking two" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?">
+  <meta name="author" content="Jeet Prakash">
+  <meta property="og:title" content="Beyond "Pick Two": CAP Theorem and PACELC for Distributed Systems | jeetprakash">
+  <meta property="og:description" content="We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of "picking two" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts: Inter & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Highlight.js Light Syntax Highlighting Theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+  <!-- Flat Design System Stylesheet -->
+  <link rel="stylesheet" href="../../../../css/style.css">
+</head>
+<body>
+
+  <!-- Site Header & Flat Navigation Bar -->
+  <header class="site-header">
+    <div class="brand-section">
+      <div>
+        <h1 class="brand-title"><a href="../../../../">jeetprakash</a></h1>
+        <p class="brand-subtitle">Software Engineering &bull; Dev Musings &bull; Code Projects</p>
+      </div>
+    </div>
+    
+    <nav class="flat-nav" aria-label="Main Navigation">
+      <a href="../../../../" class="nav-link ">All Posts</a>
+      <a href="../../../../tags/" class="nav-link ">Tags</a>
+      <a href="../../../../tag/devMusings/" class="nav-link special-musing ">#devMusings</a>
+      <a href="../../../../tag/devRants/" class="nav-link special-rant ">#devRants</a>
+      <a href="../../../../projects/" class="nav-link ">Projects</a>
+      <a href="../../../../portfolio/" class="nav-link ">Portfolio</a>
+    </nav>
+  </header>
+
+  <!-- Pre-rendered Main Content (Visible in View Page Source) -->
+  <main id="app" class="site-main">
+    
+      <a href="../../../../" class="back-btn">&larr; Back to Posts</a>
+      <article class="post-detail">
+        <header class="post-detail-header">
+          <h1 class="post-detail-title">Beyond "Pick Two": CAP Theorem and PACELC for Distributed Systems</h1>
+          <div class="post-meta-bar">
+            <span>Published: Sep 11, 2026</span>
+            
+            <div style="margin-left:auto; display:flex; gap:0.4rem;">
+              <a href="../../../../tag/distributed-systems/" class="tag-badge">#distributed-systems</a> <a href="../../../../tag/system-design/" class="tag-badge">#system-design</a> <a href="../../../../tag/architecture/" class="tag-badge">#architecture</a> <a href="../../../../tag/database/" class="tag-badge">#database</a> <a href="../../../../tag/cap-theorem/" class="tag-badge">#cap-theorem</a> <a href="../../../../tag/pacelc/" class="tag-badge">#pacelc</a>
+            </div>
+          </div>
+          <div class="post-preface-box">We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of "picking two" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?</div>
+        </header>
+        
+        <div class="post-content">
+          <p>Every distributed design implementation eventually hits three ubiquitous letters: <strong>CAP</strong>. We are often told that when building a distributed database, we have three choices: Consistency, Availability, and Partition Tolerance and we must pick any two. </p>
+<p>However, in modern software architecture, the popular &quot;pick two out of three&quot; framing is not always true all the time. The CAP theorem is completely silent about how the database should behave during the 99% of the time when the network is healthy.</p>
+<p>In this post, we will break down what the CAP theorem actually guarantees, the crucial real-world concerns it leaves out, and explore <strong>PACELC</strong> an alternative framework engineers can use to reason about distributed trade-offs.</p>
+<hr>
+<h2>The CAP Theorem</h2>
+<p>The <strong>CAP theorem</strong> states that a distributed data store cannot simultaneously provide all three of the following guarantees:</p>
+<ul>
+<li><strong>Consistency (C):</strong> Every read receives the most recent write or an error. All nodes see the exact same data at the exact same time. In CAP, consistency refers to <strong>linearizability</strong> (atomic consistency), where writes appear instantaneous across all replicas. <em>Note that this is distinct from the &#39;C&#39; in ACID transactions, which guarantees database integrity constraints.</em></li>
+<li><strong>Availability (A):</strong> Every non-failing node returns a non-error response for every request. It guarantees that the system stays responsive without failing, though the returned data may be stale.</li>
+<li><strong>Partition Tolerance (P):</strong> The system continues to operate despite arbitrary message loss, delays, or network failure between nodes.</li>
+</ul>
+<h3>The Network Partition Trade-off</h3>
+<p>To visualize why we cannot have all three guarantees at once, consider a simple two-node distributed database consisting of <strong>Node A</strong> and <strong>Node B</strong>:</p>
+<p><img src="./network-partition-tradeoff.svg" alt="Two-Node Replication Dilemma During Network Partition"></p>
+<ol>
+<li><strong>The Event:</strong> A network partition disconnects Node A from Node B.</li>
+<li><strong>The Write:</strong> Client 1 writes a new value (<code>X = 5</code>) to Node A. Because of the network partition, Node A cannot replicate this update to Node B.</li>
+<li><strong>The Read:</strong> Client 2 immediately requests <code>X</code> from Node B.</li>
+</ol>
+<p>Node B now faces an impossible dilemma:</p>
+<ul>
+<li><strong>Option 1 (Prioritize Availability - AP):</strong> Node B responds immediately with its current value (<code>X = 0</code>). The request succeeds, but the client receives stale, inconsistent data.</li>
+<li><strong>Option 2 (Prioritize Consistency - CP):</strong> Node B refuses to respond or returns an error because it cannot verify whether Node A received an update. Data correctness is preserved, but availability is sacrificed.</li>
+</ul>
+<h3>The &quot;Pick Two&quot; Myth</h3>
+<p>Beginners often assume they can select any combination: CP, AP, or CA. However, <strong>&quot;CA&quot; distributed systems do not exist</strong>. </p>
+<p>Network failures, severed fiber cables, switch outages, dropped packets are the physical reality in distributed environments. We cannot &quot;choose not to have partitions&quot;. If we build a system that ignores Partition Tolerance (P), we have built a fragile monolith deployed across multiple machines rather than a resilient distributed system.</p>
+<p>Thus, the actual CAP decision is narrower: <strong>When a network partition occurs, do we choose Consistency (CP) or Availability (AP)?</strong></p>
+<p><img src="./cap-partition-choice.svg" alt="Network Partition Architectural Decision: CP vs. AP"></p>
+<ul>
+<li><strong>CP Systems (Consistency over Availability):</strong> Systems like finance ledgers, fund transfers, and ticketing services choose CP. If an ATM loses its network link to central servers, it refuses the transaction rather than risk dispensing money from an unverified account balance.</li>
+<li><strong>AP Systems (Availability over Consistency):</strong> Social media comments/posts, and video like counts choose AP. If a network glitch occurs, Instagram still lets us view the comments on a post, fetching the latest comments later rather than sending error response.</li>
+</ul>
+<hr>
+<h2>Concerns the CAP Theorem Does Not Address</h2>
+<p>While CAP provides a foundational baseline, relying on it alone leaves massive blind spots in system design.</p>
+<h3>1. The &quot;99% Normal Case&quot; Ignored</h3>
+<p>Network partitions are rare events in well-managed data centers, network partitions might occur 1% of the time or less. <strong>CAP is completely silent on how a database behaves during the 99% of normal operations when the network is perfectly healthy</strong>.</p>
+<h3>2. Latency vs. Consistency Trade-offs</h3>
+<p>Even with no network partition, replicating data across multiple nodes forces a continuous design trade-off between <strong>latency</strong> and <strong>consistency</strong>. </p>
+<ul>
+<li>If we demand strong consistency on every write, we must wait for updates to propagate across all replicas before acknowledging success, which introduces high latency.</li>
+<li>If we prefer low latency, we acknowledge writes instantly on a single replica and replicate asynchronously in the background, accepting a brief window where clients might read stale data.<br>CAP does not capture this everyday latency penalty.</li>
+</ul>
+<h3>3. Binary Absolutism vs. Real-World Granularity</h3>
+<p>CAP models properties as binary toggles (100% consistent or 0% consistent, 100% available or 0% available). In reality, systems operate across a spectrum of consistency levels (e.g., eventual, causal, read-your-writes, linearizable) and availability SLA thresholds.</p>
+<h3>4. Absence of Performance SLA Boundaries</h3>
+<p>According to CAP&#39;s formal definition, a database that takes 1 hour to return a query is technically &quot;available&quot; as long as it returns a non-error response. In real-world engineering, a 30-second latency spike renders the APIs getting timed-out for users.</p>
+<hr>
+<h2>The Need for PACELC Over CAP</h2>
+<p>To bridge the critical gaps left by CAP theorem PACELC extends it by taking normal-state performance into aaccountas well.</p>
+<h3>Understanding the PACELC Formula</h3>
+<p>PACELC is an acronym representing two conditional trade-offs:</p>
+<div class="post-preface-box" style="margin: 1.5rem 0; font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.8; text-align: center; border-left: 4px solid var(--primary-accent);">
+  <strong>If P</strong> (Partition) &rarr; Choose <strong>A</strong> (Availability) or <strong>C</strong> (Consistency)<br>
+  <strong>Else E</strong> (Normal Operation) &rarr; Choose <strong>L</strong> (Latency) or <strong>C</strong> (Consistency)
+</div>
+
+<p><img src="./pacelc-tradeoff-tree.svg" alt="PACELC Trade-off Decision Tree"></p>
+<p>By explicitly evaluating the &quot;Else&quot; clause (<strong>ELC</strong>), PACELC captures the replication choices engineers make while configuring database settings, write concerns, and read preferences.</p>
+<h3>The Four PACELC System Classifications</h3>
+<p>PACELC categorizes distributed databases into four primary spectrums:</p>
+<table>
+<thead>
+<tr>
+<th align="left">PACELC Class</th>
+<th align="left">Partition State (P) Trade-off</th>
+<th align="left">Normal State (E) Trade-off</th>
+<th align="left">Typical Use Cases &amp; Systems</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>PA/EL</strong></td>
+<td align="left">Availability</td>
+<td align="left">Low Latency</td>
+<td align="left">High-throughput feeds, telemetry, shopping carts (<em>Cassandra, DynamoDB</em>)</td>
+</tr>
+<tr>
+<td align="left"><strong>PC/EC</strong></td>
+<td align="left">Consistency</td>
+<td align="left">Consistency</td>
+<td align="left">Financials, locks, balance ledgers (<em>CockroachDB, Spanner, ZooKeeper</em>)</td>
+</tr>
+<tr>
+<td align="left"><strong>PA/EC</strong></td>
+<td align="left">Availability</td>
+<td align="left">Consistency</td>
+<td align="left">Primary-Secondary document stores with failover (<em>MongoDB default</em>)</td>
+</tr>
+<tr>
+<td align="left"><strong>PC/EL</strong></td>
+<td align="left">Consistency</td>
+<td align="left">Low Latency</td>
+<td align="left">Theoretical edge case (demands consistency in failure, sacrifices it in health)</td>
+</tr>
+</tbody></table>
+<h4>1. PA/EL Systems (High Availability &amp; Low Latency)</h4>
+<ul>
+<li><strong>Behavior:</strong> During partitions, these systems trade consistency for availability (PA). Under normal conditions, they prioritize sub-millisecond response times over immediate consistency (EL) by replicating asynchronously.</li>
+<li><strong>Examples:</strong> Apache Cassandra, Amazon DynamoDB, Riak.</li>
+<li><strong>Best For:</strong> Social media feeds, shopping carts, session stores, and real-time gaming leaderboards where speed preserves user experience and eventual consistency is acceptable.</li>
+</ul>
+<h4>2. PC/EC Systems (Consistency in All Cases)</h4>
+<ul>
+<li><strong>Behavior:</strong> When partitioned, they refuse requests to prevent serving stale data (PC). During normal operations, they pay a latency tax by blocking writes until a quorum of replicas confirms the data (EC).</li>
+<li><strong>Examples:</strong> Google Bigtable, Apache HBase, Apache ZooKeeper, TiDB, CockroachDB.</li>
+<li><strong>Best For:</strong> Core financial ledgers, billing systems, distributed locking, and inventory management where data corruption or overselling is catastrophic.</li>
+</ul>
+<h4>3. PA/EC Systems (Available on Partition, Consistent Normally)</h4>
+<ul>
+<li><strong>Behavior:</strong> In normal operations, writes and reads default to a primary node to guarantee consistency (EC). If a partition isolates the primary, the system elects a new primary to accept writes, preserving availability (PA).</li>
+<li><strong>Examples:</strong> MongoDB (default replica set configuration).</li>
+<li><strong>Best For:</strong> Content management and e-commerce applications desiring strict consistency under normal loads with automated failover handling.</li>
+</ul>
+<h4>4. PC/EL Systems (Rare / Theoretical)</h4>
+<ul>
+<li><strong>Behavior:</strong> Choose consistency during partitions but sacrifice consistency for lower latency during normal operations. Because systems valuing consistency in failure modes usually demand it during normal operation, PC/EL configurations are rare in production.</li>
+</ul>
+<hr>
+<h3>Tunable Consistency: Moving Beyond Fixed Classifications</h3>
+<p>Modern databases are rarely locked into a single fixed quadrant. Most engines provide <strong>tunable consistency controls</strong> that allow developers to adjust PACELC behaviors per operation:</p>
+<ul>
+<li><strong>Cassandra &amp; DynamoDB:</strong> Allow developers to specify read/write consistency levels per query (e.g., <code>ONE</code>, <code>QUORUM</code>, <code>ALL</code>), trading latency for strong consistency on demand.</li>
+<li><strong>Azure Cosmos DB:</strong> Offers five distinct consistency choices ranging from Strong and Bounded Staleness to Eventual consistency.</li>
+<li><strong>Modern Consensus Engines:</strong> Systems like CockroachDB leverage Raft consensus to execute rapid recovery and low-latency synchronous replication, narrowing the performance gap between PC/EC safety and PA/EL responsiveness.</li>
+</ul>
+<hr>
+<h2>Conclusion</h2>
+<p>The CAP theorem remains a foundational concept for understanding how distributed systems behave when networks fail. However, because network partitions represent a small fraction of system runtime, relying solely on CAP leaves out crucial day-to-day decisions.</p>
+<p><strong>PACELC provides the complete picture</strong>:</p>
+<ul>
+<li><strong>CAP</strong> answers: <em>&quot;What happens when the network breaks?&quot;</em></li>
+<li><strong>PACELC</strong> answers: <em>&quot;What trade-offs are we making every other day of the year?&quot;</em></li>
+</ul>
+<p>When evaluating databases or answering distributed system challenges, frame the architectural choices around business requirements: determine whether the application can tolerate stale reads for speed, or if it must pay the latency tax to guarantee absolute data correctness.</p>
+
+        </div>
+      </article>
+    
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <p>&copy; 2026 Jeet Prakash &bull; Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </footer>
+
+  <!-- Syntax Highlighting Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</body>
+</html>

@@ -1,5 +1,21 @@
 [
   {
+    "slug": "cap-theorem-and-beyond-pick-two",
+    "title": "Beyond \"Pick Two\": CAP Theorem and PACELC for Distributed Systems",
+    "date": "2026-09-11",
+    "preface": "We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of \"picking two\" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?",
+    "tags": [
+      "distributed-systems",
+      "system-design",
+      "architecture",
+      "database",
+      "cap-theorem",
+      "pacelc"
+    ],
+    "file": "posts/2026/09/cap-theorem-and-beyond-pick-two/cap-theorem-and-beyond-pick-two.md",
+    "url": "posts/2026/09/cap-theorem-and-beyond-pick-two/"
+  },
+  {
     "slug": "building-distributed-tinyurl-with-ai",
     "title": "Building a Scalable TinyURL Microservices Architecture with AI",
     "date": "2026-08-22",

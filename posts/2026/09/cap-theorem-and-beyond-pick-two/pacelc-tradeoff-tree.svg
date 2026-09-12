@@ -1,0 +1,113 @@
+<svg viewBox="0 0 940 440" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+    <filter id="shadow-d3" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.06" />
+    </filter>
+    <marker id="arr-d3-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2563eb" />
+    </marker>
+    <marker id="arr-d3-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#059669" />
+    </marker>
+    <marker id="arr-d3-red" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="940" height="440" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- Root Node -->
+  <g transform="translate(300, 15)" filter="url(#shadow-d3)">
+    <rect width="340" height="46" rx="6" fill="#0f172a" />
+    <text x="170" y="28" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.03em">PACELC DECISION FRAMEWORK</text>
+  </g>
+
+  <!-- Primary Split Lines -->
+  <path d="M 410 61 L 240 100" fill="none" stroke="#dc2626" stroke-width="2" marker-end="url(#arr-d3-red)" />
+  <path d="M 530 61 L 700 100" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-d3-green)" />
+
+  <!-- Left Main Branch: Partition State -->
+  <g transform="translate(30, 105)" filter="url(#shadow-d3)">
+    <rect width="420" height="60" rx="6" fill="#fef2f2" stroke="#fecaca" stroke-width="1.5" />
+    <text x="210" y="27" font-size="11.5" font-weight="700" fill="#991b1b" text-anchor="middle">IF PARTITION OCCURS (P)</text>
+    <text x="210" y="45" font-size="10" fill="#b91c1c" text-anchor="middle">Network failure mode (~1% of runtime)</text>
+  </g>
+
+  <!-- Right Main Branch: Normal State -->
+  <g transform="translate(490, 105)" filter="url(#shadow-d3)">
+    <rect width="420" height="60" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5" />
+    <text x="210" y="27" font-size="11.5" font-weight="700" fill="#166534" text-anchor="middle">ELSE: NORMAL HEALTHY STATE (E)</text>
+    <text x="210" y="45" font-size="10" fill="#15803d" text-anchor="middle">Steady-state replication (~99% of runtime)</text>
+  </g>
+
+  <!-- Secondary Split Lines -->
+  <!-- Under Partition: A vs C -->
+  <path d="M 180 165 L 130 205" fill="none" stroke="#dc2626" stroke-width="1.8" marker-end="url(#arr-d3-red)" />
+  <path d="M 300 165 L 350 205" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arr-d3-blue)" />
+
+  <!-- Under Normal: L vs C -->
+  <path d="M 640 165 L 590 205" fill="none" stroke="#059669" stroke-width="1.8" marker-end="url(#arr-d3-green)" />
+  <path d="M 760 165 L 810 205" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arr-d3-blue)" />
+
+  <!-- Leaf 1: Availability (A) -->
+  <g transform="translate(25, 210)" filter="url(#shadow-d3)">
+    <rect width="200" height="120" rx="6" fill="#ffffff" stroke="#fcd34d" stroke-width="1.5" />
+    <rect width="200" height="26" rx="6" fill="#fef3c7" />
+    <text x="100" y="18" font-size="11" font-weight="700" fill="#92400e" text-anchor="middle">Choose Availability (A)</text>
+    <text x="15" y="45" font-size="9.5" font-weight="600" fill="#0f172a">&#8226; Action: Serve local replica</text>
+    <text x="15" y="62" font-size="9" fill="#64748b">&#8226; Trade-off: Stale reads possible</text>
+    <rect x="15" y="80" width="170" height="26" rx="4" fill="#fffbeb" stroke="#fde68a" />
+    <text x="100" y="97" font-size="10" font-weight="700" fill="#b45309" text-anchor="middle">Path Component: PA</text>
+  </g>
+
+  <!-- Leaf 2: Consistency under Partition (C) -->
+  <g transform="translate(245, 210)" filter="url(#shadow-d3)">
+    <rect width="200" height="120" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.5" />
+    <rect width="200" height="26" rx="6" fill="#eff6ff" />
+    <text x="100" y="18" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">Choose Consistency (C)</text>
+    <text x="15" y="45" font-size="9.5" font-weight="600" fill="#0f172a">&#8226; Action: Block or return error</text>
+    <text x="15" y="62" font-size="9" fill="#64748b">&#8226; Trade-off: Lower availability</text>
+    <rect x="15" y="80" width="170" height="26" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
+    <text x="100" y="97" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">Path Component: PC</text>
+  </g>
+
+  <!-- Leaf 3: Latency under Normal (L) -->
+  <g transform="translate(495, 210)" filter="url(#shadow-d3)">
+    <rect width="200" height="120" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1.5" />
+    <rect width="200" height="26" rx="6" fill="#f0fdf4" />
+    <text x="100" y="18" font-size="11" font-weight="700" fill="#166534" text-anchor="middle">Choose Latency (L)</text>
+    <text x="15" y="45" font-size="9.5" font-weight="600" fill="#0f172a">&#8226; Action: Asynchronous replica</text>
+    <text x="15" y="62" font-size="9" fill="#64748b">&#8226; Trade-off: Eventual consistency</text>
+    <rect x="15" y="80" width="170" height="26" rx="4" fill="#f0fdf4" stroke="#86efac" />
+    <text x="100" y="97" font-size="10" font-weight="700" fill="#15803d" text-anchor="middle">Path Component: EL</text>
+  </g>
+
+  <!-- Leaf 4: Consistency under Normal (C) -->
+  <g transform="translate(715, 210)" filter="url(#shadow-d3)">
+    <rect width="200" height="120" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.5" />
+    <rect width="200" height="26" rx="6" fill="#eff6ff" />
+    <text x="100" y="18" font-size="11" font-weight="700" fill="#1e40af" text-anchor="middle">Choose Consistency (C)</text>
+    <text x="15" y="45" font-size="9.5" font-weight="600" fill="#0f172a">&#8226; Action: Quorum sync writes</text>
+    <text x="15" y="62" font-size="9" fill="#64748b">&#8226; Trade-off: Higher latency tax</text>
+    <rect x="15" y="80" width="170" height="26" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
+    <text x="100" y="97" font-size="10" font-weight="700" fill="#1d4ed8" text-anchor="middle">Path Component: EC</text>
+  </g>
+
+  <!-- Bottom Combined Quadrants -->
+  <g transform="translate(25, 355)" filter="url(#shadow-d3)">
+    <rect width="890" height="65" rx="6" fill="#ffffff" stroke="#cbd5e1" />
+    <text x="20" y="24" font-size="11" font-weight="700" fill="#334155">FOUR RESULTANT PACELC QUADRANTS:</text>
+    <rect x="20" y="34" width="200" height="24" rx="4" fill="#fef3c7" stroke="#fcd34d" />
+    <text x="120" y="50" font-size="9.5" font-weight="700" fill="#92400e" text-anchor="middle">PA / EL (Cassandra, DynamoDB)</text>
+    <rect x="235" y="34" width="200" height="24" rx="4" fill="#eff6ff" stroke="#bfdbfe" />
+    <text x="335" y="50" font-size="9.5" font-weight="700" fill="#1e40af" text-anchor="middle">PC / EC (CockroachDB, Spanner)</text>
+    <rect x="450" y="34" width="200" height="24" rx="4" fill="#f0fdf4" stroke="#86efac" />
+    <text x="550" y="50" font-size="9.5" font-weight="700" fill="#166534" text-anchor="middle">PA / EC (MongoDB default)</text>
+    <rect x="665" y="34" width="200" height="24" rx="4" fill="#fafaf9" stroke="#d6d3d1" />
+    <text x="765" y="50" font-size="9.5" font-weight="600" fill="#78716c" text-anchor="middle">PC / EL (Theoretical / Rare)</text>
+  </g>
+</svg>
