@@ -1,5 +1,19 @@
 [
   {
+    "slug": "designing-a-real-time-user-typing-indicator",
+    "title": "Designing a Real-Time User Typing Indicator for Messaging App",
+    "date": "2026-10-04",
+    "preface": "Delivering real-time \"typing...\" indicator across a network sounds simple, but naive implementations may quickly crush servers and battery life. Lets have a dive into WebSocket streaming, client-side throttling, and TTL-driven leases.",
+    "tags": [
+      "websockets",
+      "distributed-systems",
+      "real-time",
+      "messaging"
+    ],
+    "file": "posts/2026/10/designing-a-real-time-user-typing-indicator/designing-a-real-time-user-typing-indicator.md",
+    "url": "posts/2026/10/designing-a-real-time-user-typing-indicator/"
+  },
+  {
     "slug": "cap-theorem-and-beyond-pick-two",
     "title": "Beyond \"Pick Two\": CAP Theorem and PACELC for Distributed Systems",
     "date": "2026-09-12",

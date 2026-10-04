@@ -1,0 +1,121 @@
+<svg viewBox="0 0 920 280" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+    <filter id="shadow-proto" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.06" />
+    </filter>
+    <marker id="arr-p-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2563eb" />
+    </marker>
+    <marker id="arr-p-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#059669" />
+    </marker>
+    <marker id="arr-p-amber" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d97706" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="920" height="280" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- Header Banner -->
+  <g transform="translate(250, 14)" filter="url(#shadow-proto)">
+    <rect width="420" height="34" rx="6" fill="#0f172a" />
+    <text x="210" y="22" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.04em">THE HEARTBEAT &amp; LEASE LIFECYCLE PROTOCOL</text>
+  </g>
+
+  <!-- Track 1: Sender Side -->
+  <g transform="translate(20, 65)">
+    <!-- Sender Label Pill -->
+    <rect width="130" height="75" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="65" y="32" font-size="12" font-weight="700" fill="#1e40af" text-anchor="middle">Sender Side</text>
+    <text x="65" y="50" font-size="10" fill="#3b82f6" text-anchor="middle">(Ingress Flow)</text>
+
+    <!-- Step 1 -->
+    <g transform="translate(155, 0)" filter="url(#shadow-proto)">
+      <rect width="215" height="75" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <rect width="215" height="24" rx="8" fill="#f8fafc" />
+      <line x1="0" y1="24" x2="215" y2="24" stroke="#e2e8f0" stroke-width="1" />
+      <text x="12" y="17" font-size="10" font-weight="700" fill="#0f172a">1. First Keystroke</text>
+      <text x="12" y="44" font-size="10" fill="#334155">&#8226; Dispatches <tspan font-family="monospace" font-weight="600" fill="#2563eb">typing_start</tspan></text>
+      <text x="12" y="60" font-size="9" fill="#64748b">Instant wire broadcast (&lt;200ms)</text>
+    </g>
+
+    <!-- Arrow 1 -> 2 -->
+    <path d="M 370 37 L 400 37" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-p-blue)" />
+
+    <!-- Step 2 -->
+    <g transform="translate(410, 0)" filter="url(#shadow-proto)">
+      <rect width="215" height="75" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <rect width="215" height="24" rx="8" fill="#f8fafc" />
+      <line x1="0" y1="24" x2="215" y2="24" stroke="#e2e8f0" stroke-width="1" />
+      <text x="12" y="17" font-size="10" font-weight="700" fill="#0f172a">2. Client Throttling</text>
+      <text x="12" y="44" font-size="10" fill="#334155">&#8226; Suppresses subsequent keys</text>
+      <text x="12" y="60" font-size="9" fill="#64748b">1.8s quiet window; zero spam</text>
+    </g>
+
+    <!-- Arrow 2 -> 3 -->
+    <path d="M 625 37 L 655 37" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-p-blue)" />
+
+    <!-- Step 3 -->
+    <g transform="translate(665, 0)" filter="url(#shadow-proto)">
+      <rect width="215" height="75" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <rect width="215" height="24" rx="8" fill="#f8fafc" />
+      <line x1="0" y1="24" x2="215" y2="24" stroke="#e2e8f0" stroke-width="1" />
+      <text x="12" y="17" font-size="10" font-weight="700" fill="#0f172a">3. Periodic Heartbeat</text>
+      <text x="12" y="44" font-size="10" fill="#334155">&#8226; Emits refresh if still active</text>
+      <text x="12" y="60" font-size="9" fill="#64748b">No explicit stop event needed!</text>
+    </g>
+  </g>
+
+  <!-- Track 2: Recipient Side -->
+  <g transform="translate(20, 175)">
+    <!-- Recipient Label Pill -->
+    <rect width="130" height="75" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="65" y="32" font-size="12" font-weight="700" fill="#166534" text-anchor="middle">Recipient Side</text>
+    <text x="65" y="50" font-size="10" fill="#15803d" text-anchor="middle">(Egress Flow)</text>
+
+    <!-- Step 1 -->
+    <g transform="translate(155, 0)" filter="url(#shadow-proto)">
+      <rect width="215" height="75" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <rect width="215" height="24" rx="8" fill="#f8fafc" />
+      <line x1="0" y1="24" x2="215" y2="24" stroke="#e2e8f0" stroke-width="1" />
+      <text x="12" y="17" font-size="10" font-weight="700" fill="#0f172a">1. Receives typing_start</text>
+      <text x="12" y="44" font-size="10" fill="#334155">&#8226; Displays "typing..." banner</text>
+      <text x="12" y="60" font-size="9" fill="#64748b">Immediate UI feedback</text>
+    </g>
+
+    <!-- Arrow 1 -> 2 -->
+    <path d="M 370 37 L 400 37" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-p-green)" />
+
+    <!-- Step 2 -->
+    <g transform="translate(410, 0)" filter="url(#shadow-proto)">
+      <rect width="215" height="75" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <rect width="215" height="24" rx="8" fill="#f8fafc" />
+      <line x1="0" y1="24" x2="215" y2="24" stroke="#e2e8f0" stroke-width="1" />
+      <text x="12" y="17" font-size="10" font-weight="700" fill="#0f172a">2. Arms Lease Timer (TTL)</text>
+      <text x="12" y="44" font-size="10" fill="#334155">&#8226; Sets local 3.0s lease</text>
+      <text x="12" y="60" font-size="9" fill="#64748b">Resets on each incoming frame</text>
+    </g>
+
+    <!-- Arrow 2 -> 3 -->
+    <path d="M 625 37 L 655 37" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-p-green)" />
+
+    <!-- Step 3 -->
+    <g transform="translate(665, 0)" filter="url(#shadow-proto)">
+      <rect width="215" height="75" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+      <rect width="215" height="24" rx="8" fill="#f8fafc" />
+      <line x1="0" y1="24" x2="215" y2="24" stroke="#e2e8f0" stroke-width="1" />
+      <text x="12" y="17" font-size="10" font-weight="700" fill="#0f172a">3. Passive Auto-Expiration</text>
+      <text x="12" y="44" font-size="10" fill="#334155">&#8226; TTL hits 0 &#8594; hides banner</text>
+      <text x="12" y="60" font-size="9" fill="#64748b">Zero stuck ghost indicators!</text>
+    </g>
+  </g>
+
+  <!-- Vertical Renew Connection -->
+  <path d="M 772 142 L 772 160 L 517 160 L 517 170" fill="none" stroke="#d97706" stroke-width="1.8" stroke-dasharray="4,4" marker-end="url(#arr-p-amber)" />
+  <rect x="545" y="150" width="190" height="19" rx="3" fill="#fef3c7" stroke="#fcd34d" />
+  <text x="640" y="163" font-size="8.5" font-weight="700" fill="#92400e" text-anchor="middle">Heartbeat renews TTL lease back to 3.0s</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg viewBox="0 0 920 460" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+    <filter id="shadow-arch" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.06" />
+    </filter>
+    <marker id="arr-blue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2563eb" />
+    </marker>
+    <marker id="arr-green" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#059669" />
+    </marker>
+    <marker id="arr-orange" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#d97706" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="920" height="460" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- Top Title Banner -->
+  <g transform="translate(260, 16)" filter="url(#shadow-arch)">
+    <rect width="400" height="40" rx="6" fill="#0f172a" />
+    <text x="200" y="25" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.04em">EDGE REAL-TIME INFRASTRUCTURE</text>
+  </g>
+
+  <!-- Client 1: User A (Sender) -->
+  <g transform="translate(50, 75)" filter="url(#shadow-arch)">
+    <rect width="250" height="66" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <circle cx="28" cy="33" r="14" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="28" y="38" font-size="11" font-weight="700" fill="#1d4ed8" text-anchor="middle">A</text>
+    <text x="52" y="28" font-size="12" font-weight="700" fill="#1e40af">User A (Sender)</text>
+    <text x="52" y="46" font-size="10" fill="#3b82f6">Mobile Client &#8226; Actively Typing</text>
+  </g>
+
+  <!-- Client 2: User B (Receiver) -->
+  <g transform="translate(620, 75)" filter="url(#shadow-arch)">
+    <rect width="250" height="66" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <circle cx="28" cy="33" r="14" fill="#dcfce7" stroke="#10b981" stroke-width="1.5" />
+    <text x="28" y="38" font-size="11" font-weight="700" fill="#15803d" text-anchor="middle">B</text>
+    <text x="52" y="28" font-size="12" font-weight="700" fill="#166534">User B (Receiver)</text>
+    <text x="52" y="46" font-size="10" fill="#15803d">Mobile Client &#8226; Viewing Conversation</text>
+  </g>
+
+  <!-- Flow 1: Client A -> Gateway 1 -->
+  <path d="M 175 141 L 175 200" fill="none" stroke="#2563eb" stroke-width="2" marker-end="url(#arr-blue)" />
+  <rect x="75" y="160" width="200" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" />
+  <text x="175" y="175" font-size="9.5" font-weight="700" fill="#1e40af" text-anchor="middle">WSS (TLS): typing_start frame</text>
+
+  <!-- Flow 4: Gateway 2 -> Client B -->
+  <path d="M 745 200 L 745 147" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)" />
+  <rect x="645" y="160" width="200" height="22" rx="4" fill="#dcfce7" stroke="#86efac" />
+  <text x="745" y="175" font-size="9.5" font-weight="700" fill="#166534" text-anchor="middle">WSS (TLS): typing_start push</text>
+
+  <!-- Gateway Node 1 -->
+  <g transform="translate(50, 205)" filter="url(#shadow-arch)">
+    <rect width="250" height="84" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="250" height="26" rx="8" fill="#f8fafc" />
+    <line x1="0" y1="26" x2="250" y2="26" stroke="#e2e8f0" stroke-width="1" />
+    <text x="15" y="18" font-size="11" font-weight="700" fill="#0f172a">WS Gateway Node 1</text>
+    <text x="15" y="46" font-size="9.5" fill="#475569">&#8226; Terminates TLS &amp; maintains TCP socket</text>
+    <text x="15" y="65" font-size="9.5" fill="#475569">&#8226; In-memory registry: user_a &#8594; socket_fd</text>
+  </g>
+
+  <!-- Gateway Node 2 -->
+  <g transform="translate(620, 205)" filter="url(#shadow-arch)">
+    <rect width="250" height="84" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="250" height="26" rx="8" fill="#f8fafc" />
+    <line x1="0" y1="26" x2="250" y2="26" stroke="#e2e8f0" stroke-width="1" />
+    <text x="15" y="18" font-size="11" font-weight="700" fill="#0f172a">WS Gateway Node 2</text>
+    <text x="15" y="46" font-size="9.5" fill="#475569">&#8226; Terminates TLS &amp; maintains TCP socket</text>
+    <text x="15" y="65" font-size="9.5" fill="#475569">&#8226; In-memory registry: user_b &#8594; socket_fd</text>
+  </g>
+
+  <!-- Flow 2: Gateway 1 -> PubSub -->
+  <path d="M 175 289 L 175 340" fill="none" stroke="#d97706" stroke-width="2" marker-end="url(#arr-orange)" />
+  <rect x="70" y="303" width="210" height="22" rx="4" fill="#fef3c7" stroke="#fcd34d" />
+  <text x="175" y="318" font-size="9" font-weight="700" fill="#92400e" text-anchor="middle">PUBLISH &#8226; channel: chat:{room_id}</text>
+
+  <!-- Flow 3: PubSub -> Gateway 2 -->
+  <path d="M 745 340 L 745 295" fill="none" stroke="#059669" stroke-width="2" marker-end="url(#arr-green)" />
+  <rect x="640" y="303" width="210" height="22" rx="4" fill="#dcfce7" stroke="#86efac" />
+  <text x="745" y="318" font-size="9" font-weight="700" fill="#166534" text-anchor="middle">FORWARD &#8226; to active receiver socket</text>
+
+  <!-- Ephemeral Pub/Sub Tier -->
+  <g transform="translate(50, 345)" filter="url(#shadow-arch)">
+    <rect width="820" height="88" rx="8" fill="#ffffff" stroke="#fde68a" stroke-width="1.5" />
+    <rect width="820" height="28" rx="8" fill="#fffbeb" />
+    <line x1="0" y1="28" x2="820" y2="28" stroke="#fde68a" stroke-width="1" />
+    <circle cx="20" cy="14" r="5" fill="#f59e0b" />
+    <text x="35" y="19" font-size="11.5" font-weight="700" fill="#92400e">EPHEMERAL PUB/SUB TIER (Redis Cluster / NATS Core)</text>
+    
+    <!-- Sub-boxes -->
+    <rect x="20" y="38" width="375" height="38" rx="4" fill="#f8fafc" stroke="#e2e8f0" />
+    <text x="30" y="54" font-size="9.5" font-weight="600" fill="#0f172a">&#8226; Dynamic Fan-Out via chat:{room_id} topic</text>
+    <text x="30" y="68" font-size="9" fill="#64748b">Only gateways with connected conversation members subscribe</text>
+
+    <rect x="425" y="38" width="375" height="38" rx="4" fill="#f8fafc" stroke="#e2e8f0" />
+    <text x="435" y="54" font-size="9.5" font-weight="600" fill="#0f172a">&#8226; Zero Persistence Guarantee</text>
+    <text x="435" y="68" font-size="9" fill="#64748b">100% in-memory broadcast; discarded safely during transient spikes</text>
+  </g>
+</svg>
