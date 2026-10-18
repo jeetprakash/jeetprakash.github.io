@@ -52,21 +52,114 @@ function getTagClass(tag) {
   return 'tag-badge';
 }
 
-// Layout Template Generator
-function renderHtmlPage({ title, description, content, rootPrefix, activeNav = '' }) {
+// Site & SEO Configuration Constants
+const SITE_URL = 'https://jeetprakash.github.io';
+const SITE_NAME = 'jeetprakash';
+const SITE_AUTHOR = 'Jeet Prakash';
+const TWITTER_HANDLE = '@jeetprakash_';
+const DEFAULT_OG_IMAGE = 'assets/images/header-placeholder.svg';
+
+// Helper: Safely escape HTML attributes to prevent malformed meta tags
+function escapeHtmlAttr(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+// Helper: Convert relative asset or page path to absolute URL
+function toAbsoluteUrl(relOrAbsPath) {
+  if (!relOrAbsPath) return `${SITE_URL}/${DEFAULT_OG_IMAGE}`;
+  if (relOrAbsPath.startsWith('http://') || relOrAbsPath.startsWith('https://')) {
+    return relOrAbsPath;
+  }
+  const cleanPath = relOrAbsPath.replace(/^\.?\/?/, '');
+  return `${SITE_URL}/${cleanPath}`;
+}
+
+// Layout Template Generator with Full-Spectrum SEO & Structured Data
+function renderHtmlPage({
+  title,
+  description,
+  content,
+  rootPrefix,
+  activeNav = '',
+  canonicalPath = '',
+  ogType = 'website',
+  ogImage = '',
+  articleData = null,
+  structuredData = []
+}) {
+  const canonicalUrl = canonicalPath === ''
+    ? `${SITE_URL}/`
+    : `${SITE_URL}/${canonicalPath.replace(/^\.?\/?/, '')}`;
+
+  const fullImageUrl = toAbsoluteUrl(ogImage || DEFAULT_OG_IMAGE);
+
+  // Article Open Graph extensions
+  let articleMetaTags = '';
+  if (ogType === 'article' && articleData) {
+    if (articleData.publishedTime) {
+      articleMetaTags += `\n  <meta property="article:published_time" content="${articleData.publishedTime}">`;
+    }
+    if (articleData.modifiedTime) {
+      articleMetaTags += `\n  <meta property="article:modified_time" content="${articleData.modifiedTime}">`;
+    }
+    articleMetaTags += `\n  <meta property="article:author" content="${escapeHtmlAttr(articleData.author || SITE_AUTHOR)}">`;
+    if (Array.isArray(articleData.tags)) {
+      articleData.tags.forEach(t => {
+        const clean = t.replace(/^#/, '');
+        articleMetaTags += `\n  <meta property="article:tag" content="${escapeHtmlAttr(clean)}">`;
+      });
+    }
+  }
+
+  // Schema.org JSON-LD structured data scripts
+  const structuredDataHtml = (structuredData || []).map(schema => {
+    return `\n  <script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n  </script>`;
+  }).join('');
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${title}</title>
+  <title>${escapeHtmlAttr(title)}</title>
   
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="${description}">
-  <meta name="author" content="Jeet Prakash">
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${description}">
-  <meta property="og:type" content="website">
+  <!-- SEO & Crawler Directives -->
+  <meta name="description" content="${escapeHtmlAttr(description)}">
+  <meta name="author" content="${SITE_AUTHOR}">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="${canonicalUrl}">
+
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/jpeg" href="${rootPrefix}assets/images/favicon.jpg">
+  <link rel="apple-touch-icon" href="${rootPrefix}assets/images/favicon.jpg">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:site_name" content="${SITE_NAME}">
+  <meta property="og:title" content="${escapeHtmlAttr(title)}">
+  <meta property="og:description" content="${escapeHtmlAttr(description)}">
+  <meta property="og:url" content="${canonicalUrl}">
+  <meta property="og:type" content="${ogType}">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="${fullImageUrl}">
+  <meta property="og:image:alt" content="${escapeHtmlAttr(title)}">${articleMetaTags}
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="${TWITTER_HANDLE}">
+  <meta name="twitter:creator" content="${TWITTER_HANDLE}">
+  <meta name="twitter:title" content="${escapeHtmlAttr(title)}">
+  <meta name="twitter:description" content="${escapeHtmlAttr(description)}">
+  <meta name="twitter:image" content="${fullImageUrl}">
+  <meta name="twitter:image:alt" content="${escapeHtmlAttr(title)}">
+
+  <!-- Schema.org JSON-LD Structured Data -->${structuredDataHtml}
 
   <!-- Google Fonts: Inter & Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -221,12 +314,31 @@ async function buildSite() {
   });
   homeContent += `</div>`;
 
+  const homeStructuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": SITE_NAME,
+      "url": `${SITE_URL}/`,
+      "description": "Developer blog, dev musings, project showcase, and portfolio.",
+      "author": {
+        "@type": "Person",
+        "name": SITE_AUTHOR,
+        "url": `${SITE_URL}/portfolio/`
+      }
+    }
+  ];
+
   fs.writeFileSync(path.join(__dirname, 'index.html'), renderHtmlPage({
     title: 'jeetprakash | Developer Blog & Portfolio',
     description: 'Developer blog, dev musings, project showcase, and portfolio.',
     content: homeContent,
     rootPrefix: './',
-    activeNav: 'home'
+    activeNav: 'home',
+    canonicalPath: '',
+    ogType: 'website',
+    ogImage: DEFAULT_OG_IMAGE,
+    structuredData: homeStructuredData
   }));
 
   // 2. Individual Blog Post Pages (posts/YYYY/MM/slug/index.html)
@@ -242,10 +354,10 @@ async function buildSite() {
     }).join(' ');
 
     const headerImgHtml = p.headerImage ? `
-      <img src="${rootPrefix}${p.headerImage}" alt="${p.title}" class="post-header-img" onerror="this.style.display='none'"/>
+      <img src="${rootPrefix}${p.headerImage}" alt="${escapeHtmlAttr(p.title)}" class="post-header-img" onerror="this.style.display='none'"/>
     ` : '';
 
-    const updatedDateHtml = p.updated ? `&bull; <span>Updated: ${formatDate(p.updated)}</span>` : '';
+    const updatedDateHtml = p.updated ? `&bull; <span>Updated: <time datetime="${p.updated}">${formatDate(p.updated)}</time></span>` : '';
 
     const postContent = `
       <a href="${rootPrefix}" class="back-btn">&larr; Back to Posts</a>
@@ -254,7 +366,7 @@ async function buildSite() {
           <h1 class="post-detail-title">${p.title}</h1>
           <div class="post-meta-bar">
             <div class="post-meta-dates">
-              <span>Published: ${formatDate(p.date)}</span>
+              <span>Published: <time datetime="${p.date}">${formatDate(p.date)}</time></span>
               ${updatedDateHtml}
             </div>
             <div class="post-tags-list">
@@ -270,11 +382,75 @@ async function buildSite() {
       </article>
     `;
 
+    const postCanonicalUrl = `${SITE_URL}/${p.url}`;
+    const postImageUrl = toAbsoluteUrl(p.headerImage || DEFAULT_OG_IMAGE);
+
+    const postStructuredData = [
+      {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": p.title,
+        "description": p.preface || p.title,
+        "datePublished": p.date,
+        "dateModified": p.updated || p.date,
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": postCanonicalUrl
+        },
+        "author": {
+          "@type": "Person",
+          "name": SITE_AUTHOR,
+          "url": `${SITE_URL}/portfolio/`
+        },
+        "publisher": {
+          "@type": "Person",
+          "name": SITE_AUTHOR,
+          "url": `${SITE_URL}/`
+        },
+        "image": postImageUrl,
+        "keywords": (p.tags || []).join(', ')
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": `${SITE_URL}/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Posts",
+            "item": `${SITE_URL}/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": p.title,
+            "item": postCanonicalUrl
+          }
+        ]
+      }
+    ];
+
     fs.writeFileSync(path.join(postDir, 'index.html'), renderHtmlPage({
       title: `${p.title} | jeetprakash`,
       description: p.preface || p.title,
       content: postContent,
-      rootPrefix: rootPrefix
+      rootPrefix: rootPrefix,
+      canonicalPath: p.url,
+      ogType: 'article',
+      ogImage: p.headerImage || DEFAULT_OG_IMAGE,
+      articleData: {
+        publishedTime: p.date,
+        modifiedTime: p.updated || p.date,
+        author: SITE_AUTHOR,
+        tags: p.tags || []
+      },
+      structuredData: postStructuredData
     }));
     console.log(`   └─ Pre-rendered post: posts/${p.year}/${p.month}/${p.slug}/index.html`);
   });
@@ -310,12 +486,37 @@ async function buildSite() {
   tagsContent += `</div>`;
 
   ensureDir(path.join(__dirname, 'tags'));
+  const tagsStructuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": `${SITE_URL}/`
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tags",
+          "item": `${SITE_URL}/tags/`
+        }
+      ]
+    }
+  ];
+
   fs.writeFileSync(path.join(__dirname, 'tags', 'index.html'), renderHtmlPage({
     title: 'All Tags | jeetprakash',
     description: 'Browse articles by developer tags and topics.',
     content: tagsContent,
     rootPrefix: rootPrefixTags,
-    activeNav: 'tags'
+    activeNav: 'tags',
+    canonicalPath: 'tags/',
+    ogType: 'website',
+    ogImage: DEFAULT_OG_IMAGE,
+    structuredData: tagsStructuredData
   }));
 
   // 4. Specific Tag Filter Pages (tag/<name>/index.html)
@@ -360,13 +561,44 @@ async function buildSite() {
     tagPageContent += `</div>`;
 
     const activeNavTag = (t === 'devMusings' ? 'devMusings' : (t === 'devRants' ? 'devRants' : 'tags'));
+    const tagCanonicalPath = `tag/${t}/`;
+    const tagStructuredData = [
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": `${SITE_URL}/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Tags",
+            "item": `${SITE_URL}/tags/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": `#${t}`,
+            "item": `${SITE_URL}/${tagCanonicalPath}`
+          }
+        ]
+      }
+    ];
 
     fs.writeFileSync(path.join(tagDir, 'index.html'), renderHtmlPage({
       title: `#${t} Posts | jeetprakash`,
       description: `Articles tagged with #${t}`,
       content: tagPageContent,
       rootPrefix: rootPrefixTag,
-      activeNav: activeNavTag
+      activeNav: activeNavTag,
+      canonicalPath: tagCanonicalPath,
+      ogType: 'website',
+      ogImage: DEFAULT_OG_IMAGE,
+      structuredData: tagStructuredData
     }));
     console.log(`   └─ Pre-rendered tag: tag/${t}/index.html`);
   });
@@ -447,12 +679,37 @@ async function buildSite() {
   projListContent += `</div>`;
 
   ensureDir(path.join(__dirname, 'projects'));
+  const projectsStructuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": `${SITE_URL}/`
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Projects",
+          "item": `${SITE_URL}/projects/`
+        }
+      ]
+    }
+  ];
+
   fs.writeFileSync(path.join(__dirname, 'projects', 'index.html'), renderHtmlPage({
     title: 'Projects | jeetprakash',
     description: 'Open-source tools and developer projects by Jeet Prakash.',
     content: projListContent,
     rootPrefix: rootPrefixProj,
-    activeNav: 'projects'
+    activeNav: 'projects',
+    canonicalPath: 'projects/',
+    ogType: 'website',
+    ogImage: DEFAULT_OG_IMAGE,
+    structuredData: projectsStructuredData
   }));
 
   // 6. Pre-render Individual Project Detail Pages (projects/<slug>/index.html)
@@ -490,7 +747,7 @@ async function buildSite() {
         <header class="post-detail-header">
           <h1 class="post-detail-title">${proj.title}</h1>
           <div class="post-meta-bar">
-            <span>Published: ${formatDate(proj.date)}</span>
+            <span>Published: <time datetime="${proj.date}">${formatDate(proj.date)}</time></span>
           </div>
           <p class="post-preface-box">${proj.shortDescription || ''}</p>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1rem;">
@@ -505,12 +762,57 @@ async function buildSite() {
       </article>
     `;
 
+    const projCanonicalUrl = `${SITE_URL}/${proj.url}`;
+    const projStructuredData = [
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": proj.title,
+        "description": proj.shortDescription || proj.title,
+        "codeRepository": proj.github || '',
+        "programmingLanguage": proj.tech || [],
+        "author": {
+          "@type": "Person",
+          "name": SITE_AUTHOR,
+          "url": `${SITE_URL}/portfolio/`
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": `${SITE_URL}/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Projects",
+            "item": `${SITE_URL}/projects/`
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": proj.title,
+            "item": projCanonicalUrl
+          }
+        ]
+      }
+    ];
+
     fs.writeFileSync(path.join(projectDir, 'index.html'), renderHtmlPage({
       title: `${proj.title} | Projects | jeetprakash`,
       description: proj.shortDescription || proj.title,
       content: projectDetailContent,
       rootPrefix: rootPrefixDetail,
-      activeNav: 'projects'
+      activeNav: 'projects',
+      canonicalPath: proj.url,
+      ogType: 'website',
+      ogImage: DEFAULT_OG_IMAGE,
+      structuredData: projStructuredData
     }));
     console.log(`   └─ Pre-rendered project: projects/${proj.slug}/index.html`);
   });
@@ -602,13 +904,141 @@ async function buildSite() {
   `;
 
   ensureDir(path.join(__dirname, 'portfolio'));
+
+  const portfolioStructuredData = [
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "name": portData.name || SITE_AUTHOR,
+        "jobTitle": portData.title || '',
+        "description": portData.bio || '',
+        "url": `${SITE_URL}/portfolio/`,
+        "sameAs": [
+          portData.github,
+          portData.linkedin
+        ].filter(Boolean)
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": `${SITE_URL}/`
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Portfolio",
+          "item": `${SITE_URL}/portfolio/`
+        }
+      ]
+    }
+  ];
+
   fs.writeFileSync(path.join(__dirname, 'portfolio', 'index.html'), renderHtmlPage({
     title: 'Portfolio | jeetprakash',
     description: `Developer portfolio and background of ${portData.name}`,
     content: portContent,
     rootPrefix: rootPrefixPort,
-    activeNav: 'portfolio'
+    activeNav: 'portfolio',
+    canonicalPath: 'portfolio/',
+    ogType: 'profile',
+    ogImage: DEFAULT_OG_IMAGE,
+    structuredData: portfolioStructuredData
   }));
+
+  // =========================================================================
+  // SITEMAP & ROBOTS.TXT GENERATION
+  // =========================================================================
+  console.log('🗺️ Generating sitemap.xml & robots.txt...');
+
+  const sitemapUrls = [];
+
+  // 1. Home
+  const latestPostDate = posts.length > 0 ? (posts[0].updated || posts[0].date) : new Date().toISOString().split('T')[0];
+  sitemapUrls.push({
+    loc: `${SITE_URL}/`,
+    lastmod: latestPostDate,
+    changefreq: 'weekly',
+    priority: '1.0'
+  });
+
+  // 2. Blog Posts
+  posts.forEach(p => {
+    sitemapUrls.push({
+      loc: `${SITE_URL}/${p.url}`,
+      lastmod: p.updated || p.date,
+      changefreq: 'monthly',
+      priority: '0.8'
+    });
+  });
+
+  // 3. Tags Index
+  sitemapUrls.push({
+    loc: `${SITE_URL}/tags/`,
+    changefreq: 'weekly',
+    priority: '0.6'
+  });
+
+  // 4. Individual Tag Pages
+  tagsArray.forEach(t => {
+    sitemapUrls.push({
+      loc: `${SITE_URL}/tag/${t}/`,
+      changefreq: 'weekly',
+      priority: '0.5'
+    });
+  });
+
+  // 5. Projects Index
+  sitemapUrls.push({
+    loc: `${SITE_URL}/projects/`,
+    changefreq: 'monthly',
+    priority: '0.7'
+  });
+
+  // 6. Individual Projects
+  projects.forEach(proj => {
+    sitemapUrls.push({
+      loc: `${SITE_URL}/${proj.url}`,
+      lastmod: proj.date,
+      changefreq: 'monthly',
+      priority: '0.6'
+    });
+  });
+
+  // 7. Portfolio
+  sitemapUrls.push({
+    loc: `${SITE_URL}/portfolio/`,
+    changefreq: 'monthly',
+    priority: '0.7'
+  });
+
+  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map(u => `  <url>
+    <loc>${u.loc}</loc>${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`).join('\n')}
+</urlset>
+`;
+
+  fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapXml);
+  console.log(`   └─ Generated sitemap.xml (${sitemapUrls.length} URLs)`);
+
+  const robotsTxt = `User-agent: *
+Allow: /
+
+Sitemap: ${SITE_URL}/sitemap.xml
+`;
+  fs.writeFileSync(path.join(__dirname, 'robots.txt'), robotsTxt);
+  console.log('   └─ Generated robots.txt');
 
   console.log('✅ Static Site Generation Pre-rendering Complete!');
 }

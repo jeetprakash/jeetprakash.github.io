@@ -3,14 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Beyond "Pick Two": CAP Theorem and PACELC for Distributed Systems | jeetprakash</title>
+  <title>Beyond &quot;Pick Two&quot;: CAP Theorem and PACELC for Distributed Systems | jeetprakash</title>
   
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of "picking two" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?">
+  <!-- SEO & Crawler Directives -->
+  <meta name="description" content="We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of &quot;picking two&quot; we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?">
   <meta name="author" content="Jeet Prakash">
-  <meta property="og:title" content="Beyond "Pick Two": CAP Theorem and PACELC for Distributed Systems | jeetprakash">
-  <meta property="og:description" content="We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of "picking two" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?">
-  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://jeetprakash.github.io/posts/2026/09/cap-theorem-and-beyond-pick-two/">
+
+  <!-- Favicon & Mobile Icons -->
+  <link rel="icon" type="image/jpeg" href="../../../../assets/images/favicon.jpg">
+  <link rel="apple-touch-icon" href="../../../../assets/images/favicon.jpg">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:site_name" content="jeetprakash">
+  <meta property="og:title" content="Beyond &quot;Pick Two&quot;: CAP Theorem and PACELC for Distributed Systems | jeetprakash">
+  <meta property="og:description" content="We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of &quot;picking two&quot; we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?">
+  <meta property="og:url" content="https://jeetprakash.github.io/posts/2026/09/cap-theorem-and-beyond-pick-two/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://jeetprakash.github.io/assets/images/header-placeholder.svg">
+  <meta property="og:image:alt" content="Beyond &quot;Pick Two&quot;: CAP Theorem and PACELC for Distributed Systems | jeetprakash">
+  <meta property="article:published_time" content="2026-09-12">
+  <meta property="article:modified_time" content="2026-09-12">
+  <meta property="article:author" content="Jeet Prakash">
+  <meta property="article:tag" content="distributed-systems">
+  <meta property="article:tag" content="system-design">
+  <meta property="article:tag" content="architecture">
+  <meta property="article:tag" content="database">
+  <meta property="article:tag" content="cap-theorem">
+  <meta property="article:tag" content="pacelc">
+
+  <!-- Twitter Card Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@jeetprakash_">
+  <meta name="twitter:creator" content="@jeetprakash_">
+  <meta name="twitter:title" content="Beyond &quot;Pick Two&quot;: CAP Theorem and PACELC for Distributed Systems | jeetprakash">
+  <meta name="twitter:description" content="We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of &quot;picking two&quot; we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?">
+  <meta name="twitter:image" content="https://jeetprakash.github.io/assets/images/header-placeholder.svg">
+  <meta name="twitter:image:alt" content="Beyond &quot;Pick Two&quot;: CAP Theorem and PACELC for Distributed Systems | jeetprakash">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Beyond \"Pick Two\": CAP Theorem and PACELC for Distributed Systems",
+  "description": "We all know the importance of CAP theorem when it comes to designing and implemeting distributed systems and the eventual decision of \"picking two\" we may have to make. But is this all to it? And is there a way to model the real-world latency vs. consistency trade-offs of distributed systems?",
+  "datePublished": "2026-09-12",
+  "dateModified": "2026-09-12",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://jeetprakash.github.io/posts/2026/09/cap-theorem-and-beyond-pick-two/"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Jeet Prakash",
+    "url": "https://jeetprakash.github.io/portfolio/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Jeet Prakash",
+    "url": "https://jeetprakash.github.io/"
+  },
+  "image": "https://jeetprakash.github.io/assets/images/header-placeholder.svg",
+  "keywords": "distributed-systems, system-design, architecture, database, cap-theorem, pacelc"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://jeetprakash.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Posts",
+      "item": "https://jeetprakash.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Beyond \"Pick Two\": CAP Theorem and PACELC for Distributed Systems",
+      "item": "https://jeetprakash.github.io/posts/2026/09/cap-theorem-and-beyond-pick-two/"
+    }
+  ]
+}
+  </script>
 
   <!-- Google Fonts: Inter & Fira Code -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +139,7 @@
           <h1 class="post-detail-title">Beyond "Pick Two": CAP Theorem and PACELC for Distributed Systems</h1>
           <div class="post-meta-bar">
             <div class="post-meta-dates">
-              <span>Published: Sep 12, 2026</span>
+              <span>Published: <time datetime="2026-09-12">Sep 12, 2026</time></span>
               
             </div>
             <div class="post-tags-list">
