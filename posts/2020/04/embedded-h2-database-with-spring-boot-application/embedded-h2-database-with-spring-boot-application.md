@@ -1,9 +1,13 @@
 ---
-layout: default
-canonical_url: 'https://jeetprakash.github.io/posts/2020/04/embedded-h2-database-with-spring-boot-application/'
-title: Embedded H2 Database with Spring Boot Application
-description: Using H2 database as an embedded DB for java based desktop applications
-tags: [h2, spring boot, database, embedded]
+title: "Embedded H2 Database with Spring Boot Application"
+slug: embedded-h2-database-with-spring-boot-application
+date: "2020-04-26"
+tags:
+  - h2
+  - spring boot
+  - database
+  - embedded
+preface: "Using H2 database as an embedded DB for java based desktop applications"
 ---
 
 It’s a well known fact that when we are building a web application it is nearly impossible to do away with some form of data storage. There's got to be a database, relational or non-relational, where we need to store the business data to be retrieved and used later. Desktop applications too might require some useful data to be be stored locally like application settings, cached data from servers etc.

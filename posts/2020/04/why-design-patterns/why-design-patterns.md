@@ -1,9 +1,13 @@
 ---
-layout: default
-canonical_url: 'https://jeetprakash.github.io/posts/2020/04/why-design-patterns/'
-title: Why Design Patterns?
-description: Why should we care about using design patterns in our projects?
-tags: [design patterns, software, design, patterns]
+title: "Why Design Patterns?"
+slug: why-design-patterns
+date: "2020-04-26"
+tags:
+  - design patterns
+  - software
+  - design
+  - patterns
+preface: "Why should we care about using design patterns in our projects?"
 ---
 
 ![Kings Landing](https://awoiaf.westeros.org/thumb.php?f=King%27s_Landing.jpg&width=800 "You must be wondering what Kings Landing has to do with Design Patterns")

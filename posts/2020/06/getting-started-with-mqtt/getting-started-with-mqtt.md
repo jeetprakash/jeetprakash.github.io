@@ -1,10 +1,14 @@
 ---
-layout: default
-canonical_url: 'https://jeetprakash.github.io/posts/2020/06/getting-started-with-mqtt/'
-title: Getting Started with MQTT
-description: The MQTT protocol is a lightweight protocol that enables small IoT devices to communicate using publish and subscribe model.
-image: https://jeetprakash.github.io/posts/2020/06/getting-started-with-mqtt/louis-reed-zDxlNcdUzxk-unsplash.jpg
-tags: [mqtt, iot, eclipse-mosquitto, pub-sub]
+title: "Getting Started with MQTT"
+slug: getting-started-with-mqtt
+date: "2020-06-06"
+tags:
+  - mqtt
+  - iot
+  - eclipse-mosquitto
+  - pub-sub
+preface: "The MQTT protocol is a lightweight protocol that enables small IoT devices to communicate using publish and subscribe model."
+headerImage: "posts/2020/06/getting-started-with-mqtt/louis-reed-zDxlNcdUzxk-unsplash.jpg"
 ---
 
 MQTT is a light-weight publish and subscribe protocol which allows low energy devices to exchange messages among each other. It is a simple messaging protocol design for resource constrained devices having low bandwidth. And hence it has found wide adoption on devices for Internet of Things (IoT) as it enables the IoT devices to receive control commands to do various things like turning the lights on or off.

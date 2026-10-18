@@ -1,9 +1,12 @@
 ---
-layout: default
-canonical_url: 'https://jeetprakash.github.io/posts/2020/04/getting-started-with-hibernate/'
-title: Getting Started With Hibernate
-description: Setting up a simple Hibernate project without using any web framework
-tags: [hibernate, java, database]
+title: "Getting Started With Hibernate"
+slug: getting-started-with-hibernate
+date: "2020-04-26"
+tags:
+  - hibernate
+  - java
+  - database
+preface: "Setting up a simple Hibernate project without using any web framework"
 ---
 
 Hibernate is one of the most famous Object-Relational Mapping (ORM) tool that allows a developer to easily map specialised Java objects, known as Entities, to database tables while also enabling him/her to create new rows on database tables and/or update the existing ones via those Java objects. This capability greatly reduces the development time as now we don’t have to take care of each and every intricate detail about how the data is being created, updated and deleted on the database. And it need not saying that an awesome framework like Hibernate provides a lot more than just that.

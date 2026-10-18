@@ -1,9 +1,13 @@
 ---
-layout: default
-canonical_url: 'https://jeetprakash.github.io/posts/2020/04/no-xml-spring-and-hibernate-integration/'
-title: No XML Spring and Hibernate Integration
-description: Creating an end to end Spring Hibernate application without using any XML configuration
-tags: [hibernate, spring, java, database]
+title: "No XML Spring and Hibernate Integration"
+slug: no-xml-spring-and-hibernate-integration
+date: "2020-04-26"
+tags:
+  - hibernate
+  - spring
+  - java
+  - database
+preface: "Creating an end to end Spring Hibernate application without using any XML configuration"
 ---
 
 Back in the pre Spring 3.1 days, we had to configure each and every bean into one of the spring configuration files which only happens to be an XML. And so if we were building a web application with Spring which is also using a relational database to store all its data, we needed to create a bean tag into one of those spring configuration XML files for reading out database connection properties to create a data source bean, which we then feed as a parameter to yet another bean tag to create a database session factory bean.

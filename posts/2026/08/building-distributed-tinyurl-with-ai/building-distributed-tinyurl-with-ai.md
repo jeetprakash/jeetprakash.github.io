@@ -1,9 +1,15 @@
 ---
-layout: default
-canonical_url: 'https://jeetprakash.github.io/posts/2026/08/building-distributed-tinyurl-with-ai/'
-title: Building a Scalable TinyURL Microservices Architecture with AI
-description: The journey of engineering a distributed, fault-tolerant URL shortener using Antigravity AI agents, and lessons learned on prompt precision and code monitoring.
-tags: [system-design, microservices, ai, kubernetes, prometheus, grafana]
+title: "Building a Scalable TinyURL Microservices Architecture with AI"
+slug: building-distributed-tinyurl-with-ai
+date: "2026-08-22"
+tags:
+  - system-design
+  - microservices
+  - ai
+  - kubernetes
+  - prometheus
+  - grafana
+preface: "The journey of engineering a distributed, fault-tolerant URL shortener using Antigravity AI agents, and lessons learned on prompt precision and code monitoring."
 ---
 
 Building a production-ready, distributed system from scratch is rarely a linear journey. Setting out to build a highly scalable **TinyURL system** using modern cloud-native standards—**Spring Boot 3 (Java 21)**, **gRPC**, **Spring Cloud (Eureka & API Gateway)**, **multi-database PostgreSQL sharding**, **Prometheus/Grafana observability**, **Loki log aggregation**, and **Kubernetes manifests**— I chose to pair program with an autonomous AI coding agent (Antigravity).

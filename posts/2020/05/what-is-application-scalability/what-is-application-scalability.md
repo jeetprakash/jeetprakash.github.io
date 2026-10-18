@@ -1,10 +1,13 @@
 ---
-layout: default
-canonical_url: 'https://jeetprakash.github.io/posts/2020/05/what-is-application-scalability/'
-title: What is Application Scalability?
-description: What to do when your application starts trending and then drowning in a huge load?
-image: https://jeetprakash.github.io/posts/2020/05/what-is-application-scalability/img03.png
-tags: [scalability, architecture, horizontal scaling, vertical scaling]
+title: "What is Application Scalability?"
+slug: what-is-application-scalability
+date: "2020-05-30"
+tags:
+  - scalability
+  - architecture
+  - horizontal scaling
+  - vertical scaling
+preface: "What to do when your application starts trending and then drowning in a huge load?"
 ---
 
 So you got this brilliant idea that you just converted into an app and deployed on one of the instances that you just bought on a cloud platform. Initially your app is not that famous and has a low user base but everything seems to be running fine with the app.

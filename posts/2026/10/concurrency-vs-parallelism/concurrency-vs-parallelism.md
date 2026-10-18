@@ -9,7 +9,7 @@ tags:
   - multithreading
   - performance
   - system-design
-preface: While often used interchangeably, concurrency and parallelism represent fundamentally distinct paradigms in software architecture. Lets get into single-core interleaving, multi-core execution, and what different does it make whether your workload is I/O-bound or CPU-bound.
+preface: "While often used interchangeably, concurrency and parallelism represent fundamentally distinct paradigms in software architecture. Lets get into single-core interleaving, multi-core execution, and what different does it make whether your workload is I/O-bound or CPU-bound."
 ---
 
 In software engineering, the terms "concurrency" and "parallelism" are frequently used interchangeably. However, they represent fundamentally different paradigms in computer science. Understanding the distinction is not just a matter of semantics, it is a critical architectural decision that dictates how a system scales, handles load, and utilizes hardware. 
