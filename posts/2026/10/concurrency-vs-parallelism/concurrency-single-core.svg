@@ -1,0 +1,142 @@
+<svg viewBox="0 0 940 430" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+    <filter id="shadow-conc" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.06" />
+    </filter>
+    <marker id="arr-time" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b" />
+    </marker>
+    <marker id="arr-switch" markerWidth="6" markerHeight="6" refX="3" refY="6" orient="auto">
+      <polygon points="0 0, 6 0, 3 6" fill="#0284c7" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="940" height="430" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- Top Title Banner -->
+  <g transform="translate(260, 14)" filter="url(#shadow-conc)">
+    <rect width="420" height="34" rx="6" fill="#0f172a" />
+    <text x="210" y="22" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.04em">CONCURRENCY: SINGLE-CORE TASK INTERLEAVING</text>
+  </g>
+
+  <!-- Timeline Axis Header -->
+  <g transform="translate(145, 52)">
+    <line x1="0" y1="10" x2="755" y2="10" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr-time)" />
+    <text x="0" y="5" font-size="9" font-weight="700" fill="#64748b" letter-spacing="0.05em">TIME PROGRESSION (WALL-CLOCK)</text>
+    <text x="690" y="5" font-size="9" font-weight="700" fill="#64748b">&#8594; FUTURE</text>
+  </g>
+
+  <!-- Row 1: Task A -->
+  <g transform="translate(20, 72)">
+    <!-- Label -->
+    <rect width="115" height="44" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.2" />
+    <text x="57" y="22" font-size="11.5" font-weight="700" fill="#1e40af" text-anchor="middle">Task A</text>
+    <text x="57" y="36" font-size="8.5" fill="#3b82f6" text-anchor="middle">(Web Request)</text>
+
+    <!-- Execution Slice 1 -->
+    <rect x="125" y="0" width="105" height="44" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="177" y="22" font-size="10.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">Execute</text>
+    <text x="177" y="35" font-size="8.5" fill="#2563eb" text-anchor="middle">Parse &amp; Query</text>
+
+    <!-- Wait on I/O -->
+    <rect x="235" y="0" width="455" height="44" rx="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4" />
+    <text x="462" y="27" font-size="10" font-style="italic" fill="#64748b" text-anchor="middle">Waiting on Database I/O (Async Non-Blocking Delay)</text>
+
+    <!-- Execution Slice 2 -->
+    <rect x="695" y="0" width="185" height="44" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="787" y="22" font-size="10.5" font-weight="700" fill="#1d4ed8" text-anchor="middle">Execute</text>
+    <text x="787" y="35" font-size="8.5" fill="#2563eb" text-anchor="middle">Format &amp; Send Response</text>
+  </g>
+
+  <!-- Row 2: Task B -->
+  <g transform="translate(20, 124)">
+    <!-- Label -->
+    <rect width="115" height="44" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2" />
+    <text x="57" y="22" font-size="11.5" font-weight="700" fill="#15803d" text-anchor="middle">Task B</text>
+    <text x="57" y="36" font-size="8.5" fill="#166534" text-anchor="middle">(Payment API)</text>
+
+    <!-- Queued -->
+    <rect x="125" y="0" width="105" height="44" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="177" y="26" font-size="9" fill="#94a3b8" text-anchor="middle">Queued</text>
+
+    <!-- Execution Slice 1 -->
+    <rect x="235" y="0" width="180" height="44" rx="5" fill="#dcfce7" stroke="#10b981" stroke-width="1.5" />
+    <text x="325" y="22" font-size="10.5" font-weight="700" fill="#15803d" text-anchor="middle">Execute</text>
+    <text x="325" y="35" font-size="8.5" fill="#166534" text-anchor="middle">Authenticate &amp; Call API</text>
+
+    <!-- Wait on I/O -->
+    <rect x="420" y="0" width="460" height="44" rx="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4" />
+    <text x="650" y="27" font-size="10" font-style="italic" fill="#64748b" text-anchor="middle">Waiting on External Network Call</text>
+  </g>
+
+  <!-- Row 3: Task C -->
+  <g transform="translate(20, 176)">
+    <!-- Label -->
+    <rect width="115" height="44" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.2" />
+    <text x="57" y="22" font-size="11.5" font-weight="700" fill="#b45309" text-anchor="middle">Task C</text>
+    <text x="57" y="36" font-size="8.5" fill="#92400e" text-anchor="middle">(File Upload)</text>
+
+    <!-- Queued -->
+    <rect x="125" y="0" width="290" height="44" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="270" y="26" font-size="9" fill="#94a3b8" text-anchor="middle">Queued in Event Loop</text>
+
+    <!-- Execution Slice 1 -->
+    <rect x="420" y="0" width="180" height="44" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" />
+    <text x="510" y="22" font-size="10.5" font-weight="700" fill="#b45309" text-anchor="middle">Execute</text>
+    <text x="510" y="35" font-size="8.5" fill="#92400e" text-anchor="middle">Stream File Chunk</text>
+
+    <!-- Wait on I/O -->
+    <rect x="605" y="0" width="275" height="44" rx="5" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4" />
+    <text x="742" y="27" font-size="10" font-style="italic" fill="#64748b" text-anchor="middle">Waiting on Disk Write</text>
+  </g>
+
+  <!-- Row 4: Single CPU Core Timeline (Hardware Level) -->
+  <g transform="translate(20, 240)">
+    <!-- Hardware CPU Label -->
+    <rect width="115" height="50" rx="6" fill="#0f172a" />
+    <text x="57" y="23" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle">Single CPU Core</text>
+    <text x="57" y="38" font-size="8.5" fill="#94a3b8" text-anchor="middle">Physical Execution</text>
+
+    <!-- Core Allocation Slices -->
+    <!-- Task A -->
+    <rect x="125" y="0" width="105" height="50" rx="4" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.2" />
+    <text x="177" y="24" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Task A</text>
+    <text x="177" y="39" font-size="8" fill="#dbeafe" text-anchor="middle">Running</text>
+
+    <!-- Task B -->
+    <rect x="235" y="0" width="180" height="50" rx="4" fill="#059669" stroke="#047857" stroke-width="1.2" />
+    <text x="325" y="24" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Task B</text>
+    <text x="325" y="39" font-size="8" fill="#d1fae5" text-anchor="middle">Switched on A&#39;s I/O Wait</text>
+
+    <!-- Task C -->
+    <rect x="420" y="0" width="180" height="50" rx="4" fill="#d97706" stroke="#b45309" stroke-width="1.2" />
+    <text x="510" y="24" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Task C</text>
+    <text x="510" y="39" font-size="8" fill="#fef3c7" text-anchor="middle">Switched on B&#39;s I/O Wait</text>
+
+    <!-- Idle slice -->
+    <rect x="605" y="0" width="85" height="50" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-dasharray="2,2" />
+    <text x="647" y="24" font-size="10" font-weight="600" fill="#64748b" text-anchor="middle">Idle</text>
+    <text x="647" y="38" font-size="8" fill="#94a3b8" text-anchor="middle">Polling</text>
+
+    <!-- Task A Resumed -->
+    <rect x="695" y="0" width="185" height="50" rx="4" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.2" />
+    <text x="787" y="24" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">Task A</text>
+    <text x="787" y="39" font-size="8" fill="#dbeafe" text-anchor="middle">I/O Callback Resumed</text>
+  </g>
+
+  <!-- Bottom Key Architectural Takeaway Box -->
+  <g transform="translate(20, 310)">
+    <rect width="880" height="95" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <circle cx="28" cy="24" r="10" fill="#dcfce7" stroke="#10b981" stroke-width="1.5" />
+    <text x="28" y="28" font-size="11" font-weight="700" fill="#15803d" text-anchor="middle">&#10003;</text>
+    <text x="48" y="27" font-size="11.5" font-weight="700" fill="#166534">KEY ARCHITECTURAL MECHANISM: CONCURRENCY WITHOUT PARALLELISM</text>
+    
+    <text x="25" y="52" font-size="10" fill="#15803d">&#8226; <tspan font-weight="700" fill="#0f172a">Structural Decomposition:</tspan> Tasks are interleaved dynamically. When Task A pauses to wait for a database query, the CPU core immediately pivots to Task B.</text>
+    <text x="25" y="70" font-size="10" fill="#15803d">&#8226; <tspan font-weight="700" fill="#0f172a">Simultaneity vs. Throughput:</tspan> Exactly <tspan font-weight="700" fill="#b91c1c">ONE</tspan> task physically occupies the CPU pipeline at any given microsecond, yet all 3 tasks make continuous progress without blocking.</text>
+    <text x="25" y="88" font-size="10" fill="#15803d">&#8226; <tspan font-weight="700" fill="#0f172a">Ideal Target:</tspan> High-throughput I/O-bound workloads (Node.js event loops, Python asyncio, Go goroutines multiplexed on 1 core).</text>
+  </g>
+</svg>

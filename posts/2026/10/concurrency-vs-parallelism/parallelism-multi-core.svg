@@ -1,0 +1,101 @@
+<svg viewBox="0 0 940 450" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    </style>
+    <filter id="shadow-para" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.06" />
+    </filter>
+    <marker id="arr-time-p" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="940" height="450" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- Top Title Banner -->
+  <g transform="translate(260, 14)" filter="url(#shadow-para)">
+    <rect width="420" height="34" rx="6" fill="#0f172a" />
+    <text x="210" y="22" font-size="11.5" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.04em">PARALLELISM: MULTI-CORE SIMULTANEOUS EXECUTION</text>
+  </g>
+
+  <!-- Timeline Axis Header -->
+  <g transform="translate(155, 52)">
+    <line x1="0" y1="10" x2="745" y2="10" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr-time-p)" />
+    <text x="0" y="5" font-size="9" font-weight="700" fill="#64748b" letter-spacing="0.05em">TIME PROGRESSION (WALL-CLOCK)</text>
+    <text x="680" y="5" font-size="9" font-weight="700" fill="#64748b">&#8594; FUTURE</text>
+  </g>
+
+  <!-- Core 1 -->
+  <g transform="translate(20, 72)">
+    <!-- Label -->
+    <rect width="125" height="48" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.2" />
+    <text x="62" y="23" font-size="11.5" font-weight="700" fill="#1e40af" text-anchor="middle">Core 1</text>
+    <text x="62" y="38" font-size="8.5" fill="#3b82f6" text-anchor="middle">(Physical ALU / L1)</text>
+
+    <!-- Execution Bar -->
+    <rect x="135" y="0" width="750" height="48" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5" />
+    <text x="150" y="24" font-size="11" font-weight="700" fill="#1d4ed8">Task A: Video Transcoding (H.264 Encoder)</text>
+    <text x="150" y="39" font-size="9" fill="#2563eb">100% Core Utilization &#8226; Dedicated Hardware Pipeline &#8226; Zero Context Switching</text>
+  </g>
+
+  <!-- Core 2 -->
+  <g transform="translate(20, 128)">
+    <!-- Label -->
+    <rect width="125" height="48" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2" />
+    <text x="62" y="23" font-size="11.5" font-weight="700" fill="#15803d" text-anchor="middle">Core 2</text>
+    <text x="62" y="38" font-size="8.5" fill="#166534" text-anchor="middle">(Physical ALU / L1)</text>
+
+    <!-- Execution Bar -->
+    <rect x="135" y="0" width="750" height="48" rx="5" fill="#dcfce7" stroke="#10b981" stroke-width="1.5" />
+    <text x="150" y="24" font-size="11" font-weight="700" fill="#15803d">Task B: Image Filtering &amp; Matrix Convolution</text>
+    <text x="150" y="39" font-size="9" fill="#166534">100% Core Utilization &#8226; Dedicated Hardware Pipeline &#8226; Zero Context Switching</text>
+  </g>
+
+  <!-- Core 3 -->
+  <g transform="translate(20, 184)">
+    <!-- Label -->
+    <rect width="125" height="48" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1.2" />
+    <text x="62" y="23" font-size="11.5" font-weight="700" fill="#b45309" text-anchor="middle">Core 3</text>
+    <text x="62" y="38" font-size="8.5" fill="#92400e" text-anchor="middle">(Physical ALU / L1)</text>
+
+    <!-- Execution Bar -->
+    <rect x="135" y="0" width="750" height="48" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5" />
+    <text x="150" y="24" font-size="11" font-weight="700" fill="#b45309">Task C: Machine Learning Tensor Computation</text>
+    <text x="150" y="39" font-size="9" fill="#92400e">100% Core Utilization &#8226; Dedicated Hardware Pipeline &#8226; Zero Context Switching</text>
+  </g>
+
+  <!-- Core 4 -->
+  <g transform="translate(20, 240)">
+    <!-- Label -->
+    <rect width="125" height="48" rx="6" fill="#fef2f2" stroke="#fecaca" stroke-width="1.2" />
+    <text x="62" y="23" font-size="11.5" font-weight="700" fill="#991b1b" text-anchor="middle">Core 4</text>
+    <text x="62" y="38" font-size="8.5" fill="#dc2626" text-anchor="middle">(Physical ALU / L1)</text>
+
+    <!-- Execution Bar -->
+    <rect x="135" y="0" width="750" height="48" rx="5" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5" />
+    <text x="150" y="24" font-size="11" font-weight="700" fill="#991b1b">Task D: High-Throughput Gzip Compression</text>
+    <text x="150" y="39" font-size="9" fill="#dc2626">100% Core Utilization &#8226; Dedicated Hardware Pipeline &#8226; Zero Context Switching</text>
+  </g>
+
+  <!-- Vertical Synchronous Slice (Physical Wall Clock Moment) -->
+  <g transform="translate(520, 68)">
+    <rect width="170" height="225" rx="6" fill="#0f172a" fill-opacity="0.04" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4" />
+    <rect x="15" y="-12" width="140" height="22" rx="4" fill="#0f172a" />
+    <text x="85" y="3" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle">EXACT SAME INSTANT</text>
+    <text x="85" y="215" font-size="8.5" font-weight="700" fill="#475569" text-anchor="middle">Physical Simultaneity (t)</text>
+  </g>
+
+  <!-- Bottom Key Architectural Takeaway Box -->
+  <g transform="translate(20, 316)">
+    <rect width="885" height="108" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <circle cx="28" cy="24" r="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5" />
+    <text x="28" y="28" font-size="11" font-weight="700" fill="#1d4ed8" text-anchor="middle">&#10003;</text>
+    <text x="48" y="27" font-size="11.5" font-weight="700" fill="#1e40af">KEY ARCHITECTURAL MECHANISM: PARALLELISM REQUIRES HARDWARE</text>
+    
+    <text x="25" y="52" font-size="10" fill="#1e40af">&#8226; <tspan font-weight="700" fill="#0f172a">True Physical Simultaneity:</tspan> Tasks do not yield, pause, or take turns. Each task owns a physically separate processor core executing instructions at the exact same physical clock cycle.</text>
+    <text x="25" y="70" font-size="10" fill="#1e40af">&#8226; <tspan font-weight="700" fill="#0f172a">Zero Illusion:</tspan> Concurrency on 1 core gives the <tspan font-style="italic">illusion</tspan> of simultaneity. Parallelism on 4 cores delivers <tspan font-weight="700" fill="#059669">4x true throughput</tspan> for pure compute tasks (bounded by memory bus &amp; Amdahl&#39;s Law).</text>
+    <text x="25" y="88" font-size="10" fill="#1e40af">&#8226; <tspan font-weight="700" fill="#0f172a">Ideal Target:</tspan> CPU-bound workloads where threads compute continuously (video rendering, cryptographic hashing, matrix math, data compression).</text>
+  </g>
+</svg>

@@ -1,5 +1,21 @@
 [
   {
+    "slug": "concurrency-vs-parallelism",
+    "title": "Concurrency vs. Parallelism in Software Architecture",
+    "date": "2026-10-18",
+    "preface": "While often used interchangeably, concurrency and parallelism represent fundamentally distinct paradigms in software architecture. Lets get into single-core interleaving, multi-core execution, and what different does it make whether your workload is I/O-bound or CPU-bound.",
+    "tags": [
+      "concurrency",
+      "parallelism",
+      "architecture",
+      "multithreading",
+      "performance",
+      "system-design"
+    ],
+    "file": "posts/2026/10/concurrency-vs-parallelism/concurrency-vs-parallelism.md",
+    "url": "posts/2026/10/concurrency-vs-parallelism/"
+  },
+  {
     "slug": "designing-a-real-time-user-typing-indicator",
     "title": "Designing a Real-Time User Typing Indicator for Messaging App",
     "date": "2026-10-04",
